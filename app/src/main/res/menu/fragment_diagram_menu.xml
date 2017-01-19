@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+    android:id="@+id/diagram_settings_icon"
+    android:icon="@drawable/ic_diagram_table_settings_white_24dp"
+    android:title="@string/fragment_diagram_settings_icon_button"
+    app:showAsAction="always">
+</item>
+
+    <item
+        android:id="@+id/diagram_share_icon"
+        android:icon="@drawable/ic_diagram_table_share_white_24dp"
+        android:title="@string/fragment_diagram_share_icon_button"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/diagram_save_icon"
+        android:icon="@drawable/ic_diagram_table_save_white_24dp"
+        android:title="@string/fragment_diagram_save_icon_button"
+        app:showAsAction="never">
+    </item>
+</menu>

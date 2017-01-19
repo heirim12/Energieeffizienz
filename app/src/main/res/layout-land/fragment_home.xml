@@ -1,0 +1,150 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".gui.fragments.FragmentHome">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/fragment_home_layout_margin">
+
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/home_textViewPanel1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorCurrentMeasurementPanel"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="@string/fragment_home_panel1"
+                    android:textSize="@dimen/fragment_home_title1_size"
+                    android:textStyle="normal|bold"/>
+
+                <TextView
+                    android:id="@+id/home_textViewDynamic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/fragment_home_text_gap"
+                    android:layout_marginLeft="@dimen/fragment_home_text_gap"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/fragment_home_dynamic"
+                    android:textSize="@dimen/fragment_home_title2_size"
+                    android:textStyle="normal|italic"/>
+
+                <TextView
+                    android:id="@+id/home_textViewWatt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/fragment_home_text_gap"
+                    android:fontFamily="monospace"
+                    android:gravity="right"
+                    android:text="xxxW"
+                    android:textSize="@dimen/fragment_home_text_size"/>
+
+                <TextView
+                    android:id="@+id/home_textViewWattHour1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="right"
+                    android:text="xxxkWh"
+                    android:textSize="@dimen/fragment_home_text_size"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fragment_home_space"/>
+
+                <TextView
+                    android:id="@+id/home_textViewPanel2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorCurrentMeasurementPanel"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="@string/fragment_home_panel2"
+                    android:textSize="@dimen/fragment_home_title1_size"
+                    android:textStyle="normal|bold"/>
+
+                <TextView
+                    android:id="@+id/home_textViewStatic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fragment_home_text_gap"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/fragment_home_static"
+                    android:textSize="@dimen/fragment_home_title2_size"
+                    android:textStyle="normal|italic"/>
+
+                <TextView
+                    android:id="@+id/home_textViewWatt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="right"
+                    android:text="xxxW"
+                    android:textSize="@dimen/fragment_home_text_size"/>
+
+                <TextView
+                    android:id="@+id/home_textViewWattHour2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="right"
+                    android:text="xxxkWh"
+                    android:textSize="@dimen/fragment_home_text_size"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <Space
+            android:layout_width="@dimen/fragment_home_space"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_textViewChartTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorCurrentMeasurementPanel"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="@string/fragment_home_chart_title"
+                android:textSize="@dimen/fragment_home_title1_size"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:id="@+id/home_textViewChartDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fragment_home_text_gap"
+                android:layout_marginLeft="@dimen/fragment_home_text_gap"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/fragment_home_chart_description"
+                android:textSize="@dimen/fragment_home_title2_size"
+                android:textStyle="normal|italic"/>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/home_barChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

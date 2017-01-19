@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+    <string name="app_name">Energieeffizienz</string>
+
+    <string name="opendrawer">Öffnen</string>
+    <string name="closedrawer">Schließen</string>
+
+
+
+    <!-- Navigation Drawer -->
+    <!-- ======================================================================================= -->
+    <string name="nav_home">Start</string>
+    <string name="nav_current_measurement">Laufende Messung</string>
+    <string name="nav_subtitle_records">Aufzeichnungen</string>
+    <string name="nav_diagram">Diagramm</string>
+    <string name="nav_table">Tabelle</string>
+    <string name="nav_subtitle_information">Informationen</string>
+    <string name="nav_system">Anlage</string>
+    <string name="nav_students">Maturanten</string>
+    <string name="nav_settings">Einstellungen</string>
+
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Home: fragment_home.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_home_title">Energieeffizienz</string>
+
+    <string name="fragment_home_panel1">Panel 1</string>
+    <string name="fragment_home_dynamic">(dynamisch)</string>
+
+    <string name="fragment_home_panel2">Panel 2</string>
+    <string name="fragment_home_static">(statisch)</string>
+
+    <string name="fragment_home_chart_title">Gesamt Energieertrag</string>
+    <string name="fragment_home_chart_description">(der letzten sieben Tage)</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Current Measurment: fragment_current_measurement.xmll -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_current_measurement_title">Laufende Messung</string>
+    <string name="fragment_current_measurement_toast_timeout">Es gab ein Problem mit der Server-Kommunikation.</string>
+
+    <string name="fragment_current_measurement_spinner_continuously">kontinuierlich</string>
+    <string name="fragment_current_measurement_spinner1sec">1 sek</string>
+    <string name="fragment_current_measurement_spinner3sec">2 sek</string>
+    <string name="fragment_current_measurement_spinner5sec">5 sek</string>
+    <string name="fragment_current_measurement_spinner10sec">10 sek</string>
+
+    <string name="fragment_current_measurement_toggleON">EIN</string>
+    <string name="fragment_current_measurement_toggleOFF">AUS</string>
+
+    <string name="fragment_current_measurement_panel1">Panel 1:</string>
+    <string name="fragment_current_measurement_dynamic">(dynamisch)</string>
+
+    <string name="fragment_current_measurement_panel2">Panel 2:</string>
+    <string name="fragment_current_measurement_static">(statisch)</string>
+    <string name="fragment_current_measurement_angle2">30°</string>
+    <string name="fragment_current_measurement_orientation2">Süd-West</string>
+
+    <string name="fragment_current_measurement_angle">Winkel:</string>
+    <string name="fragment_current_measurement_orientation">Ausrichtung:</string>
+
+    <string name="fragment_current_measurement_engines">Motoren:</string>
+    <string name="fragment_current_measurement_positioning">für die Positionierung des dymanischen Panels</string>
+
+    <string name="fragment_current_measurement_battery">Batterie</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Records Diagram: fragment_diagram.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_diagram_title">Diagramm</string>
+    <string name="fragment_diagram_settings_icon_button">Einstellungen</string>
+    <string name="fragment_diagram_starttext">Drücke den Einstellungs-Button in der Toolbar</string>
+
+    <string name="fragment_diagram_share_icon_button">Teilen als Bild</string>
+    <string name="fragment_diagram_save_icon_button">Speichern als Bild</string>
+    <string name="fragment_diagram_no_chart">Sie müssen zuerst mithilfe der Diagramm-Einstellungen ein Diagramm erstellen!</string>
+    <string name="fragment_diagram_saved_linechart1">Diagramm 1 wurde gespeichert.</string>
+    <string name="fragment_diagram_saved_linechart2">Diagramm 2 wurde gespeichert.</string>
+    <string name="fragment_diagram_saved">Diagramm wurde in Gallary gespeichert.</string>
+    <string name="fragment_diagram_save_error">Diagram konnte nicht gespeichert werden.</string>
+
+    <string name="fragment_diagram_chooser_dialog_share">Wählen Sie das zu teilente Diagramm:</string>
+    <string name="fragment_diagram_chooser_dialog_save_1diagram">Geben Sie einen Dateinamen ein:</string>
+    <string name="fragment_diagram_chooser_dialog_save_2diagram">Wählen Sie das zu speichernte Diagramm und geben Sie einen Dateinamen eine:</string>
+    <string name="fragment_diagram_chooser_dialog_diagram1">Diagramm 1</string>
+    <string name="fragment_diagram_chooser_dialog_diagram2">Diagramm 2</string>
+    <string name="fragment_diagram_share_error">Error: Etwas ist schief gelaufen!</string>
+
+    <string name="fragment_diagram_settings_hasnot_changed">Die Einstellungen haben sich nicht geändert.</string>
+    <string name="fragment_diagram_settings_has_changed">Einstellungen wurden übernommen, die Daten werden in kürze angezeigt.</string>
+
+    <string name="fragment_diagram_voltage_panel1">Spannung Panel1 [V]</string>
+    <string name="fragment_diagram_voltage_panel2">Spannung Panel2 [V]</string>
+    <string name="fragment_diagram_current_panel1">Strom Panel1 [A]</string>
+    <string name="fragment_diagram_current_panel2">Strom Panel2 [A]</string>
+    <string name="fragment_diagram_power_panel1">Leistung Panel1 [W]</string>
+    <string name="fragment_diagram_power_panel2">Leistung Panel2 [W]</string>
+    <string name="fragment_diagram_power_both_panels">Leistung beide Panele [W]</string>
+    <string name="fragment_diagram_energy_panel1">Energie Panel1 [Wh] </string>
+    <string name="fragment_diagram_energy_panel2">Energie Panel2 [Wh]</string>
+    <string name="fragment_diagram_energy_both_panels">Energie beide Panele [Wh]</string>
+
+    <string name="fragment_diagram_voltage_unit">V</string>
+    <string name="fragment_diagram_current_unit">A</string>
+    <string name="fragment_diagram_power_unit">W</string>
+    <string name="fragment_diagram_energy_unit">Wh</string>
+    <string name="fragment_diagram_marker_view_at">um</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Records Table: fragment_table.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_table_title">Tabelle</string>
+    <string name="fragment_table_settings_icon_button">Einstellungen</string>
+
+    <string name="fragment_table_settings_hasnot_changed">Die Einstellungen haben sich nicht geändert.</string>
+    <string name="fragment_table_settings_has_changed">Einstellungen wurden übernommen, die Daten werden in kürze angezeigt.</string>
+
+    <string name="fragment_table_dateTime">Datum/Zeit</string>
+    <string name="fragment_table_voltage_panel1">Spannung Panel1 [V]</string>
+    <string name="fragment_table_voltage_panel2">Spannung Panel2 [V]</string>
+    <string name="fragment_table_current_panel1">Strom Panel1 [A]</string>
+    <string name="fragment_table_current_panel2">Strom Panel2 [A]</string>
+    <string name="fragment_table_power_panel1">Leistung Panel1 [W]</string>
+    <string name="fragment_table_power_panel2">Leistung Panel2 [W]</string>
+    <string name="fragment_table_power_both_panels">Leistung beide Panele [W]</string>
+    <string name="fragment_table_energy_panel1">Energie Panel1 [Wh] </string>
+    <string name="fragment_table_energy_panel2">Energie Panel2 [Wh]</string>
+    <string name="fragment_table_energy_both_panels">Energie beide Panele [Wh]</string>
+
+    <string name="fragment_table_voltage_unit">V</string>
+    <string name="fragment_table_current_unit">A</string>
+    <string name="fragment_table_power_unit">W</string>
+    <string name="fragment_table_energy_unit">Wh</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Information System: fragment_info_system.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_info_system_title">Informationen: Anlage</string>
+    <string name="test_info_system">Informationen: Anlage</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Information Students: fragment_info_students.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_info_students_title">Informationen: Maturanten</string>
+    <string name="test_info_students">Informationen: Maturanten</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Activity Settings -->
+    <!-- ======================================================================================= -->
+
+    <!-- ======================================================================================= -->
+
+    <!-- Dialog Diagram Settings -->
+    <!-- ======================================================================================= -->
+    <string name="dialog_diagram_title">Einstellungen</string>
+
+    <string name="dialog_diagram_ok">ok</string>
+    <string name="dialog_diagram_cancel">abbrechen</string>
+
+    <string name="dialog_diagram_start_date">Start Datum:</string>
+    <string name="dialog_diagram_end_date">End Datum:</string>
+
+    <string name="dialog_diagram_panel1">Panel 1:</string>
+    <string name="dialog_diagram_panel2">Panel 2:</string>
+    <string name="dialog_diagram_both_panels">Beide Panele:</string>
+    <string name="dialog_diagram_all">(alles)</string>
+    <string name="dialog_diagram_voltage">Spannung</string>
+    <string name="dialog_diagram_current">Strom</string>
+    <string name="dialog_diagram_power">Leistung</string>
+    <string name="dialog_diagram_energy">Energie</string>
+    <!-- ======================================================================================= -->
+</resources>

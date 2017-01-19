@@ -1,0 +1,365 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gui.fragments.FragmentCurrentMeasurement">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/fragment_current_measurement_layout_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fragment_current_measurement_layout_margin"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/cur_meas_spinnerRefreshCycle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+
+                <ToggleButton
+                    android:id="@+id/cur_meas_toggleButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:text="ToggleButton"
+                    android:textOff="@string/fragment_current_measurement_toggleOFF"
+                    android:textOn="@string/fragment_current_measurement_toggleON" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/fragment_current_measurement_layout_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/cur_meas_layoutPanel1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorCurrentMeasurementPanel"
+                    android:padding="@dimen/fragment_current_measurement_layout_margin">
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewPanel1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_panel1"
+                        android:textSize="@dimen/fragment_current_measurement_title1_size"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewDynamic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/cur_meas_textViewPanel1"
+                        android:layout_below="@+id/cur_meas_textViewPanel1"
+                        android:layout_marginStart="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/fragment_current_measurement_dynamic"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size"
+                        android:textStyle="normal|italic" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewVolt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewDynamic"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxV"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAmpere1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/cur_meas_textViewVolt1"
+                        android:layout_below="@id/cur_meas_textViewVolt1"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxA"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewWatt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/cur_meas_textViewVolt1"
+                        android:layout_below="@id/cur_meas_textViewAmpere1"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxW"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAngleText1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/cur_meas_textViewWatt1"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_angle"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAngleValue1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewAngleText1"
+                        android:fontFamily="monospace"
+                        android:text="30°"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewOrientationText1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/cur_meas_textViewAngleValue1"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_orientation"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewOrientationValue1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewOrientationText1"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:text="Süd-Ost"
+                        android:textSize="@dimen/fragment_current_measurement_text_size"/>
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="@dimen/fragment_current_measurement_layout_margin"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:id="@+id/cur_meas_layoutPanel2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorCurrentMeasurementPanel"
+                    android:padding="@dimen/fragment_current_measurement_layout_margin">
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewPanel2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_panel2"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/fragment_current_measurement_title1_size"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewStatic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cur_meas_textViewPanel2"
+                        android:layout_marginLeft="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/fragment_current_measurement_static"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size"
+                        android:textStyle="normal|italic" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewVolt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewStatic"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxV"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAmpere2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/cur_meas_textViewVolt2"
+                        android:layout_below="@id/cur_meas_textViewVolt2"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxA"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewWatt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/cur_meas_textViewVolt2"
+                        android:layout_below="@id/cur_meas_textViewAmpere2"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="monospace"
+                        android:text="xxxW"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAngleText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/cur_meas_textViewWatt2"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_angle"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewAngleValue2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewAngleText2"
+                        android:fontFamily="monospace"
+                        android:text="@string/fragment_current_measurement_angle2"
+                        android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewOrientationText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/cur_meas_textViewAngleValue2"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/fragment_current_measurement_orientation"
+                        android:textSize="@dimen/fragment_current_measurement_title2_size" />
+
+                    <TextView
+                        android:id="@+id/cur_meas_textViewOrientationValue2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/cur_meas_textViewOrientationText2"
+                        android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                        android:text="@string/fragment_current_measurement_orientation2"
+                        android:textSize="@dimen/fragment_current_measurement_text_size"/>
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="@dimen/fragment_current_measurement_layout_margin"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/cur_meas_layoutEngine"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/fragment_current_measurement_layout_margin"
+                        android:layout_weight="1"
+                        android:background="@color/colorCurrentMeasurementPanel"
+                        android:padding="@dimen/fragment_current_measurement_layout_margin">
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewEngine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:fontFamily="sans-serif-smallcaps"
+                            android:text="@string/fragment_current_measurement_engines"
+                            android:textSize="@dimen/fragment_current_measurement_title1_size"
+                            android:textStyle="normal|bold" />
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewVoltEngines"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@id/cur_meas_textViewEngine"
+                            android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                            android:fontFamily="monospace"
+                            android:text="xxxV"
+                            android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewAmpereEngines"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@id/cur_meas_textViewVoltEngines"
+                            android:layout_below="@id/cur_meas_textViewVoltEngines"
+                            android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                            android:fontFamily="monospace"
+                            android:text="xxxA"
+                            android:textSize="@dimen/fragment_current_measurement_text_size" />
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewWattEngienes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@id/cur_meas_textViewVoltEngines"
+                            android:layout_below="@id/cur_meas_textViewAmpereEngines"
+                            android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
+                            android:fontFamily="monospace"
+                            android:text="xxxW"
+                            android:textSize="@dimen/fragment_current_measurement_text_size" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/cur_meas_layoutBattery"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/colorCurrentMeasurementPanel"
+                        android:padding="@dimen/fragment_current_measurement_layout_margin">
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewBattery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:fontFamily="sans-serif-smallcaps"
+                            android:text="@string/fragment_current_measurement_battery"
+                            android:textSize="@dimen/fragment_current_measurement_title1_size"
+                            android:textStyle="normal|bold" />
+
+                        <TextView
+                            android:id="@+id/cur_meas_textViewVoltBattery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@id/cur_meas_textViewBattery"
+                            android:fontFamily="monospace"
+                            android:text="xxxV"
+                            android:textSize="@dimen/fragment_current_measurement_text_size" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

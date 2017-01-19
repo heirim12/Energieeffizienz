@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:checkable="true"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_nav_home_24dp"
+            android:title="@string/nav_home" />
+
+        <item
+            android:checkable="true"
+            android:id="@+id/nav_current_measurement"
+            android:icon="@drawable/ic_nav_current_measurmant24dp"
+            android:title="@string/nav_current_measurement" />
+    </group>
+
+    <item android:title="@string/nav_subtitle_records">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_records_diagram"
+                android:icon="@drawable/ic_nav_diagram_24dp"
+                android:title="@string/nav_diagram"/>
+
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_records_table"
+                android:icon="@drawable/ic_nav_table_24dp"
+                android:title="@string/nav_table"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_subtitle_information">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_information_system"
+                android:icon="@drawable/ic_nav_system_24dp"
+                android:title="@string/nav_system"/>
+
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_information_students"
+                android:icon="@drawable/ic_nav_students_24dp"
+                android:title="@string/nav_students"/>
+        </menu>
+    </item>
+
+    <item >
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_nav_settings_black_24dp"
+                android:title="@string/nav_settings"/>
+        </menu>
+    </item>
+</menu>

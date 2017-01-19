@@ -1,0 +1,63 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/fragment_table_layout_margin"
+    tools:context=".gui.fragments.FragmentTable">
+    <!--
+        <TableLayout
+            android:id="@+id/fragment_table_TableLayoutHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </TableLayout>
+
+
+        <TableLayout
+            android:id="@+id/fragment_table_TableLayoutData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </TableLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+            -->
+
+    <LinearLayout
+        android:id="@+id/fragment_diagram_LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/fragment_diagram_pressicon_padding_right"
+            android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"
+            app:srcCompat="@drawable/ic_diagram_table_press_icon"
+            android:layout_gravity="right"/>
+
+        <TextView
+            android:text="@string/fragment_diagram_starttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="@dimen/fragment_diagram_layout_margin"
+            android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"/>
+    </LinearLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/fragment_table_mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </HorizontalScrollView>
+</FrameLayout>

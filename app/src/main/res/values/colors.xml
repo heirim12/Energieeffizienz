@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#ff4081</color>
+
+    <!--    Light  Green-->
+    <color name="colorPrimaryGreen">#07ba22</color>
+    <color name="colorPrimaryDarkGreen">#089724</color>
+    <color name="colorAccentGreen">#42f23c</color>
+    <color name="colorCurrentMeasurementPanel">#89c408</color>
+    <color name="colorHomePanel">#89c408</color>
+    <color name="colorHomeChart">#89c408</color>
+    <color name="colorDialogDiagram">#89c408</color>
+    <color name="colorTextTertiary">#000000</color>
+
+
+    <!--    Diagramlines-->
+    <color name="colorDiagramCurrent1">#ff4800</color>
+    <color name="colorDiagramCurrent2">#cc0c0c</color>
+    <color name="colorDiagramVoltage1">#00e626</color>
+    <color name="colorDiagramVoltage2">#059100</color>
+    <color name="colorDiagramPower1">#ddff00</color>
+    <color name="colorDiagramPower2">#cbdc0e</color>
+    <color name="colorDiagramPowerBoth">#9ca90d</color>
+    <color name="colorDiagramEnergy1">#0088ff</color>
+    <color name="colorDiagramEnergy2">#0056ce</color>
+    <color name="colorDiagramEnergyBoth">#000474</color>
+    <color name="colorDiagramHighlighting">#000000</color>
+
+    <!--    Table TEST-->
+    <color name="colorTableBorders">#000000</color>
+    <color name="colorTableRow1">#07ba22</color> <!-- same as colorPrimaryGreen-->
+    <color name="colorTableRow2">#089724</color> <!-- same as colorPrimaryDarkGreen-->
+
+    <!--    Table -->
+    <color name="colorTableCell">#97ed75</color>
+</resources>

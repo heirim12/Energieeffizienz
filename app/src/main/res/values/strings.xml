@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Energieeffizienz</string>
+
+    <string name="opendrawer">Open</string>
+    <string name="closedrawer">Close</string>
+
+
+    <!-- Navigation Drawer -->
+    <!-- ======================================================================================= -->
+    <string name="nav_home">Home</string>
+    <string name="nav_current_measurement">Current Measurement</string>
+    <string name="nav_subtitle_records">Records</string>
+    <string name="nav_diagram">Diagram</string>
+    <string name="nav_table">Table</string>
+    <string name="nav_subtitle_information">Information</string>
+    <string name="nav_system">System</string>
+    <string name="nav_students">Students</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Home: fragment_home.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_home_title">Energy Efficiency</string>
+
+    <string name="fragment_home_panel1">Panel 1</string>
+    <string name="fragment_home_dynamic">(dynamic)</string>
+
+    <string name="fragment_home_panel2">Panel 2</string>
+    <string name="fragment_home_static">(static)</string>
+
+    <string name="fragment_home_chart_title">total energie yield</string>
+    <string name="fragment_home_chart_description">(of the last seven days)</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Current Measurment: fragment_current_measurement.xmll -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_current_measurement_title">Current Measurement</string>
+    <string name="fragment_current_measurement_toast_timeout">There was an problem with the server communication.</string>
+
+    <string name="fragment_current_measurement_spinner_continuously">continuously</string>
+    <string name="fragment_current_measurement_spinner1sec">1 sec</string>
+    <string name="fragment_current_measurement_spinner3sec">2 sec</string>
+    <string name="fragment_current_measurement_spinner5sec">5 sec</string>
+    <string name="fragment_current_measurement_spinner10sec">10 sec</string>
+
+    <string name="fragment_current_measurement_toggleON">ON</string>
+    <string name="fragment_current_measurement_toggleOFF">OFF</string>
+
+    <string name="fragment_current_measurement_panel1">Panel 1:</string>
+    <string name="fragment_current_measurement_dynamic">(dynamic)</string>
+
+    <string name="fragment_current_measurement_panel2">Panel 2:</string>
+    <string name="fragment_current_measurement_static">(static)</string>
+    <string name="fragment_current_measurement_angle2">30°</string>
+    <string name="fragment_current_measurement_orientation2">South-West</string>
+
+    <string name="fragment_current_measurement_angle">Angle:</string>
+    <string name="fragment_current_measurement_orientation">Orientation:</string>
+
+
+    <string name="fragment_current_measurement_engines">Engines:</string>
+    <string name="fragment_current_measurement_positioning">for the positioning of the dynamic panel</string>
+
+    <string name="fragment_current_measurement_battery">Battery</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Records Diagram: fragment_diagram.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_diagram_title">Diagram</string>
+    <string name="fragment_diagram_settings_icon_button">Settings</string>
+    <string name="fragment_diagram_starttext">Press the Settings-Button in the Toolbar</string>
+
+    <string name="fragment_diagram_share_icon_button">Share as Image</string>
+    <string name="fragment_diagram_save_icon_button">Save as Image</string>
+    <string name="fragment_diagram_no_chart">You have to choose diagram-settings to draw a diagram before!</string>
+    <string name="fragment_diagram_saved_linechart1">Diagram 1 has been successfully saved.</string>
+    <string name="fragment_diagram_saved_linechart2">Diagram 2 has been successfully saved.</string>
+    <string name="fragment_diagram_saved">Diagram has been saved to Gallery</string>
+    <string name="fragment_diagram_save_error">Something went wrong, diagram has not been saved.</string>
+
+    <string name="fragment_diagram_chooser_dialog_share">Choose the diagram you want to share:</string>
+    <string name="fragment_diagram_chooser_dialog_save_1diagram">Enter the filename:</string>
+    <string name="fragment_diagram_chooser_dialog_save_2diagram">Choose the diagram you want to save and enter the filename:</string>
+    <string name="fragment_diagram_chooser_dialog_diagram1">Diagram 1</string>
+    <string name="fragment_diagram_chooser_dialog_diagram2">Diagram 2</string>
+    <string name="fragment_diagram_share_error">Error: Something went wrong!</string>
+
+    <string name="fragment_diagram_settings_hasnot_changed">The settings haven´t changed.</string>
+    <string name="fragment_diagram_settings_has_changed">Settings have been saved, the data will be shown soon.</string>
+
+    <string name="fragment_diagram_voltage_panel1">Voltage Panel1 [V]</string>
+    <string name="fragment_diagram_voltage_panel2">Voltage Panel2 [V]</string>
+    <string name="fragment_diagram_current_panel1">Current Panel1 [A]</string>
+    <string name="fragment_diagram_current_panel2">Current Panel2 [A]</string>
+    <string name="fragment_diagram_power_panel1">Power Panel1 [W]</string>
+    <string name="fragment_diagram_power_panel2">Power Panel2 [W]</string>
+    <string name="fragment_diagram_power_both_panels">Power both Panels [W]</string>
+    <string name="fragment_diagram_energy_panel1">Energy Panel1 [Wh]</string>
+    <string name="fragment_diagram_energy_panel2">Energy Panel2 [Wh]</string>
+    <string name="fragment_diagram_energy_both_panels">Energy both Panels [Wh]</string>
+
+    <string name="fragment_diagram_voltage_unit">V</string>
+    <string name="fragment_diagram_current_unit">A</string>
+    <string name="fragment_diagram_power_unit">W</string>
+    <string name="fragment_diagram_energy_unit">Wh</string>
+    <string name="fragment_diagram_marker_view_at">at</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Records Table: fragment_table.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_table_title">Table</string>
+    <string name="fragment_table_settings_icon_button">Settings</string>
+
+    <string name="fragment_table_settings_hasnot_changed">The settings haven´t changed.</string>
+    <string name="fragment_table_settings_has_changed">Settings have been saved, the data will be shown soon.</string>
+
+    <string name="fragment_table_dateTime">Date/Time</string>
+    <string name="fragment_table_voltage_panel1">Voltage Panel1 [V]</string>
+    <string name="fragment_table_voltage_panel2">Voltage Panel2 [V]</string>
+    <string name="fragment_table_current_panel1">Current Panel1 [A]</string>
+    <string name="fragment_table_current_panel2">Current Panel2 [A]</string>
+    <string name="fragment_table_power_panel1">Power Panel1 [W]</string>
+    <string name="fragment_table_power_panel2">Power Panel2 [W]</string>
+    <string name="fragment_table_power_both_panels">Power both Panels [W]</string>
+    <string name="fragment_table_energy_panel1">Energy Panel1 [Wh]</string>
+    <string name="fragment_table_energy_panel2">Energy Panel2 [Wh]</string>
+    <string name="fragment_table_energy_both_panels">Energy both Panels [Wh]</string>
+
+    <string name="fragment_table_voltage_unit">V</string>
+    <string name="fragment_table_current_unit">A</string>
+    <string name="fragment_table_power_unit">W</string>
+    <string name="fragment_table_energy_unit">Wh</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Information System: fragment_info_system.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_info_system_title">Information: System</string>
+    <string name="test_info_system">Information: System</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Fragment Information Students: fragment_info_students.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_info_students_title">Information: Students</string>
+    <string name="test_info_students">Information: Students</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Activity Settings -->
+    <!-- ======================================================================================= -->
+
+    <!-- ======================================================================================= -->
+
+    <!-- Dialog Records Settings -->
+    <!-- ======================================================================================= -->
+    <string name="dialog_diagram_title">Settings</string>
+
+    <string name="dialog_diagram_ok">ok</string>
+    <string name="dialog_diagram_cancel">cancel</string>
+
+    <string name="dialog_diagram_start_date">Start Date:</string>
+    <string name="dialog_diagram_end_date">End Date:</string>
+
+    <string name="dialog_diagram_panel1">Panel 1:</string>
+    <string name="dialog_diagram_panel2">Panel 2:</string>
+    <string name="dialog_diagram_both_panels">Both Panels:</string>
+    <string name="dialog_diagram_all">(all)</string>
+    <string name="dialog_diagram_voltage">Voltage</string>
+    <string name="dialog_diagram_current">Current</string>
+    <string name="dialog_diagram_power">Power</string>
+    <string name="dialog_diagram_energy">Energy</string>
+    <!-- ======================================================================================= -->
+</resources>

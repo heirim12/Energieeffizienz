@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="refresh_array">
+        <item>@string/fragment_current_measurement_spinner_continuously</item>
+        <item>@string/fragment_current_measurement_spinner1sec</item>
+        <item>@string/fragment_current_measurement_spinner3sec</item>
+        <item>@string/fragment_current_measurement_spinner5sec</item>
+        <item>@string/fragment_current_measurement_spinner10sec</item>
+    </string-array>
+</resources>
