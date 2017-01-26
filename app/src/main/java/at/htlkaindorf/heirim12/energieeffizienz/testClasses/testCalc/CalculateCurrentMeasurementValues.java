@@ -41,9 +41,9 @@ public class CalculateCurrentMeasurementValues
         else
             panel1OrientationString = "Nord-West";
 
-        currentMeasurementValues = new CurrentMeasurementValues(panel1Volt,panel1Ampere,panel1Watt,
-                panel1Angle,panel1OrientationString,panel2Volt,panel2Ampere,panel2Watt,enginesVolt,
-                enginesAmpere,enginesWatt,batteryVolt);
+//        currentMeasurementValues = new CurrentMeasurementValues(panel1Volt,panel1Ampere,panel1Watt,
+//                panel1Angle,panel1OrientationString,panel2Volt,panel2Ampere,panel2Watt,enginesVolt,
+//                enginesAmpere,enginesWatt,batteryVolt);
     }
 
     public CurrentMeasurementValues getCurrentMeasurementValues() {

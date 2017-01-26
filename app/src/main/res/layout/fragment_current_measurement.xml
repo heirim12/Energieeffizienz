@@ -125,14 +125,14 @@
                         android:textSize="@dimen/fragment_current_measurement_title2_size" />
 
                     <TextView
-                        android:id="@+id/cur_meas_textViewAngleValue1"
+                        android:id="@+id/cur_meas_textViewAzimuth1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/cur_meas_textViewAngleText1"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
                         android:fontFamily="monospace"
-                        android:text="30°"
+                        android:text="xxx°"
                         android:textSize="@dimen/fragment_current_measurement_text_size" />
 
                     <TextView
@@ -140,20 +140,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/cur_meas_textViewAngleValue1"
+                        android:layout_below="@id/cur_meas_textViewAzimuth1"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
                         android:fontFamily="sans-serif-smallcaps"
                         android:text="@string/fragment_current_measurement_orientation"
                         android:textSize="@dimen/fragment_current_measurement_title2_size" />
 
                     <TextView
-                        android:id="@+id/cur_meas_textViewOrientationValue1"
+                        android:id="@+id/cur_meas_textViewElevation1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/cur_meas_textViewOrientationText1"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
-                        android:text="Süd-Ost"
+                        android:text="xxx°"
                         android:textSize="@dimen/fragment_current_measurement_text_size" />
 
 
@@ -239,22 +239,22 @@
                         android:textSize="@dimen/fragment_current_measurement_title2_size" />
 
                     <TextView
-                        android:id="@+id/cur_meas_textViewAngleValue2"
+                        android:id="@+id/cur_meas_textViewAzimuth2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/cur_meas_textViewAngleText2"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
                         android:fontFamily="monospace"
-                        android:text="@string/fragment_current_measurement_angle2"
+                        android:text="xxx°"
                         android:textSize="@dimen/fragment_current_measurement_text_size" />
 
                     <TextView
-                        android:id="@+id/cur_meas_textViewOrientationText2"
+                        android:id="@+id/cur_meas_textViewElevation2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/cur_meas_textViewAngleValue2"
+                        android:layout_below="@id/cur_meas_textViewAzimuth2"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
                         android:fontFamily="sans-serif-smallcaps"
                         android:text="@string/fragment_current_measurement_orientation"
@@ -265,66 +265,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/cur_meas_textViewOrientationText2"
+                        android:layout_below="@id/cur_meas_textViewElevation2"
                         android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
-                        android:text="@string/fragment_current_measurement_orientation2"
+                        android:text="xxx°"
                         android:textSize="@dimen/fragment_current_measurement_text_size" />
 
                 </RelativeLayout>
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/cur_meas_layoutEngine"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/fragment_current_measurement_layout_margin"
-                android:background="@color/colorCurrentMeasurementPanel"
-                android:padding="@dimen/fragment_current_measurement_layout_margin">
-
-                <TextView
-                    android:id="@+id/cur_meas_textViewEngine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="@string/fragment_current_measurement_engines"
-                    android:textSize="@dimen/fragment_current_measurement_title1_size"
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/cur_meas_textViewVoltEngines"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/cur_meas_textViewEngine"
-                    android:fontFamily="monospace"
-                    android:text="xxxV"
-                    android:textSize="@dimen/fragment_current_measurement_text_size" />
-
-                <TextView
-                    android:id="@+id/cur_meas_textViewAmpereEngines"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/cur_meas_textViewVoltEngines"
-                    android:layout_below="@id/cur_meas_textViewVoltEngines"
-                    android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
-                    android:fontFamily="monospace"
-                    android:text="xxxA"
-                    android:textSize="@dimen/fragment_current_measurement_text_size" />
-
-                <TextView
-                    android:id="@+id/cur_meas_textViewWattEngienes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/cur_meas_textViewVoltEngines"
-                    android:layout_below="@id/cur_meas_textViewAmpereEngines"
-                    android:layout_marginTop="@dimen/fragment_current_measurement_text_gap"
-                    android:fontFamily="monospace"
-                    android:text="xxxW"
-                    android:textSize="@dimen/fragment_current_measurement_text_size" />
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/cur_meas_layoutBattery"
@@ -341,7 +288,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-smallcaps"
-                    android:text="@string/fragment_current_measurement_battery"
+                    android:text="@string/fragment_current_measurement_accu"
                     android:textSize="@dimen/fragment_current_measurement_title1_size"
                     android:textStyle="normal|bold" />
 

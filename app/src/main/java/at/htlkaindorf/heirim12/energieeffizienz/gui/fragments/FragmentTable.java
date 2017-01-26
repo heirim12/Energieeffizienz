@@ -1,9 +1,10 @@
 package at.htlkaindorf.heirim12.energieeffizienz.gui.fragments;
 
 
-import android.app.Activity;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,15 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TableRow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,7 +54,6 @@ public class FragmentTable extends Fragment
   //================================================================================================
   // Methods and classes for creating the table
   //================================================================================================
-
   private class TableListViewAdapter extends BaseAdapter
   {
     private final Records records;
@@ -142,7 +139,6 @@ public class FragmentTable extends Fragment
     }
   }
 
-
   private class CustomTableLineLayout
   {
     private final RecordsSettings recordsSettings;
@@ -163,7 +159,7 @@ public class FragmentTable extends Fragment
     {
       final TextView textView = new TextView(getContext());
       textView.setLayoutParams(new LinearLayout.LayoutParams(
-              ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, weight));
+              0, ViewGroup.LayoutParams.WRAP_CONTENT, weight));
       textView.setGravity(Gravity.CENTER);
       textView.setText(String.format("%s", string));
       //textView.setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
@@ -308,8 +304,12 @@ public class FragmentTable extends Fragment
 
   private void createTable(Records records)
   {
+    final HorizontalScrollView scrollView = (HorizontalScrollView)
+            thisFragment.findViewById(R.id.fragment_table_horizontalScrollView);
+    scrollView.setFillViewport(false);
+    //scrollView.setPadding();
     final LinearLayout mainLayout =
-            (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLayout);
+            (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
     final CustomTableLineLayout customTableLineLayout = new CustomTableLineLayout(recordsSettings);
     mainLayout.removeAllViews();
 
@@ -325,7 +325,7 @@ public class FragmentTable extends Fragment
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
       {
-
+        //TODO:
       }
     });
 
@@ -333,11 +333,36 @@ public class FragmentTable extends Fragment
     mainLayout.addView(listView);
   }
 
+
+  //================================================================================================
+  // Methods for saving the diagram
+  //================================================================================================
+  private void saveTable(String filename)
+  {
+    //TODO
+  }
+
+  private void saveTableSettings()
+  {
+    //TODO
+    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
+  }
+
+
+  //================================================================================================
+  // Methods for sharing the diagram
+  //================================================================================================
+  private void shareTable()
+  {
+    //TODO:
+    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
+  }
+
+
   //================================================================================================
   // Methods for opening the settings dialog and getting the settings
   //================================================================================================
   //This Methode is called when the DialogSettings Object is closed with pressed with "ok".
-  @Override
   public void onRecordsSettingsOKListener(RecordsSettings recordsSettings)
   {
     if (recordsSettings.equals(this.recordsSettings))
@@ -346,10 +371,26 @@ public class FragmentTable extends Fragment
               Toast.LENGTH_LONG).show();
     else
     {
+      this.recordsSettings = recordsSettings;
+
       Toast.makeText(getContext(),
               getResources().getText(R.string.fragment_table_settings_has_changed),
               Toast.LENGTH_LONG).show();
-      this.recordsSettings = recordsSettings;
+
+      LinearLayout mainLayout =
+              (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
+      LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
+              (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+      progressBarParams.gravity = Gravity.CENTER_HORIZONTAL;
+      mainLayout.removeAllViews();
+
+      ProgressBar progressBar = new ProgressBar(getContext(), null,
+              android.R.attr.progressBarStyleLarge);
+      progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccentGreen),
+              PorterDuff.Mode.SRC_IN);
+      progressBar.setLayoutParams(progressBarParams);
+      mainLayout.addView(progressBar);
+
       executor = Executors.newSingleThreadExecutor();
       executor.execute(new Runnable()
       {
@@ -364,7 +405,28 @@ public class FragmentTable extends Fragment
 
   private void openSettings()
   {
-    DialogFragment dialogSettings = new DialogRecordsSettings();
+    final DialogFragment dialogSettings = new DialogRecordsSettings();
+    final Bundle recordSettingsBundle = new Bundle();
+    if(recordsSettings != null)
+    {
+      recordSettingsBundle.putBoolean("panel1Voltage", recordsSettings.isPanel1Voltage());
+      recordSettingsBundle.putBoolean("panel1Current", recordsSettings.isPanel1Current());
+      recordSettingsBundle.putBoolean("panel1Power", recordsSettings.isPanel1Power());
+      recordSettingsBundle.putBoolean("panel1Energy", recordsSettings.isPanel1Energy());
+      recordSettingsBundle.putBoolean("panel2Voltage", recordsSettings.isPanel2Voltage());
+      recordSettingsBundle.putBoolean("panel2Current", recordsSettings.isPanel2Current());
+      recordSettingsBundle.putBoolean("panel2Power", recordsSettings.isPanel2Power());
+      recordSettingsBundle.putBoolean("panel2Energy", recordsSettings.isPanel2Energy());
+      recordSettingsBundle.putBoolean("bothPower", recordsSettings.isBothPower());
+      recordSettingsBundle.putBoolean("bothEnergy", recordsSettings.isBothEnergy());
+      recordSettingsBundle.putInt("startDay", recordsSettings.getStartDay());
+      recordSettingsBundle.putInt("startMonth", recordsSettings.getStartMonth());
+      recordSettingsBundle.putInt("startYear", recordsSettings.getStartYear());
+      recordSettingsBundle.putInt("endDay", recordsSettings.getEndDay());
+      recordSettingsBundle.putInt("endMonth", recordsSettings.getEndMonth());
+      recordSettingsBundle.putInt("endYear", recordsSettings.getEndYear());
+      dialogSettings.setArguments(recordSettingsBundle);
+    }
     dialogSettings.setTargetFragment(this, 0);
     dialogSettings.show(getFragmentManager(), "dialogRecordsSettings");
   }
@@ -381,12 +443,22 @@ public class FragmentTable extends Fragment
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    if (item.getItemId() == R.id.table_settings_icon)
+    switch (item.getItemId())
     {
-      openSettings();
-      return true;
-    } else
-      return super.onOptionsItemSelected(item);
+      case R.id.table_settings_icon:
+        openSettings();
+        return true;
+
+      case R.id.table_share_icon:
+        shareTable();
+        return true;
+
+      case R.id.table_save_icon:
+        saveTableSettings();
+        return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 
   //================================================================================================
@@ -406,6 +478,14 @@ public class FragmentTable extends Fragment
   }
 
   @Override
+  public void onCreate(@Nullable Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+    // onDestroy will not be called => data will be saved
+    setRetainInstance(true);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState)
   {
@@ -413,30 +493,10 @@ public class FragmentTable extends Fragment
     thisFragment = inflater.inflate(R.layout.fragment_table, container, false);
     getActivity().setTitle(getString(R.string.fragment_table_title));
     setHasOptionsMenu(true);
-
-//
-//    final int textViewID = View.generateViewId();
-//    System.out.println(textViewID);
-//                                                                                                          ///TEST 1243
-//    LinearLayout linearLayout = (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLayout);
-//    TextView textView = new TextView(getContext());
-//    textView.setId(textViewID);
-//    System.out.println(textView.getId());
-//    textView.setText("Test1");
-//    linearLayout.addView(textView);
-//    Button button = new Button(getContext());
-//
-//    linearLayout.addView(button);
-//    button.setOnClickListener(new View.OnClickListener()
-//    {
-//      @Override
-//      public void onClick(View view)
-//      {
-//        TextView textView4 = (TextView) thisFragment.findViewById(textViewID);
-//        textView4.setText("JUHUU");
-//      }
-//    });
-
+    if (records != null)
+    {
+      createTable(records);
+    }
 
     return thisFragment;
   }
@@ -444,6 +504,7 @@ public class FragmentTable extends Fragment
   @Override
   public void onStop()
   {
+    //TODO:
     if (executor != null)
       executor.shutdown();
     super.onStop();

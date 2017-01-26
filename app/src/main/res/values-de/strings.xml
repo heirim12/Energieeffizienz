@@ -59,13 +59,10 @@
     <string name="fragment_current_measurement_angle2">30°</string>
     <string name="fragment_current_measurement_orientation2">Süd-West</string>
 
-    <string name="fragment_current_measurement_angle">Winkel:</string>
-    <string name="fragment_current_measurement_orientation">Ausrichtung:</string>
+    <string name="fragment_current_measurement_angle">Azimut</string>
+    <string name="fragment_current_measurement_orientation">Elevation</string>
 
-    <string name="fragment_current_measurement_engines">Motoren:</string>
-    <string name="fragment_current_measurement_positioning">für die Positionierung des dymanischen Panels</string>
-
-    <string name="fragment_current_measurement_battery">Batterie</string>
+    <string name="fragment_current_measurement_accu">Akku</string>
     <!-- ======================================================================================= -->
 
 
@@ -116,6 +113,10 @@
     <!-- ======================================================================================= -->
     <string name="fragment_table_title">Tabelle</string>
     <string name="fragment_table_settings_icon_button">Einstellungen</string>
+    <string name="fragment_table_starttext">Drücke den Einstellungs-Button in der Toolbar</string>
+
+    <string name="fragment_table_share_icon_button">Teilen als csv-Datei</string>
+    <string name="fragment_table_save_icon_button">Speichern als csv-Datei</string>
 
     <string name="fragment_table_settings_hasnot_changed">Die Einstellungen haben sich nicht geändert.</string>
     <string name="fragment_table_settings_has_changed">Einstellungen wurden übernommen, die Daten werden in kürze angezeigt.</string>

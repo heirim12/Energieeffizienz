@@ -38,8 +38,9 @@
 
     <!-- Fragment Table -->
     <!-- ======================================================================================= -->
-    <dimen name="fragment_table_layout_margin">10dp</dimen>
-    <dimen name="fragment_table_layout_borders">1dp</dimen>
+    <dimen name="fragment_table_layout_margin">16dp</dimen>
+    <dimen name="fragment_table_pressicon_padding_right">50dp</dimen>
+    <dimen name="fragment_table_pressicon_padding_top">5dp</dimen>
     <!-- ======================================================================================= -->
 
     <!-- Dialog Settings-->

@@ -58,14 +58,10 @@
     <string name="fragment_current_measurement_angle2">30°</string>
     <string name="fragment_current_measurement_orientation2">South-West</string>
 
-    <string name="fragment_current_measurement_angle">Angle:</string>
-    <string name="fragment_current_measurement_orientation">Orientation:</string>
+    <string name="fragment_current_measurement_angle">Azimuth</string>
+    <string name="fragment_current_measurement_orientation">Elevation</string>
 
-
-    <string name="fragment_current_measurement_engines">Engines:</string>
-    <string name="fragment_current_measurement_positioning">for the positioning of the dynamic panel</string>
-
-    <string name="fragment_current_measurement_battery">Battery</string>
+    <string name="fragment_current_measurement_accu">Accu</string>
     <!-- ======================================================================================= -->
 
 
@@ -116,6 +112,10 @@
     <!-- ======================================================================================= -->
     <string name="fragment_table_title">Table</string>
     <string name="fragment_table_settings_icon_button">Settings</string>
+    <string name="fragment_table_starttext">Press the Settings-Button in the Toolbar</string>
+
+    <string name="fragment_table_share_icon_button">Share as csv-file</string>
+    <string name="fragment_table_save_icon_button">Save as csv-file</string>
 
     <string name="fragment_table_settings_hasnot_changed">The settings haven´t changed.</string>
     <string name="fragment_table_settings_has_changed">Settings have been saved, the data will be shown soon.</string>

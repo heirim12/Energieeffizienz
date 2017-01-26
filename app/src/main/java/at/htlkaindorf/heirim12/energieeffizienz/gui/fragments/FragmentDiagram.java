@@ -709,7 +709,7 @@ public class FragmentDiagram extends Fragment
 
 
     LinearLayout layout =
-            (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_LinearLayout);
+            (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
     LinearLayout.LayoutParams chartParams = new LinearLayout.LayoutParams
             (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     chartParams.weight = 1;
@@ -923,7 +923,7 @@ public class FragmentDiagram extends Fragment
               Toast.LENGTH_LONG).show();
 
       LinearLayout layout =
-              (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_LinearLayout);
+              (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
       LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
               (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
       progressBarParams.gravity = Gravity.CENTER_HORIZONTAL;
@@ -1043,12 +1043,14 @@ public class FragmentDiagram extends Fragment
     {
       createDiagram(records);
     }
+
     return thisFragment;
   }
 
   @Override
   public void onStop()
   {
+    //TODO:
     if (executor != null)
       executor.shutdown();
     super.onStop();

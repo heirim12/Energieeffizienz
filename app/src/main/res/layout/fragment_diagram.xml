@@ -6,7 +6,7 @@
     tools:context=".gui.fragments.FragmentDiagram">
 
     <LinearLayout
-        android:id="@+id/fragment_diagram_LinearLayout"
+        android:id="@+id/fragment_diagram_mainLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

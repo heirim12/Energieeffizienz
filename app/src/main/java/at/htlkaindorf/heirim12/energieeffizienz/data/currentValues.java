@@ -1,10 +1,10 @@
-package at.htlkaindorf.heirim12.energieeffizienz.testClasses.data;
+package at.htlkaindorf.heirim12.energieeffizienz.data;
 
 /**
  * Created by richard on 11.10.2016.
  */
 
-public class CurrentMeasurementValues
+public class CurrentValues
 {
     private final double panel1Voltage;
     private final double panel1Current;
@@ -18,12 +18,12 @@ public class CurrentMeasurementValues
     private final int panel2Azimuth;
     private final int panel2Elevation;
 
-    private final double batteryVoltage;
+    private final double accuVoltage;
 
-    public CurrentMeasurementValues(double panel1Voltage, double panel1Current, double panel1Power,
-                                    int panel1Azimuth, int panel1Elevation,
-                                    double panel2Voltage, double panel2Current, double panel2Power,
-                                    double batteryVoltage)
+    public CurrentValues(double panel1Voltage, double panel1Current, double panel1Power,
+                         int panel1Azimuth, int panel1Elevation,
+                         double panel2Voltage, double panel2Current, double panel2Power,
+                         double accuVoltage)
     {
         this.panel1Voltage = panel1Voltage;
         this.panel1Current = panel1Current;
@@ -35,7 +35,7 @@ public class CurrentMeasurementValues
         this.panel2Power = panel2Power;
         this.panel2Azimuth = 30;
         this.panel2Elevation = 30;
-        this.batteryVoltage = batteryVoltage;
+        this.accuVoltage = accuVoltage;
     }
 
     public double getPanel1Voltage()
@@ -88,8 +88,8 @@ public class CurrentMeasurementValues
         return panel2Elevation;
     }
 
-    public double getBatteryVoltage()
+    public double getAccuVoltage()
     {
-        return batteryVoltage;
+        return accuVoltage;
     }
 }

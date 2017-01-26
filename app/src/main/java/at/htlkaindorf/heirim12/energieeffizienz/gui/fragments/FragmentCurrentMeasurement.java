@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -20,8 +21,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
-import at.htlkaindorf.heirim12.energieeffizienz.testClasses.data.CurrentMeasurementValues;
-import at.htlkaindorf.heirim12.energieeffizienz.testClasses.testCalc.CalculateCurrentMeasurementValues;
+import at.htlkaindorf.heirim12.energieeffizienz.data.CurrentValues;
+import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 
 
 /**
@@ -35,15 +36,11 @@ public class FragmentCurrentMeasurement extends Fragment
   private final static int[] refreshMs = { 200, 1000, 3000, 5000, 10000 };
 
   private View rootView;
-  private CurrentMeasurementValues currentMeasurementValues;
   private Timer timer;
   private int refreshCycle = 1;
-
   private static Boolean inBackground = new Boolean(false);
-
   private ScheduledExecutorService exe = null;
   private Future future = null;
-
 
   //================================================================================================
   // Methods for setting the gui
@@ -54,45 +51,44 @@ public class FragmentCurrentMeasurement extends Fragment
     textView.setText(text);
   }
 
-  private void fillTextViews(CurrentMeasurementValues currentMeasurementValues)
+  private void fillTextViews(CurrentValues currentValues)
   {
-    final int textViewId[] = {
-            R.id.cur_meas_textViewVolt1,
-            R.id.cur_meas_textViewAmpere1,
-            R.id.cur_meas_textViewWatt1,
-            R.id.cur_meas_textViewAngleValue1,
-            R.id.cur_meas_textViewOrientationValue1,
-
-            R.id.cur_meas_textViewVolt2,
-            R.id.cur_meas_textViewAmpere2,
-            R.id.cur_meas_textViewWatt2,
-
-            R.id.cur_meas_textViewVoltEngines,
-            R.id.cur_meas_textViewAmpereEngines,
-            R.id.cur_meas_textViewWattEngienes,
-
-            R.id.cur_meas_textViewVoltBattery};
-
-    final String textViewText[] = {
-            String.format("%s%s",currentMeasurementValues.getPanel1Volt(),"V"),
-            currentMeasurementValues.getPanel1Ampere() + "A",
-            String.format(currentMeasurementValues.getPanel1Watt() + "W"),
-            String.format(currentMeasurementValues.getPanel1Angle() + "°"),
-            String.format(currentMeasurementValues.getPanel1Orientation()),
-
-            String.format(currentMeasurementValues.getPanel2Volt() + "V"),
-            String.format(currentMeasurementValues.getPanel2Ampere() + "A"),
-            String.format(currentMeasurementValues.getPanel2Watt() + "W"),
-
-            String.format(currentMeasurementValues.getEnginesVolt() + "V"),
-            String.format(currentMeasurementValues.getEnginesAmpere() + "A"),
-            String.format(currentMeasurementValues.getEnginesWatt() + "W"),
-
-            String.format(currentMeasurementValues.getBatteryVolt() + "V")};
-
-    for(int i = 0 ; i < textViewId.length ; i++)
+    if(currentValues != null)
     {
-      setText(textViewId[i], textViewText[i]);
+      final int textViewId[] = {
+              R.id.cur_meas_textViewVolt1,
+              R.id.cur_meas_textViewAmpere1,
+              R.id.cur_meas_textViewWatt1,
+              R.id.cur_meas_textViewAzimuth1,
+              R.id.cur_meas_textViewElevation1,
+
+              R.id.cur_meas_textViewVolt2,
+              R.id.cur_meas_textViewAmpere2,
+              R.id.cur_meas_textViewWatt2,
+              R.id.cur_meas_textViewAzimuth2,
+              R.id.cur_meas_textViewOrientationValue2,
+
+              R.id.cur_meas_textViewVoltBattery};
+
+      final String textViewText[] = {
+              String.format("%.2f%s",currentValues.getPanel1Voltage(),"V"),
+              String.format("%.2f%s",currentValues.getPanel1Current(), "A"),
+              String.format("%.2f%s",currentValues.getPanel1Power(), "W"),
+              String.format("%d%s",currentValues.getPanel1Azimuth(), "°"),
+              String.format("%d%s",currentValues.getPanel1Elevation(), "°" ),
+
+              String.format("%.2f%s",currentValues.getPanel2Voltage(),"V"),
+              String.format("%.2f%s",currentValues.getPanel2Current(), "A"),
+              String.format("%.2f%s",currentValues.getPanel2Power(), "W"),
+              String.format("%d%s",currentValues.getPanel2Azimuth(), "°"),
+              String.format("%d%s",currentValues.getPanel2Elevation(), "°" ),
+
+              String.format("%.2f%s",currentValues.getAccuVoltage(), "V")};
+
+      for(int i = 0 ; i < textViewId.length ; i++)
+      {
+        setText(textViewId[i], textViewText[i]);
+      }
     }
   }
 
@@ -189,12 +185,12 @@ public class FragmentCurrentMeasurement extends Fragment
   //================================================================================================
   // Multithreading
   //================================================================================================
-  private class UpdateInfoTask extends AsyncTask<Void, Void, CurrentMeasurementValues>
+  private class UpdateInfoTask extends AsyncTask<Void, Void, CurrentValues>
   {
     @Override
-    protected CurrentMeasurementValues doInBackground(Void... voids)
+    protected CurrentValues doInBackground(Void... voids)
     {
-      final CurrentMeasurementValues result;
+      CurrentValues result = null;
       synchronized (UpdateInfoTask.class)
       {
         if (inBackground)
@@ -203,9 +199,18 @@ public class FragmentCurrentMeasurement extends Fragment
       }
       try
       {
-        CalculateCurrentMeasurementValues calculateCurrentMeasurementValues =
-                new CalculateCurrentMeasurementValues();
-        result = calculateCurrentMeasurementValues.getCurrentMeasurementValues();
+        final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
+        result = photovoltaicDatabase.getCurrentValues();
+      }
+      catch (SQLException ex)
+      {
+        ex.printStackTrace();
+    //    Toast.makeText(getContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+      }
+      catch (Exception ex)
+      {
+        System.out.println(ex.getLocalizedMessage());
+       // Toast.makeText(getContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
       }
       finally
       {
@@ -219,12 +224,12 @@ public class FragmentCurrentMeasurement extends Fragment
     }
 
     @Override
-    protected void onPostExecute(CurrentMeasurementValues currentMeasurementValues)
+    protected void onPostExecute(CurrentValues currentValues)
     {
-      if (currentMeasurementValues == null)
+      if (currentValues == null)
         return;
-      super.onPostExecute(currentMeasurementValues);
-      fillTextViews(currentMeasurementValues);
+      super.onPostExecute(currentValues);
+      fillTextViews(currentValues);
     }
   }
 }

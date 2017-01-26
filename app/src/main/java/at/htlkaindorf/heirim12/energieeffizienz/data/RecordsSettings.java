@@ -1,5 +1,6 @@
 package at.htlkaindorf.heirim12.energieeffizienz.data;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 /**
@@ -8,29 +9,22 @@ import java.util.Objects;
 
 public class RecordsSettings
 {
-  private final int
-          startDay, startMonth, startYear,
-          endDay, endMonth, endYear;
+  private final Calendar startDate, endDate;
 
   private final boolean
           bothPower, bothEnergy,
           panel1Voltage, panel1Current, panel1Power, panel1Energy,
           panel2Voltage, panel2Current, panel2Power, panel2Energy;
 
-  public RecordsSettings(int startDay, int startMonth, int startYear,
-                         int endDay, int endMonth, int endYear,
+  public RecordsSettings(Calendar startDate, Calendar endDate,
                          boolean bothPower, boolean bothEnergy,
                          boolean panel1Voltage, boolean panel1Current,
                          boolean panel1Power, boolean panel1Energy,
                          boolean panel2Voltage, boolean panel2Current,
                          boolean panel2Power, boolean panel2Energy)
   {
-    this.startDay = startDay;
-    this.startMonth = startMonth;
-    this.startYear = startYear;
-    this.endDay = endDay;
-    this.endMonth = endMonth;
-    this.endYear = endYear;
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.bothPower = bothPower;
     this.bothEnergy = bothEnergy;
     this.panel1Voltage = panel1Voltage;
@@ -49,12 +43,8 @@ public class RecordsSettings
     if (this == o) return true;
     if (!(o instanceof RecordsSettings)) return false;
     RecordsSettings that = (RecordsSettings) o;
-    return getStartDay() == that.getStartDay() &&
-            getStartMonth() == that.getStartMonth() &&
-            getStartYear() == that.getStartYear() &&
-            getEndDay() == that.getEndDay() &&
-            getEndMonth() == that.getEndMonth() &&
-            getEndYear() == that.getEndYear() &&
+    return getStartDate().getTimeInMillis() == that.getStartDate().getTimeInMillis() &&
+            getEndDate().getTimeInMillis() == that.getEndDate().getTimeInMillis() &&
             isBothPower() == that.isBothPower() &&
             isBothEnergy() == that.isBothEnergy() &&
             isPanel1Voltage() == that.isPanel1Voltage() &&
@@ -70,37 +60,20 @@ public class RecordsSettings
   @Override
   public int hashCode()
   {
-    return Objects.hash(getStartDay(), getStartMonth(), getStartYear(), getEndDay(), getEndMonth(), getEndYear(), isBothPower(), isBothEnergy(), isPanel1Voltage(), isPanel1Current(), isPanel1Power(), isPanel1Energy(), isPanel2Voltage(), isPanel2Current(), isPanel2Power(), isPanel2Energy());
+    return Objects.hash(getStartDate(), getEndDate(),
+            isBothPower(), isBothEnergy(),
+            isPanel1Voltage(), isPanel1Current(), isPanel1Power(), isPanel1Energy(),
+            isPanel2Voltage(), isPanel2Current(), isPanel2Power(), isPanel2Energy());
   }
 
-  public int getStartDay()
+  public Calendar getStartDate()
   {
-    return startDay;
+    return startDate;
   }
 
-  public int getStartMonth()
+  public Calendar getEndDate()
   {
-    return startMonth;
-  }
-
-  public int getStartYear()
-  {
-    return startYear;
-  }
-
-  public int getEndDay()
-  {
-    return endDay;
-  }
-
-  public int getEndMonth()
-  {
-    return endMonth;
-  }
-
-  public int getEndYear()
-  {
-    return endYear;
+    return endDate;
   }
 
   public boolean isBothPower()
