@@ -21,13 +21,12 @@ import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
 
 public class PhotovoltaicDatabase extends Database
 {
-  private static PhotovoltaicDatabase theInstance = null;
+  private static PhotovoltaicDatabase theInstance = null; //only one instance of the object
 
   private PhotovoltaicDatabase(String url, String user, String password)
           throws ClassNotFoundException
   {
     super(url, user, password);
-    //String url, String user, String password)
     Class.forName("org.postgresql.Driver");
   }
 
@@ -40,12 +39,15 @@ public class PhotovoltaicDatabase extends Database
     return theInstance;
   }
 
+  //After you use changeSttings you have to get a new Instance with getInstance
   public void changeSettings(String url, String user, String password)
           throws ClassNotFoundException
   {
     theInstance = new PhotovoltaicDatabase(url, user, password);
   }
 
+  // method for saving a history-dataset into the pv_history table
+  // method has been tested and works
   public void writeHistoryDataSet(Calendar dateTime, double voltage1, double current1,
                                   int azimuth1, int elevation1,
                                   double voltage2, double current2,
@@ -68,6 +70,7 @@ public class PhotovoltaicDatabase extends Database
     }
   }
 
+  // method for refreshing the only dataset in the pv_current table
   public void refreshCurrentDataSet(Calendar dateTime, double voltage1, double current1,
                                     int azimuth1, int elevation1,
                                     double voltage2, double current2,
@@ -84,34 +87,28 @@ public class PhotovoltaicDatabase extends Database
               dateTime.getTimeInMillis(), voltage1, current1, azimuth1, elevation1,
               voltage2, current2, voltageAccu);
 
-      //IF statement throws Exception ???
-
-//      String sql = String.format(Locale.ENGLISH, "IF EXISTS " +
-//                      "(SELECT * FROM pv_current WHERE id_current = 1)" +
-//                      "THEN " +
-//                      "UPDATE pv_current " +
-//                      "SET epoch_ms = %d, voltage1 = %f, current1 = %f," +
-//                      "azimuth1 = %d, elevation1 = %d," +
-//                      "voltage2 = %f, current2 = %f, voltage_accu = %f ; " +
-//                      "ELSE " +
-//                      "INSERT INTO pv_current " +
-//                      "(epoch_ms, voltage1, current1, azimuth1, elevation1," +
-//                      "voltage2, current2, voltage_accu)" +
-//                      " VALUES (%d, %f, %f, %d, %d, %f, %f, %f) ; " +
-//                      "END IF",
-//              dateTime.getTimeInMillis(), voltage1, current1, azimuth1, elevation1,
-//              voltage2, current2, voltageAccu,
-//              dateTime.getTimeInMillis(), voltage1, current1, azimuth1, elevation1,
-//              voltage2, current2, voltageAccu);
-
-      System.out.println(sql);
-      executeUpdate(sql);
+      // updates the pv_current table entry(s), if there is no entry one will be inserted
+      if (executeUpdate(sql) == 0)
+      {
+        sql = String.format(Locale.ENGLISH, "INSERT INTO pv_current " +
+                        "(epoch_ms, voltage1, current1, azimuth1, elevation1," +
+                        "voltage2, current2, voltage_accu)" +
+                        " VALUES (%d, %f, %f, %d, %d, %f, %f, %f)",
+                dateTime.getTimeInMillis(), voltage1, current1, azimuth1, elevation1,
+                voltage2, current2, voltageAccu);
+        executeUpdate(sql);
+      }
     } finally
     {
       close();
     }
   }
 
+  // method for getting the values for the startpage of the app
+  // gets all date of the last 7 days from the pv_history table
+  // calculates the total energy of every day for the chart
+  // calculates the average power of each panel and the received energy from today
+  // method has not been tested yet
   public HomeValues getHomeValues()
           throws SQLException
   {
@@ -119,13 +116,14 @@ public class PhotovoltaicDatabase extends Database
     {
       open();
 
-      final Calendar today = Calendar.getInstance();
+      final Calendar today = Calendar.getInstance(); // save the current date and time
       final Calendar sixDaysBefore = new GregorianCalendar(
               today.get(Calendar.YEAR),
-              today.get(Calendar.DAY_OF_MONTH),
-              today.get(Calendar.DAY_OF_MONTH) - 6);
+              today.get(Calendar.MONTH),
+              today.get(Calendar.DAY_OF_MONTH) - 6); // date sis days before
 
       try (
+              // gets all entries in the pv_history table of the last six days
               final Statement statement = createStatement();
               final ResultSet resultSet =
                       statement.executeQuery(String.format("SELECT epoch_ms," +
@@ -157,9 +155,12 @@ public class PhotovoltaicDatabase extends Database
             final long timeStep = nextResultSetDateTime.getTimeInMillis()
                     - currentResultSetDateTime.getTimeInMillis();
 
+            // check if the next dataset has been measured on the same day
             if (currentResultSetDateTime.get(Calendar.DAY_OF_MONTH)
                     == nextResultSetDateTime.get(Calendar.DAY_OF_MONTH))
             {
+
+              // adds the power values if they has been measured on the last day
               if (currentResultSetDateTime.get(Calendar.DAY_OF_MONTH)
                       == today.get(Calendar.DAY_OF_MONTH))
               {
@@ -168,18 +169,17 @@ public class PhotovoltaicDatabase extends Database
                 count++;
               }
 
+              // calculates the energy from the current time to the next
               energy1 += (power1 * (double) timeStep);
               energy2 += (power2 * (double) timeStep);
 
               currentResultSetDateTime = nextResultSetDateTime;
             } else
             {
-              energy7Days.add(energy1 + energy2);
-              energy1 = 0;
-              energy2 = 0;
-
-              energy1 += (power1 * (double) timeStep);
-              energy2 += (power2 * (double) timeStep);
+              // the last energy value of the day will not be considered
+              // => doesn´t matter because it will be in the night
+              energy7Days.add((energy1 + energy2) / 3600000); // divide because we want Wh as unit
+              energy1 = energy2 = 0;
               currentResultSetDateTime = nextResultSetDateTime;
             }
 
@@ -187,12 +187,13 @@ public class PhotovoltaicDatabase extends Database
           {
             averagePower1 /= count;
             averagePower2 /= count;
-            energy7Days.add(energy1 + energy2);
+            energy7Days.add((energy1 + energy2) / 3600000); // divide because we want Wh as unit
             hasNext = false;
           }
         }
 
-        return new HomeValues(averagePower1, energy1, averagePower2, energy2, energy7Days);
+        return new HomeValues
+                (averagePower1, energy1 / 3600000, averagePower2, energy2  / 3600000, energy7Days);
       }
     } finally
     {
@@ -200,6 +201,8 @@ public class PhotovoltaicDatabase extends Database
     }
   }
 
+  // method gets the data from the pv_current table
+  // method works
   public CurrentValues getCurrentValues()
           throws SQLException
   {
@@ -209,7 +212,7 @@ public class PhotovoltaicDatabase extends Database
       try (
               final Statement statement = createStatement();
               final ResultSet resultSet =
-                      statement.executeQuery("SELECT * FROM pv_current WHERE id_current = 1");
+                      statement.executeQuery("SELECT * FROM pv_current");
       )
       {
         CurrentValues currentValues = null;
@@ -231,14 +234,20 @@ public class PhotovoltaicDatabase extends Database
     }
   }
 
+  // method gets the relevant data from the pv_history table and calculates the requested values
+  // method has not been tested yet
   public Records getHistory(RecordsSettings recordsSettings)
           throws SQLException
   {
     try
     {
+      open();
       final Statement statement = createStatement();
+      final Calendar endDate = recordsSettings.getEndDate(); // we gets a date with the time 00:00
+      endDate.add(Calendar.HOUR, 23); // add time to get 23:59
+      endDate.add(Calendar.MINUTE, 59);
       String sql = ("SELECT epoch_ms,");
-
+      // builds the query dynamic for the requested values
       if (recordsSettings.isPanel1Voltage()
               || recordsSettings.isPanel1Power() || recordsSettings.isPanel1Energy()
               || recordsSettings.isBothPower() || recordsSettings.isBothEnergy())
@@ -259,11 +268,11 @@ public class PhotovoltaicDatabase extends Database
               || recordsSettings.isBothPower() || recordsSettings.isBothEnergy())
         sql = String.format("%s current2,", sql);
 
+      sql = sql.substring(0, sql.length() - 1); // removes the last comma
       sql = String.format("%s FROM pv_history WHERE epoch_ms >= %d AND epoch_ms <= %d", sql,
               recordsSettings.getStartDate().getTimeInMillis(),
               recordsSettings.getEndDate().getTimeInMillis());
 
-      System.out.println(sql);
 
       final ResultSet resultSet = statement.executeQuery(sql);
       final Records records = new Records();
@@ -283,24 +292,28 @@ public class PhotovoltaicDatabase extends Database
                 panel2Power = Double.NaN,
                 bothPower = Double.NaN;
 
-
-        if (recordsSettings.isPanel1Voltage())
+        //saves the requested data
+        if (recordsSettings.isPanel1Voltage()
+                || recordsSettings.isPanel1Energy() || recordsSettings.isBothEnergy())
           panel1Voltage = resultSet.getDouble("voltage1");
 
-        if (recordsSettings.isPanel1Current())
+        if (recordsSettings.isPanel1Current()
+                || recordsSettings.isPanel1Energy() || recordsSettings.isBothEnergy())
           panel1Current = resultSet.getDouble("current1");
 
         if (recordsSettings.isPanel1Power())
           panel1Power = resultSet.getDouble("voltage1") * resultSet.getDouble("current1");
 
-        if (recordsSettings.isPanel2Voltage())
-          panel1Voltage = resultSet.getDouble("voltage2");
+        if (recordsSettings.isPanel2Voltage()
+                || recordsSettings.isPanel2Energy() || recordsSettings.isBothEnergy())
+          panel2Voltage = resultSet.getDouble("voltage2");
 
-        if (recordsSettings.isPanel2Current())
-          panel1Current = resultSet.getDouble("current2");
+        if (recordsSettings.isPanel2Current()
+                || recordsSettings.isPanel2Energy() || recordsSettings.isBothEnergy())
+          panel2Current = resultSet.getDouble("current2");
 
         if (recordsSettings.isPanel2Power())
-          panel1Power = resultSet.getDouble("voltage2") * resultSet.getDouble("current2");
+          panel2Power = resultSet.getDouble("voltage2") * resultSet.getDouble("current2");
 
         if (recordsSettings.isBothPower())
           bothPower = resultSet.getDouble("voltage1") * resultSet.getDouble("current1")
@@ -314,20 +327,17 @@ public class PhotovoltaicDatabase extends Database
           if (currentResultSetDateTime.get(Calendar.DAY_OF_MONTH)
                   == nextResultSetDateTime.get(Calendar.DAY_OF_MONTH))
           {
-            final int timeStep = (int) (nextResultSetDateTime.getTimeInMillis()
-                    - currentResultSetDateTime.getTimeInMillis());
+            final int timeStep = (int) ((nextResultSetDateTime.getTimeInMillis()
+                    - currentResultSetDateTime.getTimeInMillis()));
 
             if (recordsSettings.isPanel1Energy())
-              panel1Energy += ((resultSet.getDouble("voltage1") * resultSet.getDouble("current1"))
-                      * (double) timeStep);
+              panel1Energy += ((panel1Voltage * panel1Current) * (double) timeStep);
 
             if (recordsSettings.isPanel2Energy())
-              panel2Energy += ((resultSet.getDouble("voltage2") * resultSet.getDouble("current2"))
-                      * (double) timeStep);
+              panel2Energy += ((panel2Voltage * panel2Current) * (double) timeStep);
 
             if (recordsSettings.isBothEnergy())
-              bothEnergy += (((resultSet.getDouble("voltage1") * resultSet.getDouble("current1"))
-                      + (resultSet.getDouble("voltage2") * resultSet.getDouble("current2")))
+              bothEnergy += (((panel1Voltage * panel1Current) + (panel2Voltage * panel2Current))
                       * (double) timeStep);
 
             records.add(new Record(currentResultSetDateTime,
@@ -338,15 +348,24 @@ public class PhotovoltaicDatabase extends Database
             currentResultSetDateTime = nextResultSetDateTime;
           } else
           {
+            // the last energy value of the day will not be considered
+            // => doesn´t matter because it will be in the night
             records.add(new Record(currentResultSetDateTime,
-                    bothPower, bothEnergy,
-                    panel1Voltage, panel1Current, panel1Power, panel1Energy,
-                    panel2Voltage, panel2Current, panel2Power, panel2Energy));
+                    bothPower, bothEnergy / 3600000,
+                    panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
+                    panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
+            // divide the eneryvalues because we want Wh as unit
 
             bothEnergy = panel1Energy = panel2Energy = 0;
+            currentResultSetDateTime = nextResultSetDateTime;
           }
         } else
         {
+          records.add(new Record(currentResultSetDateTime,
+                  bothPower, bothEnergy / 3600000,
+                  panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
+                  panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
+          // divide the eneryvalues because we want Wh as unit
           hasNext = false;
         }
       }
@@ -384,27 +403,30 @@ public class PhotovoltaicDatabase extends Database
       }
 
 
-      //getHistory Test:
+////      getHistory Test:
       final Records records = db.getHistory(new RecordsSettings(
-              new GregorianCalendar(2016, 0, 1), new GregorianCalendar(2017, 0, 1),
+              new GregorianCalendar(2016, 0, 1), new GregorianCalendar(2016, 1, 1),
               true, true, true, true, true, true, true, true, true, true));
 
       if (records != null)
       {
         for (Record record : records.getRecords())
         {
-          System.out.println(record.getDateTime().getTimeInMillis());
-          System.out.println(record.getPanel1Voltage());
-          System.out.println(record.getPanel1Current());
-          System.out.println(record.getPanel1Power());
-          System.out.println(record.getPanel1Energy());
-          System.out.println(record.getPanel2Voltage());
-          System.out.println(record.getPanel2Current());
-          System.out.println(record.getPanel2Power());
-          System.out.println(record.getPanel2Energy());
-          System.out.println(record.getBothPower());
-          System.out.println(record.getBothEnergy());
-          System.out.println("____________________");
+
+          if (!Double.isNaN(record.getBothEnergy()))
+          {
+            System.out.println(record.getDateTime().getTimeInMillis());
+            System.out.println(record.getPanel1Voltage());
+            System.out.println(record.getPanel1Current());
+            System.out.println(record.getPanel1Power());
+            System.out.println(record.getPanel1Energy());
+            System.out.println(record.getPanel2Voltage());
+            System.out.println(record.getPanel2Current());
+            System.out.println(record.getPanel2Power());
+            System.out.println(record.getPanel2Energy());
+            System.out.println(record.getBothPower());
+            System.out.println(record.getBothEnergy());
+          }
         }
       }
 
