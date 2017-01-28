@@ -8,7 +8,7 @@ import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
  * Created by richard on 24.01.2017.
  */
 
-public class RaspberryComTester
+public class RaspberryComCurrentValuesTester
 {
 
   private double panel1Volt = 0;
@@ -101,7 +101,7 @@ public class RaspberryComTester
     {
       try
       {
-        final RaspberryComTester tester = new RaspberryComTester();
+        final RaspberryComCurrentValuesTester tester = new RaspberryComCurrentValuesTester();
         final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
         tester.calculate();
         String dataSet = String.format("%f, %f, %d, %d, %f, %f, %f",

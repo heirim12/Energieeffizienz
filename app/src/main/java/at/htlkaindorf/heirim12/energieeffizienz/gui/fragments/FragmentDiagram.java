@@ -964,12 +964,8 @@ public class FragmentDiagram extends Fragment
       recordSettingsBundle.putBoolean("panel2Energy", recordsSettings.isPanel2Energy());
       recordSettingsBundle.putBoolean("bothPower", recordsSettings.isBothPower());
       recordSettingsBundle.putBoolean("bothEnergy", recordsSettings.isBothEnergy());
-      recordSettingsBundle.putInt("startDay", recordsSettings.getStartDay());
-      recordSettingsBundle.putInt("startMonth", recordsSettings.getStartMonth());
-      recordSettingsBundle.putInt("startYear", recordsSettings.getStartYear());
-      recordSettingsBundle.putInt("endDay", recordsSettings.getEndDay());
-      recordSettingsBundle.putInt("endMonth", recordsSettings.getEndMonth());
-      recordSettingsBundle.putInt("endYear", recordsSettings.getEndYear());
+      recordSettingsBundle.putLong("startDate", recordsSettings.getStartDate().getTimeInMillis());
+      recordSettingsBundle.putLong("endDate", recordsSettings.getEndDate().getTimeInMillis());
       dialogSettings.setArguments(recordSettingsBundle);
     }
     dialogSettings.setTargetFragment(this, 0);

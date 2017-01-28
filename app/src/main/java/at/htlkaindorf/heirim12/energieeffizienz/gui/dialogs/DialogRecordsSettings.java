@@ -75,15 +75,15 @@ public class DialogRecordsSettings
       // month -1 because GregorianCalender starts month with 0
       Calendar startDatum = new GregorianCalendar(startYear, startMonth - 1, startDay);
 
-      final RecordsSettings recordsSettings =
-              new RecordsSettings(startDay, startMonth, startYear, endDay, endMonth, endYear,
-                      bothPower.isChecked(), bothEnergy.isChecked(),
-                      panel1Voltage.isChecked(), panel1Current.isChecked(),
-                      panel1Power.isChecked(), panel1Energy.isChecked(),
-                      panel2Voltage.isChecked(), panel2Current.isChecked(),
-                      panel2Power.isChecked(), panel2Energy.isChecked());
-      myOKListener.onRecordsSettingsOKListener
-              (recordsSettings);
+//      final RecordsSettings recordsSettings =
+//              new RecordsSettings(startDay, startMonth, startYear, endDay, endMonth, endYear,
+//                      bothPower.isChecked(), bothEnergy.isChecked(),
+//                      panel1Voltage.isChecked(), panel1Current.isChecked(),
+//                      panel1Power.isChecked(), panel1Energy.isChecked(),
+//                      panel2Voltage.isChecked(), panel2Current.isChecked(),
+//                      panel2Power.isChecked(), panel2Energy.isChecked());
+//      myOKListener.onRecordsSettingsOKListener
+//              (recordsSettings);
 
     }
   }
