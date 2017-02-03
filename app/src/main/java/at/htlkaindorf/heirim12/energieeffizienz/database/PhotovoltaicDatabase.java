@@ -30,17 +30,17 @@ public class PhotovoltaicDatabase extends Database
     Class.forName("org.postgresql.Driver");
   }
 
-  public static PhotovoltaicDatabase getInstance()
+  public static synchronized PhotovoltaicDatabase getInstance()
           throws ClassNotFoundException
   {
     if (theInstance == null)
       theInstance =
-              new PhotovoltaicDatabase("jdbc:postgresql://localhost:5432/pv", "raspberry", "htl");
+              new PhotovoltaicDatabase("jdbc:postgresql://10.0.0.21:5432/pv", "raspberry", "htl");
     return theInstance;
   }
 
   //After you use changeSttings you have to get a new Instance with getInstance
-  public void changeSettings(String url, String user, String password)
+  public static  synchronized void changeSettings(String url, String user, String password)
           throws ClassNotFoundException
   {
     theInstance = new PhotovoltaicDatabase(url, user, password);
@@ -216,7 +216,7 @@ public class PhotovoltaicDatabase extends Database
       )
       {
         CurrentValues currentValues = null;
-        while (resultSet.next())
+        if (resultSet.next())
         {
           currentValues = new CurrentValues(
                   resultSet.getDouble("voltage1"), resultSet.getDouble("current1"),

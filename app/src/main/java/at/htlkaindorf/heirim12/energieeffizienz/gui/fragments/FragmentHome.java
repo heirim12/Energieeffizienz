@@ -65,7 +65,7 @@ public class FragmentHome extends Fragment
             String.format(homeValues.getPanel2Watt() + "W"),
             String.format(homeValues.getPanel2WattHour() + "Wh")};
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < textViewId.length; i++)
     {
       setText(textViewId[i], textViewText[i]);
     }
@@ -138,7 +138,6 @@ public class FragmentHome extends Fragment
     // Required empty public constructor
   }
 
-
   //================================================================================================
   // Lifecycle
   //================================================================================================
@@ -149,22 +148,7 @@ public class FragmentHome extends Fragment
     // Inflate the layout for this fragment
     rootView = inflater.inflate(R.layout.fragment_home, container, false);
     getActivity().setTitle(getString(R.string.fragment_home_title));
-
     barChart = (BarChart) rootView.findViewById(R.id.home_barChart);
-
-//    try
-//    {
-//      CalculateHomeValues calculateHomeValues = new CalculateHomeValues();
-//      homeValues = calculateHomeValues.getHomeValues();
-//    } catch (Exception ex)
-//    {
-//      Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-//              Toast.LENGTH_LONG).show();
-//    } finally
-//    {
-//      makeBarChart(homeValues, barChart);
-//      fillTextViews(homeValues);
-//    }
 
     return rootView;
   }
