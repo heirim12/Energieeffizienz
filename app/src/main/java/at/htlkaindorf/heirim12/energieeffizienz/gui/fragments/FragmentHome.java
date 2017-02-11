@@ -18,15 +18,18 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
-import at.htlkaindorf.heirim12.energieeffizienz.testClasses.data.HomeValues;
-import at.htlkaindorf.heirim12.energieeffizienz.testClasses.testCalc.CalculateHomeValues;
+import at.htlkaindorf.heirim12.energieeffizienz.data.HomeValues;
+import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
+
 
 
 /**
@@ -60,10 +63,10 @@ public class FragmentHome extends Fragment
             R.id.home_textViewWattHour2};
 
     final String textViewText[] = {
-            String.format(homeValues.getPanel1Watt() + "W"),
-            String.format(homeValues.getPanel1WattHour() + "Wh"),
-            String.format(homeValues.getPanel2Watt() + "W"),
-            String.format(homeValues.getPanel2WattHour() + "Wh")};
+            String.format(homeValues.getPanel1Power() + "W"),
+            String.format(homeValues.getPanel1Energy() + "Wh"),
+            String.format(homeValues.getPanel2Power() + "W"),
+            String.format(homeValues.getPanel1Energy() + "Wh")};
 
     for (int i = 0; i < textViewId.length; i++)
     {
@@ -96,7 +99,12 @@ public class FragmentHome extends Fragment
 
   private void makeBarChart(HomeValues homeValues, BarChart barChart)
   {
-    BarDataSet barDataSet = new BarDataSet(homeValues.getWatts7Days(), "energy of both panels");
+    ArrayList<BarEntry> energy7Days = new ArrayList<>();
+    for(int i = 0; i < homeValues.getEnergy7Days().length; i++)
+    {
+      energy7Days.add(new BarEntry((float) i, (float) (homeValues.getEnergy7Days())[i]));
+    }
+    BarDataSet barDataSet = new BarDataSet(energy7Days, "energy of both panels");
     barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.colorHomeChart));
     BarData theData = new BarData(barDataSet);
     barChart.setData(theData);
@@ -189,14 +197,16 @@ public class FragmentHome extends Fragment
       HomeValues result = null;
       try
       {
-        CalculateHomeValues calculateHomeValues =
-                new CalculateHomeValues();
-        result = calculateHomeValues.getHomeValues();
+//        CalculateHomeValues calculateHomeValues =
+//                new CalculateHomeValues();
+//        result = calculateHomeValues.getHomeValues();
+        final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
+        result = photovoltaicDatabase.getHomeValues();
       }
       catch (Exception ex)
       {
-//        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-//                Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
+                Toast.LENGTH_LONG).show();
       }
       finally
       {

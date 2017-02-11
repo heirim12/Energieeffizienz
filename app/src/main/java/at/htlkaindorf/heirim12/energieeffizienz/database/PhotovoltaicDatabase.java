@@ -4,6 +4,7 @@ package at.htlkaindorf.heirim12.energieeffizienz.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,10 +24,10 @@ public class PhotovoltaicDatabase extends Database
 {
   private static PhotovoltaicDatabase theInstance = null; //only one instance of the object
 
-  private PhotovoltaicDatabase(String url, String user, String password)
+  private PhotovoltaicDatabase(String ip, String port, String user, String password)
           throws ClassNotFoundException
   {
-    super(url, user, password);
+    super(String.format("jdbc:postgresql://%s:%s/pv", ip, port), user, password);
     Class.forName("org.postgresql.Driver");
   }
 
@@ -35,15 +36,15 @@ public class PhotovoltaicDatabase extends Database
   {
     if (theInstance == null)
       theInstance =
-              new PhotovoltaicDatabase("jdbc:postgresql://10.0.0.21:5432/pv", "raspberry", "htl");
+              new PhotovoltaicDatabase("10.0.0.21", "5432", "raspberry", "htl");
     return theInstance;
   }
 
   //After you use changeSttings you have to get a new Instance with getInstance
-  public static  synchronized void changeSettings(String url, String user, String password)
+  public static synchronized void changeSettings(String ip, String port, String user, String password)
           throws ClassNotFoundException
   {
-    theInstance = new PhotovoltaicDatabase(url, user, password);
+    theInstance = new PhotovoltaicDatabase(ip, port, user, password);
   }
 
   // method for saving a history-dataset into the pv_history table
@@ -132,7 +133,8 @@ public class PhotovoltaicDatabase extends Database
                               sixDaysBefore.getTimeInMillis(), today.getTimeInMillis()));
       )
       {
-        final ArrayList<Double> energy7Days = new ArrayList<>();
+        double energy7Days[] = new double[7];
+        String[] dates = new String[7];
         double averagePower1 = 0;
         double averagePower2 = 0;
         double energy1 = 0;
@@ -147,6 +149,7 @@ public class PhotovoltaicDatabase extends Database
         {
           final double power1 = (resultSet.getDouble("voltage1") * resultSet.getDouble("current1"));
           final double power2 = (resultSet.getDouble("voltage2") * resultSet.getDouble("current2"));
+          int day = 0;
 
           if (resultSet.next())
           {
@@ -178,7 +181,8 @@ public class PhotovoltaicDatabase extends Database
             {
               // the last energy value of the day will not be considered
               // => doesn´t matter because it will be in the night
-              energy7Days.add((energy1 + energy2) / 3600000); // divide because we want Wh as unit
+              energy7Days[day] = ((energy1 + energy2) / 3600000); // divide because we want Wh as unit
+              day++;
               energy1 = energy2 = 0;
               currentResultSetDateTime = nextResultSetDateTime;
             }
@@ -187,13 +191,25 @@ public class PhotovoltaicDatabase extends Database
           {
             averagePower1 /= count;
             averagePower2 /= count;
-            energy7Days.add((energy1 + energy2) / 3600000); // divide because we want Wh as unit
+            energy7Days[day] = ((energy1 + energy2) / 3600000); // divide because we want Wh as unit
             hasNext = false;
           }
         }
 
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMM");
+        for (int i = 0; i < 5; i++)
+        {
+          sixDaysBefore.add(Calendar.DATE, (i));
+
+          dates[i] = (dateFormat.format(sixDaysBefore.getTime()));
+        }
+        dates[5] = "Yesterday";
+        dates[6] = "Today";
+
         return new HomeValues
-                (averagePower1, energy1 / 3600000, averagePower2, energy2  / 3600000, energy7Days);
+                (averagePower1, energy1 / 3600000,
+                        averagePower2, energy2 / 3600000,
+                        energy7Days, dates);
       }
     } finally
     {

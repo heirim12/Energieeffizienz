@@ -35,4 +35,7 @@
 
     <!--    Table -->
     <color name="colorTableCell">#97ed75</color>
+
+    <!--    Settings-->
+    <color name="black">#000000</color>
 </resources>

@@ -156,7 +156,16 @@
 
     <!-- Activity Settings -->
     <!-- ======================================================================================= -->
+    <string name="activity_settings_title">Einstellungen</string>
 
+    <string name="activity_settings_server_ip">Server IP</string>
+    <string name="activity_settings_server_port">Server Port</string>
+    <string name="activity_settings_user">Benutzer</string>
+    <string name="activity_settings_password">Passwort</string>
+    <string name="activity_settings_save">Speichern</string>
+
+    <string name="activity_settings_non_input_exception">Leeres Feld: </string>
+    <string name="activity_settings_successfully_changed">Einstellungen wurden übernohmen</string>
     <!-- ======================================================================================= -->
 
     <!-- Dialog Diagram Settings -->

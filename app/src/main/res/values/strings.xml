@@ -155,7 +155,16 @@
 
     <!-- Activity Settings -->
     <!-- ======================================================================================= -->
+    <string name="activity_settings_title">Settings</string>
 
+    <string name="activity_settings_server_ip">Server IP</string>
+    <string name="activity_settings_server_port">Server Port</string>
+    <string name="activity_settings_user">User</string>
+    <string name="activity_settings_password">Password</string>
+    <string name="activity_settings_save">Save</string>
+
+    <string name="activity_settings_non_input_exception">Empty field: </string>
+    <string name="activity_settings_successfully_changed">Settings has been succesfully changed</string>
     <!-- ======================================================================================= -->
 
     <!-- Dialog Records Settings -->
@@ -176,5 +185,16 @@
     <string name="dialog_diagram_current">Current</string>
     <string name="dialog_diagram_power">Power</string>
     <string name="dialog_diagram_energy">Energy</string>
+    <!-- ======================================================================================= -->
+
+
+    <!-- Shared Preferences Names: only used in java code -->
+    <!-- ======================================================================================= -->
+    <string name="shared_preference_file1">at.htlkaindorf.heirim12.energieeffizenz.Preference_File_1</string>
+
+    <string name="shared_preference_saved_ip">at.htlkaindorf.heirim12.energieeffizenz.Saved_IP</string>
+    <string name="shared_preference_saved_port">at.htlkaindorf.heirim12.energieeffizenz.Saved_PORT</string>
+    <string name="shared_preference_saved_user">at.htlkaindorf.heirim12.energieeffizenz.Saved_USER</string>
+    <string name="shared_preference_saved_password">at.htlkaindorf.heirim12.energieeffizenz.Saved_PASSWORD</string>
     <!-- ======================================================================================= -->
 </resources>
