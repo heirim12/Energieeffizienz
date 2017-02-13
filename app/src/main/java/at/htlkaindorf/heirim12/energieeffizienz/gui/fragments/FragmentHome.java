@@ -63,10 +63,10 @@ public class FragmentHome extends Fragment
             R.id.home_textViewWattHour2};
 
     final String textViewText[] = {
-            String.format(homeValues.getPanel1Power() + "W"),
-            String.format(homeValues.getPanel1Energy() + "Wh"),
-            String.format(homeValues.getPanel2Power() + "W"),
-            String.format(homeValues.getPanel1Energy() + "Wh")};
+            String.format("%.2fW",homeValues.getPanel1Power()),
+            String.format("%.2fWh",homeValues.getPanel1Energy()),
+            String.format("%.2fW",homeValues.getPanel2Power()),
+            String.format("%.2fWh",homeValues.getPanel1Energy())};
 
     for (int i = 0; i < textViewId.length; i++)
     {
@@ -205,8 +205,12 @@ public class FragmentHome extends Fragment
       }
       catch (Exception ex)
       {
-        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
+//                Toast.LENGTH_LONG).show();
+        ex.printStackTrace();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(ex.getLocalizedMessage());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       }
       finally
       {

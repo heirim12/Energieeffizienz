@@ -58,6 +58,7 @@ import at.htlkaindorf.heirim12.energieeffizienz.communication.ReceiveRecords;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Record;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Records;
 import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
+import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettings;
 
 /**
@@ -910,6 +911,7 @@ public class FragmentDiagram extends Fragment
   @Override
   public void onRecordsSettingsOKListener(RecordsSettings recordsSettings)
   {
+    System.out.println("_______________________________________________________________________");
     if (recordsSettings.equals(this.recordsSettings))
       Toast.makeText(getContext(),
               getResources().getText(R.string.fragment_diagram_settings_hasnot_changed),
@@ -1063,12 +1065,18 @@ public class FragmentDiagram extends Fragment
       Records result = null;
       try
       {
-        ReceiveRecords receiveRecords = new ReceiveRecords(recordsSettings);
-        result = receiveRecords.getRecords();
+        final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
+        result = photovoltaicDatabase.getHistory(recordsSettings);
+//        ReceiveRecords receiveRecords = new ReceiveRecords(recordsSettings);
+//        result = receiveRecords.getRecords();
       } catch (Exception ex)
       {
-        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
+//                Toast.LENGTH_LONG).show();
+        System.out.println("___________________________________________________________________");
+        ex.printStackTrace();
+        System.out.println(ex.getLocalizedMessage());
+        System.out.println("___________________________________________________________________");
       }
       return result;
     }
@@ -1081,6 +1089,7 @@ public class FragmentDiagram extends Fragment
       if (records == null)
         return;
       super.onPostExecute(records);
+      System.out.println("juhuhu");
       createDiagram(records);
     }
   }

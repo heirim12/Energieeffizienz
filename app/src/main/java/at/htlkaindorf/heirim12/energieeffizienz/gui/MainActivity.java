@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentCurrentMeasurement;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagram;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoStudents;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoSystem;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTable;
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     switch (sel)
     {
       case 0:
-//                FragmentHome fragmentHome = new FragmentHome();
-//                fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.fragmanetholder, fragmentHome);
-//                fragmentTransaction.commit();
+        FragmentHome fragmentHome = new FragmentHome();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentHome);
+        fragmentTransaction.commit();
         break;
 
       case 1:

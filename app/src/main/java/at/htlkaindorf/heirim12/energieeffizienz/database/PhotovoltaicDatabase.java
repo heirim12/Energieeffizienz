@@ -36,7 +36,7 @@ public class PhotovoltaicDatabase extends Database
   {
     if (theInstance == null)
       theInstance =
-              new PhotovoltaicDatabase("10.0.0.21", "5432", "raspberry", "htl");
+              new PhotovoltaicDatabase("127.0.0.1", "5432", "raspberry", "htl");
     return theInstance;
   }
 
@@ -144,12 +144,13 @@ public class PhotovoltaicDatabase extends Database
         boolean hasNext = resultSet.next();
         Calendar currentResultSetDateTime = new GregorianCalendar();
         currentResultSetDateTime.setTimeInMillis(resultSet.getLong("epoch_ms"));
+        int day = 0;
 
         while (hasNext)
         {
           final double power1 = (resultSet.getDouble("voltage1") * resultSet.getDouble("current1"));
           final double power2 = (resultSet.getDouble("voltage2") * resultSet.getDouble("current2"));
-          int day = 0;
+
 
           if (resultSet.next())
           {
@@ -289,6 +290,8 @@ public class PhotovoltaicDatabase extends Database
               recordsSettings.getStartDate().getTimeInMillis(),
               recordsSettings.getEndDate().getTimeInMillis());
 
+      System.out.println(sql);
+
 
       final ResultSet resultSet = statement.executeQuery(sql);
       final Records records = new Records();
@@ -398,53 +401,61 @@ public class PhotovoltaicDatabase extends Database
     try
     {
       PhotovoltaicDatabase db = getInstance();
+      HomeValues homeValues = db.getHomeValues();
+      System.out.println(homeValues.getPanel1Power());
+      System.out.println(homeValues.getPanel1Energy());
+      System.out.println(homeValues.getPanel2Power());
+      System.out.println(homeValues.getPanel2Energy());
+
+      for (int i = 0 ; i< 7; i++)
+        System.out.println(homeValues.getEnergy7Days()[i]);
 
       //refreshCurrentDataSet Test:
-      db.refreshCurrentDataSet(new GregorianCalendar(2016, 1, 1), 50, 50, 50, 50, 50, 50, 50);
-//      db.refreshCurrentDataSet(new GregorianCalendar(2016, 1, 1), 8, 8, 8, 8, 8, 8, 8);
-      final CurrentValues currentValues = db.getCurrentValues();
-      if (currentValues != null)
-      {
-        System.out.println(currentValues.getPanel1Voltage());
-        System.out.println(currentValues.getPanel1Current());
-        System.out.println(currentValues.getPanel1Power());
-        System.out.println(currentValues.getPanel1Azimuth());
-        System.out.println(currentValues.getPanel1Elevation());
-        System.out.println(currentValues.getPanel2Voltage());
-        System.out.println(currentValues.getPanel2Current());
-        System.out.println(currentValues.getPanel2Power());
-        System.out.println(currentValues.getPanel2Azimuth());
-        System.out.println(currentValues.getPanel2Elevation());
-        System.out.println(currentValues.getAccuVoltage());
-      }
-
-
-////      getHistory Test:
-      final Records records = db.getHistory(new RecordsSettings(
-              new GregorianCalendar(2016, 0, 1), new GregorianCalendar(2016, 1, 1),
-              true, true, true, true, true, true, true, true, true, true));
-
-      if (records != null)
-      {
-        for (Record record : records.getRecords())
-        {
-
-          if (!Double.isNaN(record.getBothEnergy()))
-          {
-            System.out.println(record.getDateTime().getTimeInMillis());
-            System.out.println(record.getPanel1Voltage());
-            System.out.println(record.getPanel1Current());
-            System.out.println(record.getPanel1Power());
-            System.out.println(record.getPanel1Energy());
-            System.out.println(record.getPanel2Voltage());
-            System.out.println(record.getPanel2Current());
-            System.out.println(record.getPanel2Power());
-            System.out.println(record.getPanel2Energy());
-            System.out.println(record.getBothPower());
-            System.out.println(record.getBothEnergy());
-          }
-        }
-      }
+//      db.refreshCurrentDataSet(new GregorianCalendar(2016, 1, 1), 50, 50, 50, 50, 50, 50, 50);
+////      db.refreshCurrentDataSet(new GregorianCalendar(2016, 1, 1), 8, 8, 8, 8, 8, 8, 8);
+//      final CurrentValues currentValues = db.getCurrentValues();
+//      if (currentValues != null)
+//      {
+//        System.out.println(currentValues.getPanel1Voltage());
+//        System.out.println(currentValues.getPanel1Current());
+//        System.out.println(currentValues.getPanel1Power());
+//        System.out.println(currentValues.getPanel1Azimuth());
+//        System.out.println(currentValues.getPanel1Elevation());
+//        System.out.println(currentValues.getPanel2Voltage());
+//        System.out.println(currentValues.getPanel2Current());
+//        System.out.println(currentValues.getPanel2Power());
+//        System.out.println(currentValues.getPanel2Azimuth());
+//        System.out.println(currentValues.getPanel2Elevation());
+//        System.out.println(currentValues.getAccuVoltage());
+//      }
+//
+//
+//////      getHistory Test:
+//      final Records records = db.getHistory(new RecordsSettings(
+//              new GregorianCalendar(2016, 0, 1), new GregorianCalendar(2016, 1, 1),
+//              true, true, true, true, true, true, true, true, true, true));
+//
+//      if (records != null)
+//      {
+//        for (Record record : records.getRecords())
+//        {
+//
+//          if (!Double.isNaN(record.getBothEnergy()))
+//          {
+//            System.out.println(record.getDateTime().getTimeInMillis());
+//            System.out.println(record.getPanel1Voltage());
+//            System.out.println(record.getPanel1Current());
+//            System.out.println(record.getPanel1Power());
+//            System.out.println(record.getPanel1Energy());
+//            System.out.println(record.getPanel2Voltage());
+//            System.out.println(record.getPanel2Current());
+//            System.out.println(record.getPanel2Power());
+//            System.out.println(record.getPanel2Energy());
+//            System.out.println(record.getBothPower());
+//            System.out.println(record.getBothEnergy());
+//          }
+//        }
+//      }
 
     } catch (SQLException ex)
     {
