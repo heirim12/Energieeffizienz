@@ -65,6 +65,13 @@
                 android:layout_gravity="right"
                 android:paddingRight="@dimen/fragment_diagram_layout_margin"
                 android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"/>
+
+            <ListView
+                android:id="@+id/testListview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
