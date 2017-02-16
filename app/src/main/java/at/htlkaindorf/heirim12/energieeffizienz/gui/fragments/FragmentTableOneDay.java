@@ -1,18 +1,11 @@
 package at.htlkaindorf.heirim12.energieeffizienz.gui.fragments;
 
 
-import android.graphics.PorterDuff;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -20,28 +13,24 @@ import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Record;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Records;
 import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
-import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettings;
-
+import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettingsOneDay;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettingsOneDay;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentTable extends Fragment
-        implements DialogRecordsSettings.OnRecordsSettingsOKListener
+public class FragmentTableOneDay extends Fragment
+        implements DialogRecordsSettingsOneDay.OnRecordsSettingsOKListener
 {
   //================================================================================================
   // Global declarations
@@ -50,7 +39,6 @@ public class FragmentTable extends Fragment
   private ExecutorService executor = null;
   private RecordsSettings recordsSettings = null;
   private Records records = null;
-
 
   //================================================================================================
   // Methods and classes for creating the table
@@ -259,20 +247,20 @@ public class FragmentTable extends Fragment
     public View getView(int index, View view, ViewGroup viewGroup)
     {
       final Record record = records.get(index);
-      final CustomTableLineLayout viewHolder;
+      final FragmentTable.CustomTableLineLayout viewHolder;
 
       if (view == null)
       {
         if ((index % 2) == 0)
-          viewHolder = new CustomTableLineLayout(recordsSettings, color1, lineHeight);
+          viewHolder = new FragmentTable.CustomTableLineLayout(recordsSettings, color1, lineHeight);
         else
-          viewHolder = new CustomTableLineLayout(recordsSettings, color2, lineHeight);
+          viewHolder = new FragmentTable.CustomTableLineLayout(recordsSettings, color2, lineHeight);
         view = viewHolder.getTableLineLayout();
         view.setTag(viewHolder);
       }
       else
       {
-        viewHolder = (CustomTableLineLayout) view.getTag();
+        viewHolder = (FragmentTable.CustomTableLineLayout) view.getTag();
       }
 
       if (recordsSettings.isPanel1Voltage())
@@ -367,7 +355,7 @@ public class FragmentTable extends Fragment
         textViewHolder = (TextView) view.getTag();
       }
 
-        textViewHolder.setText(dateFormat.format(new Date(record.getDateTime().getTimeInMillis())));
+      textViewHolder.setText(dateFormat.format(new Date(record.getDateTime().getTimeInMillis())));
       return view;
     }
   }
@@ -405,7 +393,7 @@ public class FragmentTable extends Fragment
     final ListView dateListView = new ListView(getContext());
     dateListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
-    dateListView.setAdapter(new DateListViewAdapter(records, R.color.colorTableWhite, lineHeight));
+    dateListView.setAdapter(new FragmentTable.DateListViewAdapter(records, R.color.colorTableWhite, lineHeight));
 
     dateLayout.addView(dateTextView);
     dateLayout.addView(dateListView);
@@ -422,14 +410,14 @@ public class FragmentTable extends Fragment
     dataLayout.setOrientation(LinearLayout.VERTICAL);
 
     //Headline for the table
-    final LinearLayout header = new CustomTableLineLayout(
+    final LinearLayout header = new FragmentTable.CustomTableLineLayout(
             recordsSettings,R.color.colorTableHeader, lineHeight).getTableLineLayout();
 
     //ListView for the Data
     final ListView dataListView = new ListView(getContext());
     dataListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
-    dataListView.setAdapter(new DataListViewAdapter(records, recordsSettings,
+    dataListView.setAdapter(new FragmentTable.DataListViewAdapter(records, recordsSettings,
             R.color.colorTableRow1, R.color.colorTableRow2, lineHeight));
     dataListView.setBackgroundColor(getResources().getColor(R.color.colorTableWhite));
 
@@ -474,210 +462,23 @@ public class FragmentTable extends Fragment
     dateListView.setOnScrollListener(onScrollListener);
   }
 
-  //================================================================================================
-  // Methods for saving the date from the Table
-  //================================================================================================
-  private void saveTable(String filename)
-  {
-    //TODO
-  }
-
-  private void saveTableSettings()
-  {
-    //TODO
-    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
-  }
-
-
-  //================================================================================================
-  // Methods for sharing the diagram
-  //================================================================================================
-  private void shareTable()
-  {
-    //TODO:
-    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
-  }
-
-
-  //================================================================================================
-  // Methods for opening the settings dialog and getting the settings
-  //================================================================================================
-  //This Methode is called when the DialogSettings Object is closed with pressed with "ok".
-  public void onRecordsSettingsOKListener(RecordsSettings recordsSettings)
-  {
-    if (recordsSettings.equals(this.recordsSettings))
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_table_settings_hasnot_changed),
-              Toast.LENGTH_LONG).show();
-    else
-    {
-      this.recordsSettings = recordsSettings;
-
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_table_settings_has_changed),
-              Toast.LENGTH_LONG).show();
-
-      LinearLayout mainLayout =
-              (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
-      LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
-              (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-      progressBarParams.gravity = Gravity.CENTER_VERTICAL;
-      mainLayout.removeAllViews();
-
-      ProgressBar progressBar = new ProgressBar(getContext(), null,
-              android.R.attr.progressBarStyleLarge);
-      progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccentGreen),
-              PorterDuff.Mode.SRC_IN);
-      progressBar.setLayoutParams(progressBarParams);
-      mainLayout.addView(progressBar);
-
-      executor = Executors.newSingleThreadExecutor();
-      executor.execute(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          new GetDataTask().execute();
-        }
-      });
-    }
-  }
-
-  private void openSettings()
-  {
-    final DialogFragment dialogSettings = new DialogRecordsSettings();
-    final Bundle recordSettingsBundle = new Bundle();
-    if(recordsSettings != null)
-    {
-      recordSettingsBundle.putBoolean("panel1Voltage", recordsSettings.isPanel1Voltage());
-      recordSettingsBundle.putBoolean("panel1Current", recordsSettings.isPanel1Current());
-      recordSettingsBundle.putBoolean("panel1Power", recordsSettings.isPanel1Power());
-      recordSettingsBundle.putBoolean("panel1Energy", recordsSettings.isPanel1Energy());
-      recordSettingsBundle.putBoolean("panel2Voltage", recordsSettings.isPanel2Voltage());
-      recordSettingsBundle.putBoolean("panel2Current", recordsSettings.isPanel2Current());
-      recordSettingsBundle.putBoolean("panel2Power", recordsSettings.isPanel2Power());
-      recordSettingsBundle.putBoolean("panel2Energy", recordsSettings.isPanel2Energy());
-      recordSettingsBundle.putBoolean("bothPower", recordsSettings.isBothPower());
-      recordSettingsBundle.putBoolean("bothEnergy", recordsSettings.isBothEnergy());
-      recordSettingsBundle.putLong("startDate", recordsSettings.getStartDate().getTimeInMillis());
-      recordSettingsBundle.putLong("endDate", recordsSettings.getEndDate().getTimeInMillis());
-      dialogSettings.setArguments(recordSettingsBundle);
-    }
-    dialogSettings.setTargetFragment(this, 0);
-    dialogSettings.show(getFragmentManager(), "dialogRecordsSettings");
-  }
-
-  //================================================================================================
-  // Button for the Settings (solved with a optionmenu)
-  //================================================================================================
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-  {
-    inflater.inflate(R.menu.fragment_table_menu, menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    switch (item.getItemId())
-    {
-      case R.id.table_settings_icon:
-        openSettings();
-        return true;
-
-      case R.id.table_share_icon:
-        shareTable();
-        return true;
-
-      case R.id.table_save_icon:
-        saveTableSettings();
-        return true;
-    }
-
-    return super.onOptionsItemSelected(item);
-  }
-
-  //================================================================================================
-  // Constructor
-  //================================================================================================
-  public FragmentTable()
+  public FragmentTableOneDay()
   {
     // Required empty public constructor
   }
 
-  //================================================================================================
-  // Lifecycle
-  //================================================================================================
-  public void onSaveInstanceState(Bundle savedInstanceState)
-  {
-    super.onSaveInstanceState(savedInstanceState);
-  }
-
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState)
-  {
-    super.onCreate(savedInstanceState);
-    // onDestroy will not be called => data will be saved
-    setRetainInstance(true);
-  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState)
   {
     // Inflate the layout for this fragment
-    thisFragment = inflater.inflate(R.layout.fragment_table, container, false);
-    getActivity().setTitle(getString(R.string.fragment_table_title));
-    setHasOptionsMenu(true);
-    if (records != null)
-    {
-      createTable(records);
-    }
-
-    return thisFragment;
+    return inflater.inflate(R.layout.fragment_fragment_table_one_day, container, false);
   }
 
   @Override
-  public void onStop()
+  public void onRecordsSettingsOneDayOKListener(RecordsSettingsOneDay recordsSettingsOneDay)
   {
-    //TODO:
-    if (executor != null)
-      executor.shutdown();
-    super.onStop();
-  }
 
-  //================================================================================================
-  // Multithreading
-  //================================================================================================
-  private class GetDataTask extends AsyncTask<Void, Void, Records>
-  {
-    @Override
-    protected Records doInBackground(Void... voids)
-    {
-      Records result = null;
-      try
-      {
-        final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
-        result = photovoltaicDatabase.getHistory(recordsSettings);
-//        ReceiveRecords receiveRecords = new ReceiveRecords(recordsSettings);
-//        result = receiveRecords.getRecords();
-      } catch (Exception ex)
-      {
-        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-                Toast.LENGTH_LONG).show();
-      }
-      return result;
-    }
-
-    @Override
-    protected void onPostExecute(Records records)
-    {
-      if (executor.isShutdown())
-        return;
-      if (records == null)
-        return;
-      super.onPostExecute(records);
-      createTable(records);
-    }
   }
 }

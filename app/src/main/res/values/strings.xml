@@ -187,6 +187,24 @@
     <string name="dialog_diagram_energy">Energy</string>
     <!-- ======================================================================================= -->
 
+    <!-- Dialog Records Settings One Day -->
+    <!-- ======================================================================================= -->
+    <string name="dialog_records_one_day_title">Settings</string>
+
+    <string name="dialog_records_one_day_ok">ok</string>
+    <string name="dialog_records_one_day_cancel">cancel</string>
+
+    <string name="dialog_records_one_day_date">Start Date:</string>
+
+    <string name="dialog_records_one_day_panel1">Panel 1:</string>
+    <string name="dialog_records_one_day_panel2">Panel 2:</string>
+    <string name="dialog_records_one_day_panels">Both Panels:</string>
+    <string name="dialog_records_one_day_all">(all)</string>
+    <string name="dialog_records_one_day_voltage">Voltage</string>
+    <string name="dialog_records_one_day_current">Current</string>
+    <string name="dialog_records_one_day_power">Power</string>
+    <!-- ======================================================================================= -->
+
 
     <!-- Shared Preferences Names: only used in java code -->
     <!-- ======================================================================================= -->
@@ -196,5 +214,8 @@
     <string name="shared_preference_saved_port">at.htlkaindorf.heirim12.energieeffizenz.Saved_PORT</string>
     <string name="shared_preference_saved_user">at.htlkaindorf.heirim12.energieeffizenz.Saved_USER</string>
     <string name="shared_preference_saved_password">at.htlkaindorf.heirim12.energieeffizenz.Saved_PASSWORD</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- ======================================================================================= -->
 </resources>
