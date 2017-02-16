@@ -60,12 +60,13 @@ import at.htlkaindorf.heirim12.energieeffizienz.data.Records;
 import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettings;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettingsOneDay;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentDiagram extends Fragment
-        implements DialogRecordsSettings.OnRecordsSettingsOKListener
+public class FragmentDiagramOneDay extends Fragment
+        implements DialogRecordsSettingsOneDay.OnRecordsSettingsOKListener
 {
   //================================================================================================
   // Global declarations
@@ -76,6 +77,7 @@ public class FragmentDiagram extends Fragment
   private ExecutorService executor = null;
   private RecordsSettings recordsSettings = null;
   private Records records;
+
 
   //================================================================================================
   // Methods and classes for creating the diagram/s
@@ -264,9 +266,9 @@ public class FragmentDiagram extends Fragment
     final List<Entry> panel1PowerEntries = new ArrayList<>();
     final List<Entry> panel2PowerEntries = new ArrayList<>();
     final List<Entry> bothPanelsPowerEntries = new ArrayList<>();
-    final List<Entry> panel1EnergyEntries = new ArrayList<>();
-    final List<Entry> panel2EnergyEntries = new ArrayList<>();
-    final List<Entry> bothPanelsEnergyEntries = new ArrayList<>();
+//    final List<Entry> panel1EnergyEntries = new ArrayList<>();
+//    final List<Entry> panel2EnergyEntries = new ArrayList<>();
+//    final List<Entry> bothPanelsEnergyEntries = new ArrayList<>();
 
     // save the x,y pair which are requested
     for (Record record : records.getRecords())
@@ -288,11 +290,6 @@ public class FragmentDiagram extends Fragment
         panel1PowerEntries.add(new Entry((float) timeStep, (float) record.getPanel1Power()));
       }
 
-      if (recordsSettings.isPanel1Energy())
-      {
-        panel1EnergyEntries.add(new Entry((float) timeStep, (float) record.getPanel1Energy()));
-      }
-
       if (recordsSettings.isPanel2Voltage())
       {
         panel2VoltageEntries.add(new Entry((float) timeStep, (float) record.getPanel2Voltage()));
@@ -308,19 +305,9 @@ public class FragmentDiagram extends Fragment
         panel2PowerEntries.add(new Entry((float) timeStep, (float) record.getPanel2Power()));
       }
 
-      if (recordsSettings.isPanel2Energy())
-      {
-        panel2EnergyEntries.add(new Entry((float) timeStep, (float) record.getPanel2Energy()));
-      }
-
       if (recordsSettings.isBothPower())
       {
         bothPanelsPowerEntries.add(new Entry((float) timeStep, (float) record.getBothPower()));
-      }
-
-      if (recordsSettings.isBothEnergy())
-      {
-        bothPanelsEnergyEntries.add(new Entry((float) timeStep, (float) record.getBothEnergy()));
       }
     }
 
@@ -473,241 +460,6 @@ public class FragmentDiagram extends Fragment
         }
       }
     }
-
-    if (recordsSettings.isPanel1Energy())
-    {
-      if (recordsSettings.isPanel1Voltage() || recordsSettings.isPanel2Voltage())
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.RIGHT, yAxisRight2, yAxisRight2Unit);
-
-          } else
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-
-          }
-        }
-      } else
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          } else
-          {
-            yAxisLeft1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel1EnergyEntries,
-                    R.string.fragment_diagram_energy_panel1, R.color.colorDiagramEnergy1,
-                    YAxis.AxisDependency.LEFT, yAxisLeft1, yAxisLeft1Unit);
-          }
-        }
-      }
-    }
-
-    if (recordsSettings.isPanel2Energy())
-    {
-      if (recordsSettings.isPanel1Voltage() || recordsSettings.isPanel2Voltage())
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.RIGHT, yAxisRight2, yAxisRight2Unit);
-
-          } else
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          }
-        }
-      } else
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          } else
-          {
-            yAxisLeft1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, panel2EnergyEntries,
-                    R.string.fragment_diagram_energy_panel2, R.color.colorDiagramEnergy2,
-                    YAxis.AxisDependency.LEFT, yAxisLeft1, yAxisLeft1Unit);
-
-          }
-        }
-      }
-    }
-
-    if (recordsSettings.isBothEnergy())
-    {
-      if (recordsSettings.isPanel1Voltage() || recordsSettings.isPanel2Voltage())
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.RIGHT, yAxisRight2, yAxisRight2Unit);
-          } else
-          {
-            yAxisLeft1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.LEFT, yAxisLeft1, yAxisLeft1Unit);
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          }
-        }
-      } else
-      {
-        if (recordsSettings.isPanel1Current() || recordsSettings.isPanel2Current())
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisLeft2Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets2, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.LEFT, yAxisLeft2, yAxisLeft2Unit);
-          } else
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          }
-        } else
-        {
-          if (recordsSettings.isPanel1Power() || recordsSettings.isPanel2Power()
-                  || recordsSettings.isBothPower())
-          {
-            yAxisRight1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.RIGHT, yAxisRight1, yAxisRight1Unit);
-          } else
-          {
-            yAxisLeft1Unit = getString(R.string.fragment_diagram_energy_unit);
-            addLineDataSet(dataSets1, bothPanelsEnergyEntries,
-                    R.string.fragment_diagram_energy_both_panels, R.color.colorDiagramEnergyBoth,
-                    YAxis.AxisDependency.LEFT, yAxisLeft1, yAxisLeft1Unit);
-          }
-        }
-      }
-    }
-
 
     LinearLayout layout =
             (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
@@ -909,7 +661,7 @@ public class FragmentDiagram extends Fragment
   //================================================================================================
   //This Method is called when the DialogSettings Object is closed with pressed with "ok".
   @Override
-  public void onRecordsSettingsOKListener(RecordsSettings recordsSettings)
+  public void onRecordsSettingsOneDayOKListener(RecordsSettings recordsSettings)
   {
     System.out.println("_______________________________________________________________________");
     if (recordsSettings.equals(this.recordsSettings))
@@ -952,22 +704,18 @@ public class FragmentDiagram extends Fragment
 
   private void openSettings()
   {
-    final DialogFragment dialogSettings = new DialogRecordsSettings();
+    final DialogFragment dialogSettings = new DialogRecordsSettingsOneDay();
     final Bundle recordSettingsBundle = new Bundle();
     if(recordsSettings != null)
     {
       recordSettingsBundle.putBoolean("panel1Voltage", recordsSettings.isPanel1Voltage());
       recordSettingsBundle.putBoolean("panel1Current", recordsSettings.isPanel1Current());
       recordSettingsBundle.putBoolean("panel1Power", recordsSettings.isPanel1Power());
-      recordSettingsBundle.putBoolean("panel1Energy", recordsSettings.isPanel1Energy());
       recordSettingsBundle.putBoolean("panel2Voltage", recordsSettings.isPanel2Voltage());
       recordSettingsBundle.putBoolean("panel2Current", recordsSettings.isPanel2Current());
       recordSettingsBundle.putBoolean("panel2Power", recordsSettings.isPanel2Power());
-      recordSettingsBundle.putBoolean("panel2Energy", recordsSettings.isPanel2Energy());
       recordSettingsBundle.putBoolean("bothPower", recordsSettings.isBothPower());
-      recordSettingsBundle.putBoolean("bothEnergy", recordsSettings.isBothEnergy());
-      recordSettingsBundle.putLong("startDate", recordsSettings.getStartDate().getTimeInMillis());
-      recordSettingsBundle.putLong("endDate", recordsSettings.getEndDate().getTimeInMillis());
+      recordSettingsBundle.putLong("date", recordsSettings.getStartDate().getTimeInMillis());
       dialogSettings.setArguments(recordSettingsBundle);
     }
     dialogSettings.setTargetFragment(this, 0);
@@ -1007,7 +755,7 @@ public class FragmentDiagram extends Fragment
   //================================================================================================
   // Constructor
   //================================================================================================
-  public FragmentDiagram()
+  public FragmentDiagramOneDay()
   {
     // Required empty public constructor
   }
@@ -1089,7 +837,6 @@ public class FragmentDiagram extends Fragment
       if (records == null)
         return;
       super.onPostExecute(records);
-      System.out.println("juhuhu");
       createDiagram(records);
     }
   }

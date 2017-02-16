@@ -48,7 +48,8 @@ public class FragmentTableOneDay extends Fragment
   private View thisFragment;
   private ExecutorService executor = null;
   private RecordsSettings recordsSettings = null;
-  private Records records = null;
+  private Records records;
+  private int sel;
 
 
   //================================================================================================
@@ -331,6 +332,7 @@ public class FragmentTableOneDay extends Fragment
 
   private void createTable(Records records)
   {
+    this.records = records;
     //Main Layout with is defined in the xml-file
     final LinearLayout mainLayout =
             (LinearLayout) thisFragment.findViewById(R.id.fragment_table_one_day_mainLinearLayout);
@@ -478,7 +480,7 @@ public class FragmentTableOneDay extends Fragment
               (LinearLayout) thisFragment.findViewById(R.id.fragment_table_one_day_mainLinearLayout);
       LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
               (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-      progressBarParams.gravity = Gravity.CENTER_VERTICAL;
+      progressBarParams.gravity = Gravity.CENTER_HORIZONTAL;
       mainLayout.removeAllViews();
 
       ProgressBar progressBar = new ProgressBar(getContext(), null,
@@ -584,8 +586,10 @@ public class FragmentTableOneDay extends Fragment
     thisFragment = inflater.inflate(R.layout.fragment_fragment_table_one_day, container, false);
     getActivity().setTitle(getString(R.string.fragment_table_one_day_title));
     setHasOptionsMenu(true);
+    System.out.println("================================================================00here1");
     if (records != null)
     {
+      System.out.println("================================================================00here2");
       createTable(records);
     }
 

@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimaryGreen"
+        android:text="@string/dialog_diagram_title"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dialog_settings_title1_size"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dialog_settings_layout_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/dialog_diagram_start_date"
+                    android:textSize="@dimen/fragment_home_title2_size"/>
+
+                <TextView
+                    android:id="@+id/dialog_settings_energy_textViewStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/fragment_home_title2_size"/>
+
+                <ImageButton
+                    android:id="@+id/dialog_settings_energy_buttonStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/dialog_diagram_end_date"
+                    android:textSize="@dimen/fragment_home_title2_size"/>
+
+                <TextView
+                    android:id="@+id/dialog_settings_energy_textViewEndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/fragment_home_title2_size"/>
+
+                <ImageButton
+                    android:id="@+id/dialog_settings_energy_buttonEndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/dialog_settings_energy_energyBoth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dialog_diagram_energy"
+                    android:textSize="@dimen/dialog_settings_text_size"/>
+
+                <CheckBox
+                    android:id="@+id/dialog_settings_energy_energy1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dialog_diagram_energy"
+                    android:textSize="@dimen/dialog_settings_text_size"/>
+
+                <CheckBox
+                    android:id="@+id/dialog_settings_energy__energy2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/dialog_settings_text_gap_big"
+                    android:text="@string/dialog_diagram_energy"
+                    android:textSize="@dimen/dialog_settings_text_size"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

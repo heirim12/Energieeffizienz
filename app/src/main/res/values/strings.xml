@@ -10,13 +10,28 @@
     <!-- ======================================================================================= -->
     <string name="nav_home">Home</string>
     <string name="nav_current_measurement">Current Measurement</string>
-    <string name="nav_subtitle_records">Records</string>
-    <string name="nav_diagram">Diagram</string>
-    <string name="nav_table">Table</string>
+    <string name="nav_subtitle_long_time_records">Longtime Records</string>
+    <string name="nav_subtitle_records_specific_daily_values">Detailed Daily Values</string>
+    <string name="nav_diagram_long_time_engery">Diagram: Energy</string>
+    <string name="nav_diagram_one_day">Diagram</string>
+    <string name="nav_table_long_time_energy">Table: Energy</string>
+    <string name="nav_table_one_day">Table</string>
     <string name="nav_subtitle_information">Information</string>
     <string name="nav_system">System</string>
     <string name="nav_students">Students</string>
+    <string name="nav_app">App</string>
     <string name="nav_settings">Settings</string>
+    <!-- ======================================================================================= -->
+
+    <!-- MainActivity -->
+    <!-- ======================================================================================= -->
+    <string name="main_activity_alert_about">About</string>
+    <string name="main_activity_alert_close">close</string>
+    <string name="main_activity_alert_version"></string>
+    <string name="main_activity_alert_developer">Developer: Richard Heinz</string>
+    <string name="main_activity_alert_mail">heirim12@htl-kaindorf.ac.at</string>
+    <string name="main_activity_alert_info1">This app has been produced for the HTL Kaindorf as a part of "Diplomarbeit" "Sonnenenergieeffizienz"./string>
+    <string name="main_activity_alert_info1">With it you can query and show current measurement, energyincome and long time values from the database/string>
 
     <!-- ======================================================================================= -->
 

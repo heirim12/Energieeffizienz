@@ -13,17 +13,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentCurrentMeasurement;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagram;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagramOneDay;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoStudents;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoSystem;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTable;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTableOneDay;
 
 
@@ -37,64 +37,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   private NavigationView navigationView;
   private int fragmentChoose;
 
-  private void loadFragment2(Fragment fragment)
+  private void showAppInfo()
   {
-    fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
-    fragmentTransaction.commit();
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage("Test")
+            .setTitle("Test");
+    builder.setPositiveButton(R.string.main_activity_alert_close, null);
+    AlertDialog dialog = builder.create();
+    dialog.show();
   }
 
-  private void loadFragment(int sel)
+  private void loadFragment(Fragment fragment)
   {
-    navigationView.setCheckedItem(sel);
-    fragmentChoose = sel;
-    switch (sel)
-    {
-      case 0:
-        FragmentHome fragmentHome = new FragmentHome();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentHome);
-        fragmentTransaction.commit();
-        break;
-
-      case 1:
-        FragmentCurrentMeasurement fragmentCurrentMeasurement = new FragmentCurrentMeasurement();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentCurrentMeasurement);
-        fragmentTransaction.commit();
-
-        break;
-
-      case 2:
-        FragmentDiagram fragmentDiagram = new FragmentDiagram();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentDiagram);
-        fragmentTransaction.commit();
-        break;
-
-      case 3:
-//        FragmentTable fragmentTable = new FragmentTable();
-        FragmentTableOneDay fragmentTable = new FragmentTableOneDay();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentTable);
-        fragmentTransaction.commit();
-        break;
-
-      case 4:
-        FragmentInfoSystem fragmentInfoSystem = new FragmentInfoSystem();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentInfoSystem);
-        fragmentTransaction.commit();
-        break;
-
-      case 5:
-
-        FragmentInfoStudents fragmentInfoStudents = new FragmentInfoStudents();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentInfoStudents);
-        fragmentTransaction.commit();
-        break;
-    }
+    fragmentTransaction = fragmentManager.beginTransaction();
+//    Fragment oldFragment = fragmentManager.findFragmentById(int);
+//    oldFragment.onDestroy();
+    fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
+    fragmentTransaction.commit();
   }
 
   @Override
@@ -115,32 +74,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   {
     // Handle navigation view item clicks here.
     int id = item.getItemId();
-
+    navigationView.setCheckedItem(id);
     switch (id)
     {
       case R.id.nav_home:
-        loadFragment(0);
+        loadFragment(new FragmentHome());
         break;
 
       case R.id.nav_current_measurement:
-        loadFragment(1);
+        loadFragment(new FragmentCurrentMeasurement());
         break;
 
-      case R.id.nav_records_diagram:
-        //loadFragment(2);
-        loadFragment2(new FragmentDiagram());
+      case R.id.nav_records_diagram_long_time_energy:
+        fragmentChoose = R.id.nav_records_diagram_long_time_energy;
+        loadFragment(new FragmentDiagramOneDay());
         break;
 
-      case R.id.nav_records_table:
-        loadFragment(3);
+      case R.id.nav_records_table_long_time_energy:
+        loadFragment(new FragmentTableOneDay());
+        break;
+
+      case R.id.nav_records_diagram_one_day:
+        fragmentChoose = R.id.nav_records_diagram_long_time_energy;
+        loadFragment(new FragmentDiagramOneDay());
+        break;
+
+      case R.id.nav_records_table_one_day:
+        loadFragment(new FragmentTableOneDay());
         break;
 
       case R.id.nav_information_system:
-        loadFragment(4);
+        loadFragment(new FragmentInfoSystem());
         break;
 
-      case R.id.nav_information_students:
-        loadFragment(5);
+      case R.id.nav_app:
+        showAppInfo();
         break;
 
       case R.id.nav_settings:
@@ -194,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     fragmentManager = getSupportFragmentManager();
     if (savedInstanceState == null)
-      loadFragment(0);
+      loadFragment(new FragmentHome());
   }
 
   @Override

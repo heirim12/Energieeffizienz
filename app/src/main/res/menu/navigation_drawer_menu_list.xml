@@ -3,31 +3,51 @@
 
     <group>
         <item
-            android:checkable="true"
             android:id="@+id/nav_home"
+            android:checkable="true"
             android:icon="@drawable/ic_nav_home_24dp"
-            android:title="@string/nav_home" />
+            android:title="@string/nav_home"/>
 
         <item
-            android:checkable="true"
             android:id="@+id/nav_current_measurement"
+            android:checkable="true"
             android:icon="@drawable/ic_nav_current_measurmant24dp"
-            android:title="@string/nav_current_measurement" />
+            android:title="@string/nav_current_measurement"/>
     </group>
 
-    <item android:title="@string/nav_subtitle_records">
+    <item android:title="@string/nav_subtitle_long_time_records">
         <menu>
             <item
+                android:id="@+id/nav_records_diagram_long_time_energy"
                 android:checkable="true"
-                android:id="@+id/nav_records_diagram"
                 android:icon="@drawable/ic_nav_diagram_24dp"
-                android:title="@string/nav_diagram"/>
+                android:title="@string/nav_diagram_long_time_engery"/>
+
+
 
             <item
+                android:id="@+id/nav_records_table_long_time_energy"
                 android:checkable="true"
-                android:id="@+id/nav_records_table"
                 android:icon="@drawable/ic_nav_table_24dp"
-                android:title="@string/nav_table"/>
+                android:title="@string/nav_table_long_time_energy"/>
+
+
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_subtitle_records_specific_daily_values">
+        <menu>
+            <item
+                android:id="@+id/nav_records_diagram_one_day"
+                android:checkable="true"
+                android:icon="@drawable/ic_nav_diagram_24dp"
+                android:title="@string/nav_diagram_one_day"/>
+
+            <item
+                android:id="@+id/nav_records_table_one_day"
+                android:checkable="true"
+                android:icon="@drawable/ic_nav_table_24dp"
+                android:title="@string/nav_table_one_day"/>
         </menu>
     </item>
 
@@ -41,17 +61,17 @@
 
             <item
                 android:checkable="true"
-                android:id="@+id/nav_information_students"
-                android:icon="@drawable/ic_nav_students_24dp"
-                android:title="@string/nav_students"/>
+                android:id="@+id/nav_app"
+                android:icon="@drawable/ic_nav_app"
+                android:title="@string/nav_app"/>
         </menu>
     </item>
 
-    <item >
+    <item>
         <menu>
             <item
-                android:checkable="true"
                 android:id="@+id/nav_settings"
+                android:checkable="true"
                 android:icon="@drawable/ic_nav_settings_black_24dp"
                 android:title="@string/nav_settings"/>
         </menu>
