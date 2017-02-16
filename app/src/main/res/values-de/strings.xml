@@ -11,11 +11,11 @@
     <!-- ======================================================================================= -->
     <string name="nav_home">Start</string>
     <string name="nav_current_measurement">Laufende Messung</string>
-    <string name="nav_subtitle_long_time_records">Langzeit Aufzeichnungen: Energie</string>
+    <string name="nav_subtitle_long_time_records">Energieertrag</string>
     <string name="nav_subtitle_records_specific_daily_values">Detaillierte Tageswerte</string>
-    <string name="nav_diagram_long_time_engery">Diagramm: Energie</string>
+    <string name="nav_diagram_long_time_engery">Diagramm</string>
     <string name="nav_diagram_one_day">Diagramm</string>
-    <string name="nav_table_long_time_energy">Tabelle: Energie</string>
+    <string name="nav_table_long_time_energy">Tabelle</string>
     <string name="nav_table_one_day">Tabelle</string>
     <string name="nav_subtitle_information">Informationen</string>
     <string name="nav_system">Anlage</string>
@@ -29,11 +29,11 @@
     <!-- ======================================================================================= -->
     <string name="main_activity_alert_about">Über</string>
     <string name="main_activity_alert_close">schließen</string>
-    <string name="main_activity_alert_version">v0.1</string>
+    <string name="main_activity_alert_version">Energieeffizienz v0.1</string>
     <string name="main_activity_alert_developer">Entwickler: Richard Heinz</string>
     <string name="main_activity_alert_mail">heirim12@htl-kaindorf.ac.at</string>
     <string name="main_activity_alert_info1">Diese App wurde für die HTL Kaindorf in verbindung mit der Diplomarbeit "Sonnenenergieeffizienz" entwickelt.</string>
-    <string name="main_activity_alert_info2">Sie dient zum Abrufen und Darstellen von Momentanmessungen, Energieertrag und für Langzeitdaten von der Datenbank.</string>
+    <string name="main_activity_alert_info2">Sie dient zum Abrufen und Darstellen von Momentanmessungen, Energieertrag und für Langzeitdaten aus der Datenbank.</string>
 
 
     <!-- ======================================================================================= -->

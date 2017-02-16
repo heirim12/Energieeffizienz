@@ -11,11 +11,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.Space;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
@@ -39,10 +43,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
   private void showAppInfo()
   {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage("Test")
-            .setTitle("Test");
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(R.string.main_activity_alert_about);
+
+    final LinearLayout aboutLayout =
+            (LinearLayout) this.getLayoutInflater().inflate(R.layout.dialog_about, null);
+
     builder.setPositiveButton(R.string.main_activity_alert_close, null);
+    builder.setView(aboutLayout);
     AlertDialog dialog = builder.create();
     dialog.show();
   }
@@ -50,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   private void loadFragment(Fragment fragment)
   {
     fragmentTransaction = fragmentManager.beginTransaction();
-//    Fragment oldFragment = fragmentManager.findFragmentById(int);
-//    oldFragment.onDestroy();
     fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
     fragmentTransaction.commit();
   }
@@ -72,10 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
   public boolean onNavigationItemSelected(MenuItem item)
   {
-    // Handle navigation view item clicks here.
-    int id = item.getItemId();
-    navigationView.setCheckedItem(id);
-    switch (id)
+    switch (item.getItemId())
     {
       case R.id.nav_home:
         loadFragment(new FragmentHome());
@@ -159,10 +162,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       e.printStackTrace();
     }
 
-
     fragmentManager = getSupportFragmentManager();
     if (savedInstanceState == null)
+    {
+      navigationView.setCheckedItem(R.id.nav_home);
       loadFragment(new FragmentHome());
+    }
+
   }
 
   @Override
