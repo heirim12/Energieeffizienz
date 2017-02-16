@@ -260,7 +260,8 @@ public class PhotovoltaicDatabase extends Database
     {
       open();
       final Statement statement = createStatement();
-      final Calendar endDate = recordsSettings.getEndDate(); // we gets a date with the time 00:00
+      final Calendar endDate = new GregorianCalendar();
+      endDate.setTimeInMillis(recordsSettings.getEndDate().getTimeInMillis()); // we gets a date with the time 00:00
       endDate.add(Calendar.HOUR, 23); // add time to get 23:59
       endDate.add(Calendar.MINUTE, 59);
       String sql = ("SELECT epoch_ms,");
@@ -288,7 +289,7 @@ public class PhotovoltaicDatabase extends Database
       sql = sql.substring(0, sql.length() - 1); // removes the last comma
       sql = String.format("%s FROM pv_history WHERE epoch_ms >= %d AND epoch_ms <= %d", sql,
               recordsSettings.getStartDate().getTimeInMillis(),
-              recordsSettings.getEndDate().getTimeInMillis());
+              endDate.getTimeInMillis());
 
       System.out.println(sql);
 

@@ -6,39 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".gui.fragments.FragmentTable">
 
-    <!--
-    <HorizontalScrollView
-        android:id="@+id/fragment_table_horizontalScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:id="@+id/fragment_table_mainLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/fragment_table_pressicon_padding_right"
-                android:paddingTop="@dimen/fragment_table_pressicon_padding_top"
-                app:srcCompat="@drawable/ic_diagram_table_press_icon"
-                android:layout_gravity="right"/>
-
-            <TextView
-                android:text="@string/fragment_table_starttext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:paddingRight="@dimen/fragment_diagram_layout_margin"
-                android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"/>
-        </LinearLayout>
-
-    </HorizontalScrollView>
-    -->
-
     <LinearLayout
         android:id="@+id/fragment_table_mainLinearLayout"
         android:layout_width="match_parent"
@@ -65,13 +32,6 @@
                 android:layout_gravity="right"
                 android:paddingRight="@dimen/fragment_diagram_layout_margin"
                 android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"/>
-
-            <ListView
-                android:id="@+id/testListview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </ListView>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

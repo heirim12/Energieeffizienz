@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
-import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettingsOneDay;
+import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +45,7 @@ public class DialogRecordsSettingsOneDay extends DialogFragment
 //================================================================================================
   public interface OnRecordsSettingsOKListener
   {
-    public void onRecordsSettingsOneDayOKListener(RecordsSettingsOneDay recordsSettingsOneDay);
+    public void onRecordsSettingsOneDayOKListener(RecordsSettings recordsSettings);
   }
 
   private class DialogOKClickListener implements DialogInterface.OnClickListener
@@ -75,13 +75,15 @@ public class DialogRecordsSettingsOneDay extends DialogFragment
       // month -1 because GregorianCalender starts month with 0
       Calendar date = new GregorianCalendar(year, month, day);
 
-      final RecordsSettingsOneDay recordsSettingsOneDay =
-              new RecordsSettingsOneDay(date,
-                      bothPower.isChecked(),
-                      panel1Voltage.isChecked(), panel1Current.isChecked(), panel1Power.isChecked(),
-                      panel2Voltage.isChecked(), panel2Current.isChecked(),panel2Power.isChecked());
+      final RecordsSettings recordsSettings =
+              new RecordsSettings(date, date,
+                      bothPower.isChecked(), false,
+                      panel1Voltage.isChecked(), panel1Current.isChecked(),
+                      panel1Power.isChecked(), false,
+                      panel2Voltage.isChecked(), panel2Current.isChecked(),
+                      panel2Power.isChecked(), false);
       myOKListener.onRecordsSettingsOneDayOKListener
-              (recordsSettingsOneDay);
+              (recordsSettings);
     }
   }
 
@@ -328,7 +330,8 @@ public class DialogRecordsSettingsOneDay extends DialogFragment
       panel2Voltage.setChecked(recordSettingsBundle.getBoolean("panel2Voltage", false));
       panel2Current.setChecked(recordSettingsBundle.getBoolean("panel2Current", false));
       panel2Power.setChecked(recordSettingsBundle.getBoolean("panel2Power", false));
-
+      final Calendar calendarDate = new GregorianCalendar();
+      calendarDate.setTimeInMillis(recordSettingsBundle.getLong("date"));
 
       if (panel1Voltage.isChecked() && panel1Current.isChecked() && panel1Power.isChecked())
         panel1All.setChecked(true);
@@ -336,7 +339,10 @@ public class DialogRecordsSettingsOneDay extends DialogFragment
       if (panel2Voltage.isChecked() && panel2Current.isChecked() && panel2Power.isChecked())
         panel2All.setChecked(true);
 
-      date.setText(String.format("%02d.%02d.%04d", day, month, year));
+      date.setText(String.format("%02d.%02d.%04d",
+              calendarDate.get(Calendar.DAY_OF_MONTH),
+              calendarDate.get(Calendar.MONTH),
+              calendarDate.get(Calendar.YEAR)));
     }
   }
 

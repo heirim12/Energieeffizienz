@@ -218,4 +218,34 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- ======================================================================================= -->
+
+    <!-- Fragment Records Table: fragment_table.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_table_one_day_title">Table</string>
+    <string name="fragment_table_one_day_settings_icon_button">Settings</string>
+    <string name="fragment_table_one_day_starttext">Press the Settings-Button in the Toolbar</string>
+
+    <string name="fragment_table_one_day_share_icon_button">Share as csv-file</string>
+    <string name="fragment_table_one_day_save_icon_button">Save as csv-file</string>
+
+    <string name="fragment_table_one_day_settings_hasnot_changed">The settings haven´t changed.</string>
+    <string name="fragment_table_one_day_settings_has_changed">Settings have been saved, the data will be shown soon.</string>
+
+    <string name="fragment_table_one_day_dateTime">Date/Time</string>
+    <string name="fragment_table_one_day_voltage_panel1">Voltage P1</string>
+    <string name="fragment_table_one_day_voltage_panel2">Voltag P2</string>
+    <string name="fragment_table_one_day_current_panel1">Current P1</string>
+    <string name="fragment_table_one_day_current_panel2">Current P2</string>
+    <string name="fragment_table_one_day_power_panel1">Power P1</string>
+    <string name="fragment_table_one_day_power_panel2">Power P2</string>
+    <string name="fragment_table_one_day_power_both_panels">Power P1+P2</string>
+    <string name="fragment_table_one_day_energy_panel1">Energy P1</string>
+    <string name="fragment_table_one_day_energy_panel2">Energy P2</string>
+    <string name="fragment_table_one_day_energy_both_panels">Energy P1+P2</string>
+
+    <string name="fragment_table_one_day_voltage_unit">V</string>
+    <string name="fragment_table_one_day_current_unit">A</string>
+    <string name="fragment_table_one_day_power_unit">W</string>
+    <string name="fragment_table_one_day_energy_unit">Wh</string>
+    <!-- ======================================================================================= -->
 </resources>

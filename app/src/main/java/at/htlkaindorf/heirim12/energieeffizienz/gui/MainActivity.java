@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoStudents;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoSystem;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTable;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTableOneDay;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
@@ -34,6 +36,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   private DrawerLayout drawerLayout;
   private NavigationView navigationView;
   private int fragmentChoose;
+
+  private void loadFragment2(Fragment fragment)
+  {
+    fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
+    fragmentTransaction.commit();
+  }
 
   private void loadFragment(int sel)
   {
@@ -64,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         break;
 
       case 3:
-        FragmentTable fragmentTable = new FragmentTable();
+//        FragmentTable fragmentTable = new FragmentTable();
+        FragmentTableOneDay fragmentTable = new FragmentTableOneDay();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragmentTable);
         fragmentTransaction.commit();
@@ -117,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         break;
 
       case R.id.nav_records_diagram:
-        loadFragment(2);
+        //loadFragment(2);
+        loadFragment2(new FragmentDiagram());
         break;
 
       case R.id.nav_records_table:

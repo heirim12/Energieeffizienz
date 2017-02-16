@@ -187,4 +187,35 @@
     <string name="dialog_diagram_power">Leistung</string>
     <string name="dialog_diagram_energy">Energie</string>
     <!-- ======================================================================================= -->
+
+    <!-- Fragment Records Table One Day: fragment_table.xml -->
+    <!-- ======================================================================================= -->
+    <string name="fragment_table_one_day_title">Tabelle</string>
+    <string name="fragment_table_one_day_settings_icon_button">Einstellungen</string>
+    <string name="fragment_table_one_day_starttext">Drücke den Einstellungs-Button in der Toolbar</string>
+
+    <string name="fragment_table_one_day_share_icon_button">Teilen als csv-Datei</string>
+    <string name="fragment_table_one_day_save_icon_button">Speichern als csv-Datei</string>
+
+    <string name="fragment_table_one_day_settings_hasnot_changed">Die Einstellungen haben sich nicht geändert.</string>
+    <string name="fragment_table_one_day_settings_has_changed">Einstellungen wurden übernommen, die Daten werden in kürze angezeigt.</string>
+
+    <string name="fragment_table_one_day_dateTime">Datum/Zeit</string>
+    <string name="fragment_table_one_day_voltage_panel1">Spannung P1</string>
+    <string name="fragment_table_one_day_voltage_panel2">Spannung P2</string>
+    <string name="fragment_table_one_day_current_panel1">Strom P1</string>
+    <string name="fragment_table_one_day_current_panel2">Strom P2</string>
+    <string name="fragment_table_one_day_power_panel1">Leistung P1</string>
+    <string name="fragment_table_one_day_power_panel2">Leistung P2</string>
+    <string name="fragment_table_one_day_power_both_panels">Leistung P1+P2</string>
+    <string name="fragment_table_one_day_energy_panel1">Energie P1</string>
+    <string name="fragment_table_one_day_energy_panel2">Energie P2</string>
+    <string name="fragment_table_one_day_energy_both_panels">Energie P1+P2</string>
+
+    <string name="fragment_table_one_day_voltage_unit">V</string>
+    <string name="fragment_table_one_day_current_unit">A</string>
+    <string name="fragment_table_one_day_power_unit">W</string>
+    <string name="fragment_table_one_day_energy_unit">Wh</string>
+    <!-- ======================================================================================= -->
+
 </resources>

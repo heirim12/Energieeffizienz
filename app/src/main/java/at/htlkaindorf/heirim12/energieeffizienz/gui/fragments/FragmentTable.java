@@ -442,8 +442,7 @@ public class FragmentTable extends Fragment
     mainLayout.addView(dateLayout);
     mainLayout.addView(dataHorizontalScrollView);
 
-    //OnScrollListener: If one ListView Scrolls the other Scrolls the same;
-    // For the user it looks like it is one.
+    //OnScrollListener: If one ListView Scrolls the other Scrolls the same; For
     AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener()
     {
       @Override
@@ -475,7 +474,7 @@ public class FragmentTable extends Fragment
   }
 
   //================================================================================================
-  // Methods for saving the date from the Table
+  // Methods for saving the diagram
   //================================================================================================
   private void saveTable(String filename)
   {
