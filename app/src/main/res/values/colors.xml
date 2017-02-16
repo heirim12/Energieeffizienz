@@ -30,8 +30,10 @@
 
     <!--    Table TEST-->
     <color name="colorTableBorders">#000000</color>
-    <color name="colorTableRow1">#07ba22</color> <!-- same as colorPrimaryGreen-->
-    <color name="colorTableRow2">#089724</color> <!-- same as colorPrimaryDarkGreen-->
+    <color name="colorTableHeader">#ffffff</color> <!-- same as colorPrimaryGreen-->
+    <color name="colorTableDateColumn">#ffffff</color> <!-- same as colorPrimaryGreen-->
+    <color name="colorTableRow1">#9807ba22</color> <!-- same as colorPrimaryGreen-->
+    <color name="colorTableRow2">#81089724</color> <!-- same as colorPrimaryDarkGreen-->
 
     <!--    Table -->
     <color name="colorTableCell">#97ed75</color>

@@ -122,16 +122,16 @@
     <string name="fragment_table_settings_has_changed">Einstellungen wurden übernommen, die Daten werden in kürze angezeigt.</string>
 
     <string name="fragment_table_dateTime">Datum/Zeit</string>
-    <string name="fragment_table_voltage_panel1">Spannung Panel1 [V]</string>
-    <string name="fragment_table_voltage_panel2">Spannung Panel2 [V]</string>
-    <string name="fragment_table_current_panel1">Strom Panel1 [A]</string>
-    <string name="fragment_table_current_panel2">Strom Panel2 [A]</string>
-    <string name="fragment_table_power_panel1">Leistung Panel1 [W]</string>
-    <string name="fragment_table_power_panel2">Leistung Panel2 [W]</string>
-    <string name="fragment_table_power_both_panels">Leistung beide Panele [W]</string>
-    <string name="fragment_table_energy_panel1">Energie Panel1 [Wh] </string>
-    <string name="fragment_table_energy_panel2">Energie Panel2 [Wh]</string>
-    <string name="fragment_table_energy_both_panels">Energie beide Panele [Wh]</string>
+    <string name="fragment_table_voltage_panel1">Spannung P1</string>
+    <string name="fragment_table_voltage_panel2">Spannung P2</string>
+    <string name="fragment_table_current_panel1">Strom P1</string>
+    <string name="fragment_table_current_panel2">Strom P2</string>
+    <string name="fragment_table_power_panel1">Leistung P1</string>
+    <string name="fragment_table_power_panel2">Leistung P2</string>
+    <string name="fragment_table_power_both_panels">Leistung P1+P2</string>
+    <string name="fragment_table_energy_panel1">Energie P1</string>
+    <string name="fragment_table_energy_panel2">Energie P2</string>
+    <string name="fragment_table_energy_both_panels">Energie P1+P2</string>
 
     <string name="fragment_table_voltage_unit">V</string>
     <string name="fragment_table_current_unit">A</string>
