@@ -41,6 +41,7 @@
     <dimen name="fragment_table_layout_margin">16dp</dimen>
     <dimen name="fragment_table_pressicon_padding_right">50dp</dimen>
     <dimen name="fragment_table_pressicon_padding_top">5dp</dimen>
+    <dimen name="fragment_table_cell">2dp</dimen>
     <!-- ======================================================================================= -->
 
     <!-- Dialog Settings-->

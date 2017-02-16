@@ -1,6 +1,8 @@
 package at.htlkaindorf.heirim12.energieeffizienz.gui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
+import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentCurrentMeasurement;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagram;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
@@ -161,6 +164,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     navigationView.setNavigationItemSelectedListener(this);
 
     drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+    //reload settings
+    final SharedPreferences sharedPreferences =
+            getSharedPreferences(getString(R.string.shared_preference_file1), Context.MODE_PRIVATE);
+    try
+    {
+      PhotovoltaicDatabase.changeSettings(
+              sharedPreferences.getString(getString(R.string.shared_preference_saved_ip), "localhost"),
+              sharedPreferences.getString(getString(R.string.shared_preference_saved_port), "5432"),
+              sharedPreferences.getString(getString(R.string.shared_preference_saved_user), "smartphone"),
+              sharedPreferences.getString(getString(R.string.shared_preference_saved_password), "htl"));
+    } catch (ClassNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+
 
     fragmentManager = getSupportFragmentManager();
     if (savedInstanceState == null)

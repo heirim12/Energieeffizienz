@@ -66,7 +66,7 @@ public class FragmentHome extends Fragment
             String.format("%.2fW",homeValues.getPanel1Power()),
             String.format("%.2fWh",homeValues.getPanel1Energy()),
             String.format("%.2fW",homeValues.getPanel2Power()),
-            String.format("%.2fWh",homeValues.getPanel1Energy())};
+            String.format("%.2fWh",homeValues.getPanel2Energy())};
 
     for (int i = 0; i < textViewId.length; i++)
     {

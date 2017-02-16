@@ -1,13 +1,16 @@
 package at.htlkaindorf.heirim12.energieeffizienz.gui.fragments;
 
 
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,6 +57,7 @@ public class FragmentTable extends Fragment
   private RecordsSettings recordsSettings = null;
   private Records records;
 
+
   //================================================================================================
   // Methods and classes for creating the table
   //================================================================================================
@@ -64,24 +68,33 @@ public class FragmentTable extends Fragment
     private TextView panel1Voltage, panel1Current, panel1Power, panel1Energy;
     private TextView panel2Voltage, panel2Current, panel2Power, panel2Energy;
     private TextView powerBoth, energyBoth;
+    private final int color;
+    private final int height;
 
 
-    public CustomTableLineLayout(RecordsSettings recordsSettings)
+    public CustomTableLineLayout(RecordsSettings recordsSettings, int color, int height)
     {
+      this.color = color;
+      this.height = height;
       this.recordsSettings = recordsSettings;
       createTableLineLayout();
     }
 
-    private TextView createTextView(float weight, String string)
+    private TextView createTextView(String string)
     {
       final TextView textView = new TextView(getContext());
       textView.setLayoutParams(new LinearLayout.LayoutParams(
-              0, ViewGroup.LayoutParams.WRAP_CONTENT, weight));
-      textView.setGravity(Gravity.CENTER);
+              ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
       textView.setText(String.format("%s", string));
-      //textView.setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
-      //textView.setPadding(border, border, border, border);
-      //textView.setTextColor();
+      int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
+      textView.setPadding(padding, padding, padding, padding);
+      textView.measure(0,0);
+      textView.setLayoutParams(new LinearLayout.LayoutParams(
+              textView.getMeasuredWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
+      textView.setGravity(Gravity.CENTER);
+      textView.setGravity(Gravity.CENTER_VERTICAL);
+      textView.setGravity(Gravity.CENTER_HORIZONTAL);
+
       return textView;
     }
 
@@ -91,66 +104,66 @@ public class FragmentTable extends Fragment
       tableLineLayout.setOrientation(LinearLayout.HORIZONTAL);
       tableLineLayout.setLayoutParams(
               new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                      LinearLayout.LayoutParams.WRAP_CONTENT));
-      tableLineLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTableCell));
+                      height));
+      tableLineLayout.setBackgroundColor(ContextCompat.getColor(getContext(), color));
 
       if (recordsSettings.isPanel1Voltage())
       {
-        panel1Voltage = createTextView(1, getString(R.string.fragment_table_voltage_panel1));
+        panel1Voltage = createTextView(getString(R.string.fragment_table_voltage_panel1));
         tableLineLayout.addView(panel1Voltage);
       }
 
       if (recordsSettings.isPanel1Current())
       {
-        panel1Current = createTextView(1, getString(R.string.fragment_table_current_panel1));
+        panel1Current = createTextView(getString(R.string.fragment_table_current_panel1));
         tableLineLayout.addView(panel1Current);
       }
 
       if (recordsSettings.isPanel1Power())
       {
-        panel1Power = createTextView(1, getString(R.string.fragment_table_power_panel1));
+        panel1Power = createTextView(getString(R.string.fragment_table_power_panel1));
         tableLineLayout.addView(panel1Power);
       }
 
       if (recordsSettings.isPanel1Energy())
       {
-        panel1Energy = createTextView(1, getString(R.string.fragment_table_energy_panel1));
+        panel1Energy = createTextView(getString(R.string.fragment_table_energy_panel1));
         tableLineLayout.addView(panel1Energy);
       }
 
       if (recordsSettings.isPanel2Voltage())
       {
-        panel2Voltage = createTextView(1, getString(R.string.fragment_table_voltage_panel2));
+        panel2Voltage = createTextView(getString(R.string.fragment_table_voltage_panel2));
         tableLineLayout.addView(panel2Voltage);
       }
 
       if (recordsSettings.isPanel2Current())
       {
-        panel2Current = createTextView(1, getString(R.string.fragment_table_current_panel2));
+        panel2Current = createTextView(getString(R.string.fragment_table_current_panel2));
         tableLineLayout.addView(panel2Current);
       }
 
       if (recordsSettings.isPanel2Power())
       {
-        panel2Power = createTextView(1, getString(R.string.fragment_table_power_panel2));
+        panel2Power = createTextView(getString(R.string.fragment_table_power_panel2));
         tableLineLayout.addView(panel2Power);
       }
 
       if (recordsSettings.isPanel2Energy())
       {
-        panel2Energy = createTextView(1, getString(R.string.fragment_table_energy_panel2));
+        panel2Energy = createTextView(getString(R.string.fragment_table_energy_panel2));
         tableLineLayout.addView(panel2Energy);
       }
 
       if (recordsSettings.isBothPower())
       {
-        powerBoth = createTextView(1, getString(R.string.fragment_table_power_both_panels));
+        powerBoth = createTextView(getString(R.string.fragment_table_power_both_panels));
         tableLineLayout.addView(powerBoth);
       }
 
       if (recordsSettings.isBothEnergy())
       {
-        energyBoth = createTextView(1, getString(R.string.fragment_table_energy_both_panels));
+        energyBoth = createTextView(getString(R.string.fragment_table_energy_both_panels));
         tableLineLayout.addView(energyBoth);
       }
     }
@@ -215,12 +228,19 @@ public class FragmentTable extends Fragment
   {
     private final Records records;
     private final RecordsSettings recordsSettings;
+    private final int lineHeight;
+    private final int color1;
+    private final int color2;
 
-    public DataListViewAdapter(Records records, RecordsSettings recordsSettings)
+    public DataListViewAdapter(Records records, RecordsSettings recordsSettings, int lineHeight,
+                               int color1, int color2)
     {
-      //super();
+      super();
       this.records = records;
       this.recordsSettings = recordsSettings;
+      this.lineHeight = lineHeight;
+      this.color1 = color1;
+      this.color2 = color2;
     }
 
     @Override
@@ -249,7 +269,10 @@ public class FragmentTable extends Fragment
 
       if (view == null)
       {
-        viewHolder = new CustomTableLineLayout(recordsSettings);
+        if ((index % 2) == 0)
+          viewHolder = new CustomTableLineLayout(recordsSettings, color1, lineHeight);
+        else
+          viewHolder = new CustomTableLineLayout(recordsSettings, color2, lineHeight);
         view = viewHolder.getTableLineLayout();
         view.setTag(viewHolder);
       }
@@ -299,7 +322,7 @@ public class FragmentTable extends Fragment
 
     public DateListViewAdapter(Records records)
     {
-      //super();
+      super();
       this.records = records;
     }
 
@@ -332,6 +355,11 @@ public class FragmentTable extends Fragment
         textViewHolder = new TextView(getContext());
         textViewHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+        int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
+        textViewHolder.setPadding(padding, padding, padding, padding);
+        textViewHolder.setGravity(Gravity.CENTER);
+        textViewHolder.setGravity(Gravity.CENTER_VERTICAL);
+        textViewHolder.setGravity(Gravity.CENTER_HORIZONTAL);
         view = textViewHolder;
         view.setTag(textViewHolder);
       }
@@ -345,78 +373,84 @@ public class FragmentTable extends Fragment
     }
   }
 
+  private int calculateTextWigthInPx(TextView textView)
+  {
+    Rect bounds = new Rect();
+    Paint textPaint = textView.getPaint();
+    String text = textView.getText().toString();
+    textPaint.getTextBounds(text,0,text.length(),bounds);
+    int height = bounds.height();
+    return bounds.width();
+  }
+
+  private int calculateTextHeightInPx(TextView textView)
+  {
+    Rect bounds = new Rect();
+    Paint textPaint = textView.getPaint();
+    String text = textView.getText().toString();
+    textPaint.getTextBounds(text,0,text.length(),bounds);
+    return bounds.height();
+  }
+
   private void createTable(Records records)
   {
     final LinearLayout mainLayout =
             (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
 
-
-
-//    Layout and children views for the left side of the Table (Date/Time)
-    final LinearLayout dateLayout = new LinearLayout(getContext());
-//    dateLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.MATCH_PARENT));
-    dateLayout.setLayoutParams(new LinearLayout.LayoutParams(150,
-            ViewGroup.LayoutParams.WRAP_CONTENT));
-    dateLayout.setOrientation(LinearLayout.VERTICAL);
-
     final TextView dateTextView = new TextView(getContext());
     dateTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
+    dateTextView.setText(new SimpleDateFormat("dd.MM.yy HH:mm").format(
+            new Date(records.get(1).getDateTime().getTimeInMillis())));
+    width = calculateTextWigthInPx(dateTextView);
+    dateTextView.measure(0,0);
+
+//    Layout and children views for the left side of the Table (Date/Time)
+    final LinearLayout dateLayout = new LinearLayout(getContext());
+    dateLayout.setLayoutParams(new LinearLayout.LayoutParams(dateTextView.getMeasuredWidth(),
+            ViewGroup.LayoutParams.WRAP_CONTENT));
+//    dateLayout.setLayoutParams(new LinearLayout.LayoutParams(calculateTextWigthInPx(dateTextView),
+//            ViewGroup.LayoutParams.WRAP_CONTENT));
+    dateLayout.setOrientation(LinearLayout.VERTICAL);
+
     dateTextView.setText(getString(R.string.fragment_table_dateTime));
 
+
     final ListView dateListView = new ListView(getContext());
-    dateListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT));
+    dateListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT));
     dateListView.setAdapter(new DateListViewAdapter(records));
-    dateListView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-    dateListView.setOnScrollListener(new AbsListView.OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView absListView, int i)
-      {
-
-      }
-
-      @Override
-      public void onScroll(AbsListView absListView, int i, int i1, int i2)
-      {
-        System.out.println("Juhuhuhuhuhuhuhuhuhuhuihujhiöo");
-      }
-    });
 
     dateLayout.addView(dateTextView);
     dateLayout.addView(dateListView);
 
 
 //    //Layout and children views for the rigth side of the table (Data)
-    final HorizontalScrollView dataScrollView = new HorizontalScrollView(getContext());
-    dataScrollView.setLayoutParams(new ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    final HorizontalScrollView dataHorizontalScrollView = new HorizontalScrollView(getContext());
+    dataHorizontalScrollView.setLayoutParams(new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+
     final LinearLayout dataLayout = new LinearLayout(getContext());
-//    dateLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.MATCH_PARENT));
-    dataLayout.setLayoutParams(new LinearLayout.LayoutParams(0,
-            ViewGroup.LayoutParams.MATCH_PARENT, 1));
-    dateLayout.setOrientation(LinearLayout.VERTICAL);
+    dataLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT));
     dataLayout.setOrientation(LinearLayout.VERTICAL);
-//    final CustomTableLineLayout customTableLineLayout = new CustomTableLineLayout(recordsSettings);
+
     final LinearLayout header = new CustomTableLineLayout(recordsSettings).getTableLineLayout();
 
     final ListView dataListView = new ListView(getContext());
-    dataListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+    dataListView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
     dataListView.setAdapter(new DataListViewAdapter(records, recordsSettings));
     dataListView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
     dataLayout.addView(header);
     dataLayout.addView(dataListView);
-    dataScrollView.addView(dataLayout);
+    dataHorizontalScrollView.addView(dataLayout);
 
 
     mainLayout.removeAllViews();
     mainLayout.addView(dateLayout);
-    mainLayout.addView(dataScrollView);
+    mainLayout.addView(dataHorizontalScrollView);
 
 
 //    DataListViewAdapter adapter =
