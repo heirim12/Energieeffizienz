@@ -367,7 +367,8 @@ public class FragmentTable extends Fragment
         textViewHolder = (TextView) view.getTag();
       }
 
-        textViewHolder.setText(dateFormat.format(new Date(record.getDateTime().getTimeInMillis())));
+//        textViewHolder.setText(dateFormat.format(new Date(record.getDateTime().getTimeInMillis())));
+      textViewHolder.setText(dateFormat.format(new Date(record.getTimeInMillis())));
       return view;
     }
   }
@@ -385,8 +386,10 @@ public class FragmentTable extends Fragment
     int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
     dateTextView.setPadding(padding, padding, padding, padding);
     dateTextView.setBackgroundColor(getResources().getColor(R.color.colorTableWhite));
+//    dateTextView.setText(new SimpleDateFormat("dd.MM.yy HH:mm").format(
+//            new Date(records.get(1).getDateTime().getTimeInMillis())));
     dateTextView.setText(new SimpleDateFormat("dd.MM.yy HH:mm").format(
-            new Date(records.get(1).getDateTime().getTimeInMillis())));
+            new Date(records.get(1).getTimeInMillis())));
     dateTextView.measure(0,0);
     final int lineHeight = dateTextView.getMeasuredHeight();
 

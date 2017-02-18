@@ -9,7 +9,8 @@ import java.util.GregorianCalendar;
 
 public class Record
 {
-  private final Calendar dateTime;
+  private final long timeInMillis;
+  //private final Calendar dateTime;
   private final double
                         bothPower, bothEnergy,
                         panel1Voltage, panel1Current, panel1Power, panel1Energy,
@@ -20,7 +21,8 @@ public class Record
                 double panel1Voltage, double panel1Current, double panel1Power, double panel1Energy,
                 double panel2Voltage, double panel2Current, double panel2Power, double panel2Energy)
   {
-    this.dateTime = dateTime;
+//    this.dateTime = dateTime;
+    this.timeInMillis = dateTime.getTimeInMillis();
     this.bothPower = bothPower;
     this.bothEnergy = bothEnergy;
     this.panel1Voltage = panel1Voltage;
@@ -33,9 +35,16 @@ public class Record
     this.panel2Energy = panel2Energy;
   }
 
-  public Calendar getDateTime()
+
+
+//  public Calendar getDateTime()
+//  {
+//    return dateTime;
+//  }
+
+  public long getTimeInMillis()
   {
-    return dateTime;
+    return timeInMillis;
   }
 
   public double getBothPower()

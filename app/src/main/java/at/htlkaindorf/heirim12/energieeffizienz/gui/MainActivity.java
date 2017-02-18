@@ -6,28 +6,28 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.Space;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentCurrentMeasurement;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagramEnergy;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagramOneDay;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoStudents;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoSystem;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTable;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTableOneDay;
 
 
@@ -88,22 +88,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(new FragmentCurrentMeasurement());
         break;
 
-      case R.id.nav_records_diagram_long_time_energy:
-        fragmentChoose = R.id.nav_records_diagram_long_time_energy;
+      case R.id.nav_records_table:
+        loadFragment(new FragmentTable());
+        break;
+
+      case R.id.nav_records_diagram_energy:
+        fragmentChoose = R.id.nav_records_diagram_energy;
+        loadFragment(new FragmentDiagramEnergy());
+        Toast.makeText(this, "Not Implemented now!!", Toast.LENGTH_SHORT).show();
+        break;
+
+      case R.id.nav_records_diagram_detailled_daily_valees:
+        fragmentChoose = R.id.nav_records_diagram_energy;
         loadFragment(new FragmentDiagramOneDay());
-        break;
-
-      case R.id.nav_records_table_long_time_energy:
-        loadFragment(new FragmentTableOneDay());
-        break;
-
-      case R.id.nav_records_diagram_one_day:
-        fragmentChoose = R.id.nav_records_diagram_long_time_energy;
-        loadFragment(new FragmentDiagramOneDay());
-        break;
-
-      case R.id.nav_records_table_one_day:
-        loadFragment(new FragmentTableOneDay());
         break;
 
       case R.id.nav_information_system:

@@ -15,39 +15,25 @@
             android:title="@string/nav_current_measurement"/>
     </group>
 
-    <item android:title="@string/nav_subtitle_long_time_records">
+    <item android:title="@string/nav_subtitle_records">
         <menu>
             <item
-                android:id="@+id/nav_records_diagram_long_time_energy"
-                android:checkable="true"
-                android:icon="@drawable/ic_nav_diagram_24dp"
-                android:title="@string/nav_diagram_long_time_engery"/>
-
-
-
-            <item
-                android:id="@+id/nav_records_table_long_time_energy"
+                android:id="@+id/nav_records_table"
                 android:checkable="true"
                 android:icon="@drawable/ic_nav_table_24dp"
-                android:title="@string/nav_table_long_time_energy"/>
+                android:title="@string/nav_table"/>
 
-
-        </menu>
-    </item>
-
-    <item android:title="@string/nav_subtitle_records_specific_daily_values">
-        <menu>
             <item
-                android:id="@+id/nav_records_diagram_one_day"
+                android:id="@+id/nav_records_diagram_energy"
+                android:checkable="true"
+                android:icon="@drawable/ic_nav_diagram_24dp"
+                android:title="@string/nav_diagram_energy"/>
+
+            <item
+                android:id="@+id/nav_records_diagram_detailled_daily_valees"
                 android:checkable="true"
                 android:icon="@drawable/ic_nav_diagram_24dp"
                 android:title="@string/nav_diagram_one_day"/>
-
-            <item
-                android:id="@+id/nav_records_table_one_day"
-                android:checkable="true"
-                android:icon="@drawable/ic_nav_table_24dp"
-                android:title="@string/nav_table_one_day"/>
         </menu>
     </item>
 
@@ -67,7 +53,7 @@
         </menu>
     </item>
 
-    <item>
+    <item android:title="">
         <menu>
             <item
                 android:id="@+id/nav_settings"

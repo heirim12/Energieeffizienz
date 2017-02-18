@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -360,6 +359,14 @@ public class PhotovoltaicDatabase extends Database
               bothEnergy += (((panel1Voltage * panel1Current) + (panel2Voltage * panel2Current))
                       * (double) timeStep);
 
+
+            if (recordsSettings.isPanel1Voltage() ||
+                    recordsSettings.isPanel1Current() ||
+                    recordsSettings.isPanel1Power() ||
+                    recordsSettings.isPanel2Voltage() ||
+                    recordsSettings.isPanel2Current() ||
+                    recordsSettings.isPanel2Power() ||
+                    recordsSettings.isBothPower())
             records.add(new Record(currentResultSetDateTime,
                     bothPower, Double.NaN,
                     panel1Voltage, panel1Current, panel1Power, Double.NaN,
@@ -370,10 +377,10 @@ public class PhotovoltaicDatabase extends Database
           {
             // the last energy value of the day will not be considered
             // => doesn´t matter because it will be in the night
-            records.add(new Record(currentResultSetDateTime,
-                    bothPower, bothEnergy / 3600000,
-                    panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
-                    panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
+              records.add(new Record(currentResultSetDateTime,
+                      bothPower, bothEnergy / 3600000,
+                      panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
+                      panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
             // divide the eneryvalues because we want Wh as unit
 
             bothEnergy = panel1Energy = panel2Energy = 0;
@@ -385,7 +392,7 @@ public class PhotovoltaicDatabase extends Database
                   bothPower, bothEnergy / 3600000,
                   panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
                   panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
-          // divide the eneryvalues because we want Wh as unit
+          // divide the energyvalues because we want Wh as unit
           hasNext = false;
         }
       }
@@ -408,7 +415,7 @@ public class PhotovoltaicDatabase extends Database
       System.out.println(homeValues.getPanel2Power());
       System.out.println(homeValues.getPanel2Energy());
 
-      for (int i = 0 ; i< 7; i++)
+      for (int i = 0; i < 7; i++)
         System.out.println(homeValues.getEnergy7Days()[i]);
 
       //refreshCurrentDataSet Test:

@@ -10,11 +10,11 @@
     <!-- ======================================================================================= -->
     <string name="nav_home">Home</string>
     <string name="nav_current_measurement">Current Measurement</string>
-    <string name="nav_subtitle_long_time_records">Energy Income</string>
+    <string name="nav_subtitle_records">Records</string>
     <string name="nav_subtitle_records_specific_daily_values">Detailed Daily Values</string>
-    <string name="nav_diagram_long_time_engery">Diagram</string>
-    <string name="nav_diagram_one_day">Diagram</string>
-    <string name="nav_table_long_time_energy">Table</string>
+    <string name="nav_diagram_energy">Diagram: Energy Income</string>
+    <string name="nav_diagram_one_day">Diagram: Detailed Daily Values</string>
+    <string name="nav_table">Table</string>
     <string name="nav_table_one_day">Table</string>
     <string name="nav_subtitle_information">Information</string>
     <string name="nav_system">System</string>

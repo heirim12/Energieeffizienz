@@ -32,8 +32,12 @@
     <color name="colorTableBorders">#000000</color>
     <color name="colorTableHeader">#ffffff</color> <!-- same as colorPrimaryGreen-->
     <color name="colorTableWhite">#ffffff</color> <!-- same as colorPrimaryGreen-->
+    <!--
+    <color name="colorTableRow1">#9807ba22</color>
+    <color name="colorTableRow2">#81089724</color>
+    -->
     <color name="colorTableRow1">#9807ba22</color> <!-- same as colorPrimaryGreen-->
-    <color name="colorTableRow2">#81089724</color> <!-- same as colorPrimaryDarkGreen-->
+    <color name="colorTableRow2">#9807ba22</color> <!-- same as colorPrimaryDarkGreen-->
 
     <!--    Table -->
     <color name="colorTableCell">#97ed75</color>

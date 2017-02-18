@@ -11,11 +11,11 @@
     <!-- ======================================================================================= -->
     <string name="nav_home">Start</string>
     <string name="nav_current_measurement">Laufende Messung</string>
-    <string name="nav_subtitle_long_time_records">Energieertrag</string>
+    <string name="nav_subtitle_records">Aufzeichnungen</string>
     <string name="nav_subtitle_records_specific_daily_values">Detaillierte Tageswerte</string>
-    <string name="nav_diagram_long_time_engery">Diagramm</string>
-    <string name="nav_diagram_one_day">Diagramm</string>
-    <string name="nav_table_long_time_energy">Tabelle</string>
+    <string name="nav_diagram_energy">Diagramm: Energieertrag</string>
+    <string name="nav_diagram_one_day">Diagramm: Detaillierte Tageswerte</string>
+    <string name="nav_table">Tabelle</string>
     <string name="nav_table_one_day">Tabelle</string>
     <string name="nav_subtitle_information">Informationen</string>
     <string name="nav_system">Anlage</string>

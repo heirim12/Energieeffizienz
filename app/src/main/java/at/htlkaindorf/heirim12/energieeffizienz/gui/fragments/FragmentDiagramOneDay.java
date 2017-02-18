@@ -49,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -234,8 +235,14 @@ public class FragmentDiagramOneDay extends Fragment
   private void createDiagram(Records records)
   {
     this.records = records;
-    final Calendar firstDate = records.get(0).getDateTime();
-    final Calendar lastDate = records.get(records.getSize() - 1).getDateTime();
+//    final Calendar firstDate = records.get(0).getDateTime();
+//    final Calendar lastDate = records.get(records.getSize() - 1).getDateTime();
+//    final long referenceTime = firstDate.getTimeInMillis() / 1000;
+
+    final Calendar firstDate = new GregorianCalendar();
+    firstDate.setTimeInMillis(records.get(0).getTimeInMillis());
+    final Calendar lastDate = new GregorianCalendar();
+    lastDate.setTimeInMillis(records.get(records.getSize() - 1).getTimeInMillis());
     final long referenceTime = firstDate.getTimeInMillis() / 1000;
 
     // initialize the LineChart and the yAxis which are necessary for creating the dataSets
@@ -273,8 +280,8 @@ public class FragmentDiagramOneDay extends Fragment
     // save the x,y pair which are requested
     for (Record record : records.getRecords())
     {
-      long timeStep = ((record.getDateTime().getTimeInMillis()) / 1000) - referenceTime;
-
+//      long timeStep = ((record.getDateTime().getTimeInMillis()) / 1000) - referenceTime;
+      long timeStep = ((record.getTimeInMillis()) / 1000) - referenceTime;
       if (recordsSettings.isPanel1Voltage())
       {
         panel1VoltageEntries.add(new Entry((float) timeStep, (float) record.getPanel1Voltage()));
