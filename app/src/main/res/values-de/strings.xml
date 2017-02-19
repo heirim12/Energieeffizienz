@@ -160,7 +160,12 @@
     <!-- Fragment Information System: fragment_info_system.xml -->
     <!-- ======================================================================================= -->
     <string name="fragment_info_system_title">Informationen: Anlage</string>
-    <string name="test_info_system">Informationen: Anlage</string>
+    <string name="fragment_info_system_Headline">Sonnenenergieeffizienz</string>
+    <string name="fragment_info_1">In der Dislozierung Arnfels (HTL Kaindorf) gibt es eine bestehende Photovoltaikanlage mit zwei Panelen. Ein Panel ist statisch montiert und das zweite ist der Sonne nachgeführt.</string>
+    <string name="fragment_info_2">Im Rahmen einer Diplomarbeit wurde die fertige Mechanische Kunstruktion genommen und die Elektronik mit der Steuereinheit neu aufgebaut.</string>
+    <string name="fragment_info_3">Nun ist es möglich, dass das Panel selbstständig der Sonne nachfährt. Relavante Daten werden gemessen und in einer Datenbank gespeichert. Mit der gewonnenen Energy wird die Werkstatt vom Schulwart geheizt.</string>
+    <string name="fragment_info_4">Mit der Android-App ist es möglich die Momentanmesswerte und die Lang-Zeit-Aufzeichnungen anzuzeigen.</string>
+
     <!-- ======================================================================================= -->
 
 

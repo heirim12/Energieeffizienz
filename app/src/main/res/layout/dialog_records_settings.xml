@@ -48,7 +48,7 @@
                     android:id="@+id/dialog_diagram_settings_buttonStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+                    android:src="@drawable/ic_date_icon_black_24dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -75,7 +75,7 @@
                     android:id="@+id/dialog_diagram_settings_buttonEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+                    android:src="@drawable/ic_date_icon_black_24dp"/>
             </LinearLayout>
 
             <Space

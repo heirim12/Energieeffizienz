@@ -11,6 +11,7 @@ import java.util.List;
 public class Records
 {
   private final List<Record> records = new ArrayList<>();
+  private final Exception exception = null;
 
   public Records()
   {
@@ -88,5 +89,10 @@ public class Records
   public List<Record> getRecords()
   {
     return records;
+  }
+
+  public Exception getException()
+  {
+    return exception;
   }
 }

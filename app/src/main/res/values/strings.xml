@@ -157,7 +157,11 @@
     <!-- Fragment Information System: fragment_info_system.xml -->
     <!-- ======================================================================================= -->
     <string name="fragment_info_system_title">Information: System</string>
-    <string name="test_info_system">Information: System</string>
+    <string name="fragment_info_system_Headline">Sun Energy Efficiency</string>
+    <string name="fragment_info_1">In the dislocation in Arnfels (HTL Kaindorf) is a photovoltaic system with two panels installed. One Panel is static and one is dynamic and following the sun.</string>
+    <string name="fragment_info_2">For our "Diplomarbeit" we took the finished mechanic construction and rebuild the electronic with the control unit for moving the dinamic panel.</string>
+    <string name="fragment_info_3">Now the system follows the sun, measures the energy income and saves all relevant data in an database. With the energy income we heat the school-janitors workshop.</string>
+    <string name="fragment_info_4">With the Android-app the current measurement and the long time records can be displayed.</string>
     <!-- ======================================================================================= -->
 
 

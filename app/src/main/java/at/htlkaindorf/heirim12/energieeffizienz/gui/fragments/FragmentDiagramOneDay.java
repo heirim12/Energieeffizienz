@@ -1,7 +1,6 @@
 package at.htlkaindorf.heirim12.energieeffizienz.gui.fragments;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -25,43 +25,32 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.IMarker;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointF;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
-import at.htlkaindorf.heirim12.energieeffizienz.communication.ReceiveRecords;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Record;
 import at.htlkaindorf.heirim12.energieeffizienz.data.Records;
 import at.htlkaindorf.heirim12.energieeffizienz.data.RecordsSettings;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettings;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.dialogs.DialogRecordsSettingsOneDay;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.diagramFormatter.SpecificValueMarkerView;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.diagramFormatter.XAxisDateFormatter;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.diagramFormatter.YAxisUnitValueFormatter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,139 +70,17 @@ public class FragmentDiagramOneDay extends Fragment
 
 
   //================================================================================================
+  // Helping Methods
+  //================================================================================================
+  private void showSnackbar(String text)
+  {
+    Snackbar.make(getActivity().findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG).show();
+  }
+
+  //================================================================================================
   // Methods and classes for creating the diagram/s
   //================================================================================================
-  private class YAxisUnitValueFormatter implements IAxisValueFormatter
-  {
-    private final String unit;
-
-    public YAxisUnitValueFormatter(String unit)
-    {
-      this.unit = unit;
-    }
-
-    @Override
-    public String getFormattedValue(float value, AxisBase axis)
-    {
-      return String.format("%.1f%s", value, unit);
-    }
-
-    @Override
-    public int getDecimalDigits()
-    {
-      return 0;
-    }
-  }
-
-  private class XAxisDateFormatter implements IAxisValueFormatter
-  {
-    private final Calendar firstDate;
-    private final Calendar lastDate;
-    private final long referenceTime;
-    private final SimpleDateFormat dateFormat;
-
-    public XAxisDateFormatter(Calendar firstDate, Calendar lastDate, long referenceTime)
-    {
-      this.firstDate = firstDate;
-      this.lastDate = lastDate;
-      this.referenceTime = referenceTime;
-      this.dateFormat = getDateFormat();
-    }
-
-    private SimpleDateFormat getDateFormat()
-    {
-      if ((lastDate.get(Calendar.YEAR) - firstDate.get(Calendar.YEAR)) < 1)
-      {
-        if ((lastDate.get(Calendar.MONTH) - firstDate.get(Calendar.MONTH)) < 1)
-        {
-          if ((lastDate.get(Calendar.DAY_OF_MONTH) - firstDate.get(Calendar.DAY_OF_MONTH)) < 1)
-          {
-            return new SimpleDateFormat("H:mm");
-          } else
-          {
-            return new SimpleDateFormat("d.MMM");
-          }
-        } else
-        {
-          return new SimpleDateFormat("d.MMM");
-        }
-      } else
-      {
-        return new SimpleDateFormat("dd.MM.yy");
-      }
-    }
-
-    @Override
-    public String getFormattedValue(float value, AxisBase axis)
-    {
-      return dateFormat.format(new Date((referenceTime + (long) value) * 1000));
-    }
-
-    @Override
-    public int getDecimalDigits()
-    {
-      return 0;
-    }
-  }
-
-  private class SpecificValueMarkerView extends MarkerView implements IMarker
-  {
-    private final long referenceTime;
-    private final long middleTimeStep;
-    private final TextView markerViewText;
-    private final SimpleDateFormat dateFormat;
-    private final String leftUnit;
-    private final String rightUnit;
-    private Boolean diagramSide; // false = left, true = right
-    private MPPointF mOffset;
-
-    public SpecificValueMarkerView(Context context, int layoutResource, long referenceTime,
-                                   Calendar lastDate, String leftUnit, String rightUnit)
-    {
-      super(context, layoutResource);
-      markerViewText = (TextView) findViewById(R.id.test_MarkerViewTextView);
-      this.referenceTime = referenceTime;
-      this.middleTimeStep = ((lastDate.getTimeInMillis() / 1000) - referenceTime) / 2;
-      this.dateFormat = new SimpleDateFormat("HH:mm; dd.MM.yyyy");
-      this.leftUnit = leftUnit;
-      this.rightUnit = rightUnit;
-      this.diagramSide = false;
-    }
-
-    @Override
-    public void refreshContent(Entry e, Highlight highlight)
-    {
-      if (e.getX() > middleTimeStep)
-        diagramSide = true;
-      else
-        diagramSide = false;
-
-      String text;
-      if (highlight.getAxis() == YAxis.AxisDependency.LEFT)
-        text = String.format("%.2f%s %s\n%s", e.getY(), leftUnit,
-                getString(R.string.fragment_diagram_marker_view_at),
-                dateFormat.format(new Date((referenceTime + (long) e.getX()) * 1000)));
-      else
-        text = String.format("%.2f%s %s\n%s", e.getY(), rightUnit,
-                getString(R.string.fragment_diagram_marker_view_at),
-                dateFormat.format(new Date((referenceTime + (long) e.getX()) * 1000)));
-
-      markerViewText.setText(text);
-      super.refreshContent(e, highlight);
-    }
-
-    @Override
-    public MPPointF getOffset()
-    {
-
-      if (diagramSide)
-        mOffset = new MPPointF(-getWidth(), -getHeight());
-      else
-        mOffset = new MPPointF(0, -getHeight());
-      return mOffset;
-    }
-  }
-
   private void addLineDataSet(List<ILineDataSet> lineDataSets, List<Entry> entries,
                               int entriesName, int entriesColor,
                               YAxis.AxisDependency axisDependency, YAxis yAxis,
@@ -237,34 +104,32 @@ public class FragmentDiagramOneDay extends Fragment
     this.records = records;
 //    final Calendar firstDate = records.get(0).getDateTime();
 //    final Calendar lastDate = records.get(records.getSize() - 1).getDateTime();
-//    final long referenceTime = firstDate.getTimeInMillis() / 1000;
+//    final long referenceTime = firstDate.getDateTimeInMillis() / 1000;
 
-    final Calendar firstDate = new GregorianCalendar();
-    firstDate.setTimeInMillis(records.get(0).getTimeInMillis());
-    final Calendar lastDate = new GregorianCalendar();
-    lastDate.setTimeInMillis(records.get(records.getSize() - 1).getTimeInMillis());
-    final long referenceTime = firstDate.getTimeInMillis() / 1000;
+    long firstDate = (records.get(0).getDateTimeInMillis());
+    long lastDate = (records.get(records.getSize() - 1).getDateTimeInMillis());
+    final long referenceTime = firstDate / 1000; // all Values formatted in Seconds => the number wont get so hight => better performance with the chart
 
     // initialize the LineChart and the yAxis which are necessary for creating the dataSets
     lineChart1 = new LineChart(getContext());
-    YAxis yAxisLeft1 = lineChart1.getAxisLeft();
+    final YAxis yAxisLeft1 = lineChart1.getAxisLeft();
     yAxisLeft1.setEnabled(false);
     String yAxisLeft1Unit = "";
-    YAxis yAxisRight1 = lineChart1.getAxisRight();
+    final YAxis yAxisRight1 = lineChart1.getAxisRight();
     yAxisRight1.setEnabled(false);
     String yAxisRight1Unit = "";
 
     lineChart2 = new LineChart(getContext());
-    YAxis yAxisLeft2 = lineChart2.getAxisLeft();
+    final YAxis yAxisLeft2 = lineChart2.getAxisLeft();
     yAxisLeft2.setEnabled(false);
     String yAxisLeft2Unit = "";
-    YAxis yAxisRight2 = lineChart2.getAxisRight();
+    final YAxis yAxisRight2 = lineChart2.getAxisRight();
     yAxisRight2.setEnabled(false);
     String yAxisRight2Unit = "";
 
     // initialize the dataSets which are necessary for setting the values in the chart
-    List<ILineDataSet> dataSets1 = new ArrayList<>();
-    List<ILineDataSet> dataSets2 = new ArrayList<>();
+    final List<ILineDataSet> dataSets1 = new ArrayList<>();
+    final List<ILineDataSet> dataSets2 = new ArrayList<>();
 
     final List<Entry> panel1VoltageEntries = new ArrayList<>();
     final List<Entry> panel2VoltageEntries = new ArrayList<>();
@@ -273,15 +138,12 @@ public class FragmentDiagramOneDay extends Fragment
     final List<Entry> panel1PowerEntries = new ArrayList<>();
     final List<Entry> panel2PowerEntries = new ArrayList<>();
     final List<Entry> bothPanelsPowerEntries = new ArrayList<>();
-//    final List<Entry> panel1EnergyEntries = new ArrayList<>();
-//    final List<Entry> panel2EnergyEntries = new ArrayList<>();
-//    final List<Entry> bothPanelsEnergyEntries = new ArrayList<>();
 
     // save the x,y pair which are requested
     for (Record record : records.getRecords())
     {
-//      long timeStep = ((record.getDateTime().getTimeInMillis()) / 1000) - referenceTime;
-      long timeStep = ((record.getTimeInMillis()) / 1000) - referenceTime;
+//      long timeStep = ((record.getDateTime().getDateTimeInMillis()) / 1000) - referenceTime;
+      long timeStep = ((record.getDateTimeInMillis()) / 1000) - referenceTime;
       if (recordsSettings.isPanel1Voltage())
       {
         panel1VoltageEntries.add(new Entry((float) timeStep, (float) record.getPanel1Voltage()));
@@ -468,14 +330,14 @@ public class FragmentDiagramOneDay extends Fragment
       }
     }
 
-    LinearLayout layout =
+    final LinearLayout layout =
             (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
-    LinearLayout.LayoutParams chartParams = new LinearLayout.LayoutParams
+    final LinearLayout.LayoutParams chartParams = new LinearLayout.LayoutParams
             (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     chartParams.weight = 1;
 
     // set the data and style the charts
-    XAxis xAxis1 = lineChart1.getXAxis();
+    final XAxis xAxis1 = lineChart1.getXAxis();
     xAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
     xAxis1.setValueFormatter(new XAxisDateFormatter(firstDate, lastDate, referenceTime));
     lineChart1.setData(new LineData(dataSets1));
@@ -494,7 +356,7 @@ public class FragmentDiagramOneDay extends Fragment
 
     if (dataSets2.size() != 0)
     {
-      XAxis xAxis2 = lineChart2.getXAxis();
+      final XAxis xAxis2 = lineChart2.getXAxis();
       xAxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
       xAxis2.setValueFormatter(new XAxisDateFormatter(firstDate, lastDate, referenceTime));
       lineChart2.setData(new LineData(dataSets2));
@@ -523,11 +385,9 @@ public class FragmentDiagramOneDay extends Fragment
   {
       if (chart.saveToGallery(filename, getString(R.string.app_name), "",
               Bitmap.CompressFormat.JPEG, 100))
-        Toast.makeText(getContext(), getString(R.string.fragment_diagram_saved),
-                Toast.LENGTH_LONG).show();
+        showSnackbar(getString(R.string.fragment_diagram_saved));
       else
-        Toast.makeText(getContext(), getString(R.string.fragment_diagram_save_error),
-                Toast.LENGTH_LONG).show();
+        showSnackbar(getString(R.string.fragment_diagram_save_error));
   }
 
   private void saveChartSettings()
@@ -579,7 +439,7 @@ public class FragmentDiagramOneDay extends Fragment
       AlertDialog chooserDialog = builder.create();
       chooserDialog.show();
     } else
-      Toast.makeText(getContext(), R.string.fragment_diagram_no_chart, Toast.LENGTH_LONG).show();
+        showSnackbar(getString(R.string.fragment_diagram_no_chart));
   }
 
 
@@ -590,9 +450,9 @@ public class FragmentDiagramOneDay extends Fragment
   {
     try
     {
-      File cachePath = new File(getContext().getCacheDir(), "images");
+      final File cachePath = new File(getContext().getCacheDir(), "images");
       cachePath.mkdir();
-      FileOutputStream stream = new FileOutputStream(cachePath + "/image.jpeg");
+      final FileOutputStream stream = new FileOutputStream(cachePath + "/image.jpeg");
       chart.getChartBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream);
       stream.close();
     } catch (IOException ex)
@@ -618,8 +478,7 @@ public class FragmentDiagramOneDay extends Fragment
       startActivity(Intent.createChooser(shareIntent, "Test"));
     } else
     {
-      Toast.makeText(getContext(), getString(R.string.fragment_diagram_share_error),
-              Toast.LENGTH_LONG).show();
+      showSnackbar(getString(R.string.fragment_diagram_share_error));
     }
   }
 
@@ -659,7 +518,7 @@ public class FragmentDiagramOneDay extends Fragment
         shareChart(lineChart1);
       }
     } else
-      Toast.makeText(getContext(), R.string.fragment_diagram_no_chart, Toast.LENGTH_LONG).show();
+        showSnackbar(getString(R.string.fragment_diagram_no_chart));
   }
 
 
@@ -672,25 +531,20 @@ public class FragmentDiagramOneDay extends Fragment
   {
     System.out.println("_______________________________________________________________________");
     if (recordsSettings.equals(this.recordsSettings))
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_diagram_settings_hasnot_changed),
-              Toast.LENGTH_LONG).show();
+      showSnackbar(getString(R.string.fragment_diagram_settings_hasnot_changed));
     else
     {
       this.recordsSettings = recordsSettings;
+      showSnackbar(getString(R.string.fragment_diagram_settings_has_changed));
 
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_diagram_settings_has_changed),
-              Toast.LENGTH_LONG).show();
-
-      LinearLayout layout =
+      final LinearLayout layout =
               (LinearLayout) thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
-      LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
+      final LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
               (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
       progressBarParams.gravity = Gravity.CENTER_HORIZONTAL;
       layout.removeAllViews();
 
-      ProgressBar progressBar = new ProgressBar(getContext(), null,
+      final ProgressBar progressBar = new ProgressBar(getContext(), null,
               android.R.attr.progressBarStyleLarge);
       progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccentGreen),
               PorterDuff.Mode.SRC_IN);
@@ -788,13 +642,11 @@ public class FragmentDiagramOneDay extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState)
   {
-    // Inflate the layout for this fragment
-    thisFragment = inflater.inflate(R.layout.fragment_diagram, container, false);
-    getActivity().setTitle(getString(R.string.fragment_diagram_title));
-    setHasOptionsMenu(true);
-    if (records != null)
+    if (records == null)
     {
-      createDiagram(records);
+      thisFragment = inflater.inflate(R.layout.fragment_diagram_one_day, container, false);
+      getActivity().setTitle(getString(R.string.fragment_diagram_title));
+      setHasOptionsMenu(true);
     }
 
     return thisFragment;
@@ -822,8 +674,7 @@ public class FragmentDiagramOneDay extends Fragment
       {
         final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
         result = photovoltaicDatabase.getHistory(recordsSettings);
-//        ReceiveRecords receiveRecords = new ReceiveRecords(recordsSettings);
-//        result = receiveRecords.getRecords();
+
       } catch (Exception ex)
       {
 //        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),

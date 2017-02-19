@@ -350,7 +350,7 @@ public class DialogRecordsSettingsOneDay extends DialogFragment
   public Dialog onCreateDialog(Bundle savedInstanceState)
   {
     viewDialog = getActivity().getLayoutInflater().inflate(
-            R.layout.fragment_dialog_records_one_day_settings, null);
+            R.layout.dialog_records_one_day_settings, null);
 
     final Calendar currentDate = Calendar.getInstance();
     final int

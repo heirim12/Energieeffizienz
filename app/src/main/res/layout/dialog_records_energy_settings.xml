@@ -47,7 +47,7 @@
                     android:id="@+id/dialog_settings_energy_buttonStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+                    android:src="@drawable/ic_date_icon_black_24dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +74,7 @@
                     android:id="@+id/dialog_settings_energy_buttonEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+                    android:src="@drawable/ic_date_icon_black_24dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -99,7 +99,7 @@
                     android:textSize="@dimen/dialog_settings_text_size"/>
 
                 <CheckBox
-                    android:id="@+id/dialog_settings_energy__energy2"
+                    android:id="@+id/dialog_settings_energy_energy2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

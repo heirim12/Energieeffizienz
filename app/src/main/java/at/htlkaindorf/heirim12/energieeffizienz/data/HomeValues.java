@@ -10,18 +10,18 @@ import java.util.ArrayList;
 
 public class HomeValues
 {
-  private final double
+  private final float
           panel1Power,
           panel1Energy,
           panel2Power,
           panel2Energy;
 
-  private final double energy7Days[];
+  private final float energy7Days[];
   private final String[] dates;
 
-  public HomeValues(double panel1Power, double panel1Energy,
-                    double panel2Power, double panel2Energy,
-                    double energy7Days[], String[] dates)
+  public HomeValues(float panel1Power, float panel1Energy,
+                    float panel2Power, float panel2Energy,
+                    float energy7Days[], String[] dates)
   {
     this.panel1Power = panel1Power;
     this.panel1Energy = panel1Energy;
@@ -31,27 +31,27 @@ public class HomeValues
     this.dates = dates;
   }
 
-  public double getPanel1Power()
+  public float getPanel1Power()
   {
     return panel1Power;
   }
 
-  public double getPanel1Energy()
+  public float getPanel1Energy()
   {
     return panel1Energy;
   }
 
-  public double getPanel2Power()
+  public float getPanel2Power()
   {
     return panel2Power;
   }
 
-  public double getPanel2Energy()
+  public float getPanel2Energy()
   {
     return panel2Energy;
   }
 
-  public double[] getEnergy7Days()
+  public float[] getEnergy7Days()
   {
     return energy7Days;
   }

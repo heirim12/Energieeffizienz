@@ -5,13 +5,13 @@
         <item
             android:id="@+id/nav_home"
             android:checkable="true"
-            android:icon="@drawable/ic_nav_home_24dp"
+            android:icon="@drawable/ic_nav_home_black_24dp"
             android:title="@string/nav_home"/>
 
         <item
             android:id="@+id/nav_current_measurement"
             android:checkable="true"
-            android:icon="@drawable/ic_nav_current_measurmant24dp"
+            android:icon="@drawable/ic_nav_current_measurmant_black_24dp"
             android:title="@string/nav_current_measurement"/>
     </group>
 
@@ -20,19 +20,19 @@
             <item
                 android:id="@+id/nav_records_table"
                 android:checkable="true"
-                android:icon="@drawable/ic_nav_table_24dp"
+                android:icon="@drawable/ic_nav_table_black_24dp"
                 android:title="@string/nav_table"/>
 
             <item
                 android:id="@+id/nav_records_diagram_energy"
                 android:checkable="true"
-                android:icon="@drawable/ic_nav_diagram_24dp"
+                android:icon="@drawable/ic_nav_diagram_black_24dp"
                 android:title="@string/nav_diagram_energy"/>
 
             <item
-                android:id="@+id/nav_records_diagram_detailled_daily_valees"
+                android:id="@+id/nav_records_diagram_detailled_daily_values"
                 android:checkable="true"
-                android:icon="@drawable/ic_nav_diagram_24dp"
+                android:icon="@drawable/ic_nav_diagram_black_24dp"
                 android:title="@string/nav_diagram_one_day"/>
         </menu>
     </item>
@@ -42,13 +42,13 @@
             <item
                 android:checkable="true"
                 android:id="@+id/nav_information_system"
-                android:icon="@drawable/ic_nav_system_24dp"
+                android:icon="@drawable/ic_nav_system_black_24dp"
                 android:title="@string/nav_system"/>
 
             <item
                 android:checkable="true"
                 android:id="@+id/nav_app"
-                android:icon="@drawable/ic_nav_app"
+                android:icon="@drawable/ic_nav_app_black_24dp"
                 android:title="@string/nav_app"/>
         </menu>
     </item>

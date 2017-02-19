@@ -6,24 +6,24 @@ package at.htlkaindorf.heirim12.energieeffizienz.data;
 
 public class CurrentValues
 {
-    private final double panel1Voltage;
-    private final double panel1Current;
-    private final double panel1Power;
+    private final float panel1Voltage;
+    private final float panel1Current;
+    private final float panel1Power;
     private final int panel1Azimuth;
     private final int panel1Elevation;
 
-    private final double panel2Voltage;
-    private final double panel2Current;
-    private final double panel2Power;
+    private final float panel2Voltage;
+    private final float panel2Current;
+    private final float panel2Power;
     private final int panel2Azimuth;
     private final int panel2Elevation;
 
-    private final double accuVoltage;
+    private final float accuVoltage;
 
-    public CurrentValues(double panel1Voltage, double panel1Current, double panel1Power,
+    public CurrentValues(float panel1Voltage, float panel1Current, float panel1Power,
                          int panel1Azimuth, int panel1Elevation,
-                         double panel2Voltage, double panel2Current, double panel2Power,
-                         double accuVoltage)
+                         float panel2Voltage, float panel2Current, float panel2Power,
+                         float accuVoltage)
     {
         this.panel1Voltage = panel1Voltage;
         this.panel1Current = panel1Current;
@@ -38,17 +38,17 @@ public class CurrentValues
         this.accuVoltage = accuVoltage;
     }
 
-    public double getPanel1Voltage()
+    public float getPanel1Voltage()
     {
         return panel1Voltage;
     }
 
-    public double getPanel1Current()
+    public float getPanel1Current()
     {
         return panel1Current;
     }
 
-    public double getPanel1Power()
+    public float getPanel1Power()
     {
         return panel1Power;
     }
@@ -63,17 +63,17 @@ public class CurrentValues
         return panel1Elevation;
     }
 
-    public double getPanel2Voltage()
+    public float getPanel2Voltage()
     {
         return panel2Voltage;
     }
 
-    public double getPanel2Current()
+    public float getPanel2Current()
     {
         return panel2Current;
     }
 
-    public double getPanel2Power()
+    public float getPanel2Power()
     {
         return panel2Power;
     }
@@ -88,7 +88,7 @@ public class CurrentValues
         return panel2Elevation;
     }
 
-    public double getAccuVoltage()
+    public float getAccuVoltage()
     {
         return accuVoltage;
     }

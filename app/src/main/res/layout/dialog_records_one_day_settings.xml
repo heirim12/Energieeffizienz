@@ -49,7 +49,7 @@
                     android:id="@+id/dialog_record_one_day_date_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_dialog_diagram_settings_date_24dp"/>
+                    android:src="@drawable/ic_date_icon_black_24dp"/>
             </LinearLayout>
 
             <Space

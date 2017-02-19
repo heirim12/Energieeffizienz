@@ -1,4 +1,4 @@
-package at.htlkaindorf.heirim12.energieeffizienz.gui;
+package at.htlkaindorf.heirim12.energieeffizienz.gui.activitys;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
@@ -28,19 +27,24 @@ import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentDiagramOne
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentHome;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentInfoSystem;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTable;
-import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentTableOneDay;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-
-  private FragmentTransaction fragmentTransaction;
-  private FragmentManager fragmentManager;
-  private ActionBarDrawerToggle actionBarDrawerToggle;
-  private DrawerLayout drawerLayout;
   private NavigationView navigationView;
-  private int fragmentChoose;
+  private DrawerLayout drawerLayout;
+  private ActionBarDrawerToggle actionBarDrawerToggle;
 
+  //================================================================================================
+  // Helping Methods
+  //================================================================================================
+  private void showSnackbar(String text)
+  {
+    Snackbar.make(findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG).show();
+  }
+
+  //Opens a AlertDialog and shows an about-page
   private void showAppInfo()
   {
     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -55,9 +59,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     dialog.show();
   }
 
+  //Replaces the old fragment with the new
   private void loadFragment(Fragment fragment)
   {
-    fragmentTransaction = fragmentManager.beginTransaction();
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    final FragmentTransaction fragmentTransaction  = fragmentManager.beginTransaction();
     fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
     fragmentTransaction.commit();
   }
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   {
     switch (item.getItemId())
     {
+
       case R.id.nav_home:
         loadFragment(new FragmentHome());
         break;
@@ -93,13 +100,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         break;
 
       case R.id.nav_records_diagram_energy:
-        fragmentChoose = R.id.nav_records_diagram_energy;
         loadFragment(new FragmentDiagramEnergy());
-        Toast.makeText(this, "Not Implemented now!!", Toast.LENGTH_SHORT).show();
         break;
 
-      case R.id.nav_records_diagram_detailled_daily_valees:
-        fragmentChoose = R.id.nav_records_diagram_energy;
+      case R.id.nav_records_diagram_detailled_daily_values:
         loadFragment(new FragmentDiagramOneDay());
         break;
 
@@ -116,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         break;
     }
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-    drawer.closeDrawer(GravityCompat.START);
+    drawerLayout.closeDrawer(GravityCompat.START);
     return true;
   }
 
@@ -126,9 +129,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    drawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-    actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-            R.string.opendrawer, R.string.closedrawer);
+
+    navigationView =
+            (NavigationView) findViewById(R.id.main_activity_navigation_drawer);
+    drawerLayout =
+            (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
+    actionBarDrawerToggle =
+            new ActionBarDrawerToggle(this, drawerLayout, R.string.opendrawer, R.string.closedrawer);
+
     drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
     //Show the Hamburger-Symbol in the ActionBar when the Drawer is not visible
@@ -139,10 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     actionBarDrawerToggle.syncState();
 
-    navigationView = (NavigationView) findViewById(R.id.main_activity_navigation_drawer);
     navigationView.setNavigationItemSelectedListener(this);
-
-    drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
     //reload settings
     final SharedPreferences sharedPreferences =
@@ -159,13 +164,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       e.printStackTrace();
     }
 
-    fragmentManager = getSupportFragmentManager();
     if (savedInstanceState == null)
     {
       navigationView.setCheckedItem(R.id.nav_home);
       loadFragment(new FragmentHome());
     }
-
   }
 
   @Override

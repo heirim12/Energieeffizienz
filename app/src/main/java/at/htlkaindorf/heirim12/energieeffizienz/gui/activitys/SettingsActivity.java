@@ -1,8 +1,9 @@
-package at.htlkaindorf.heirim12.energieeffizienz.gui;
+package at.htlkaindorf.heirim12.energieeffizienz.gui.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -84,41 +85,41 @@ public class SettingsActivity extends AppCompatActivity
             getSharedPreferences(getString(R.string.shared_preference_file1), Context.MODE_PRIVATE);
     loadOldSettings(sharedPreferences);
 
-    InputFilter[] ipFilter = new InputFilter[1];
-    ipFilter[0] = new InputFilter()
-    {
-      @Override
-      public CharSequence filter(CharSequence input, int start, int end,
-                                 Spanned dest, int dstart, int dend)
-      {
-        if (end > start)
-        {
-          String destTxt = dest.toString();
-          String resultingTxt = destTxt.substring(0, dstart)
-                  + input.subSequence(start, end)
-                  + destTxt.substring(dend);
-          if (!resultingTxt
-                  .matches("^\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3})?)?)?)?)?)?"))
-          {
-            return "";
-          } else
-          {
-            String[] splits = resultingTxt.split("\\.");
-            for (int i = 0; i < splits.length; i++)
-            {
-              if (Integer.valueOf(splits[i]) > 255)
-              {
-                return "";
-              }
-            }
-          }
-        }
-        return null;
-      }
-    };
-
-    final EditText ip = (EditText) findViewById(R.id.activity_settings_serverIp);
-    ip.setFilters(ipFilter);
+//    InputFilter[] ipFilter = new InputFilter[1];
+//    ipFilter[0] = new InputFilter()
+//    {
+//      @Override
+//      public CharSequence filter(CharSequence input, int start, int end,
+//                                 Spanned dest, int dstart, int dend)
+//      {
+//        if (end > start)
+//        {
+//          String destTxt = dest.toString();
+//          String resultingTxt = destTxt.substring(0, dstart)
+//                  + input.subSequence(start, end)
+//                  + destTxt.substring(dend);
+//          if (!resultingTxt
+//                  .matches("^\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3})?)?)?)?)?)?"))
+//          {
+//            return "";
+//          } else
+//          {
+//            String[] splits = resultingTxt.split("\\.");
+//            for (int i = 0; i < splits.length; i++)
+//            {
+//              if (Integer.valueOf(splits[i]) > 255)
+//              {
+//                return "";
+//              }
+//            }
+//          }
+//        }
+//        return null;
+//      }
+//    };
+//
+//    final EditText ip = (EditText) findViewById(R.id.activity_settings_serverIp);
+//    ip.setFilters(ipFilter);
 
     final Button saveButton = (Button) findViewById(R.id.activity_settings_saveButton);
     saveButton.setOnClickListener(new View.OnClickListener()
@@ -144,7 +145,8 @@ public class SettingsActivity extends AppCompatActivity
           finish();
         } catch (Exception ex)
         {
-          Toast.makeText(getBaseContext(), ex.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+          Snackbar.make(findViewById(android.R.id.content),
+                  ex.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
         }
       }
     });

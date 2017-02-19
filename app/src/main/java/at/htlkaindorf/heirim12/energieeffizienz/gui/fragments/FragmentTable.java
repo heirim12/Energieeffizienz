@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -51,6 +52,14 @@ public class FragmentTable extends Fragment
   private RecordsSettings recordsSettings = null;
   private Records records = null;
 
+  //================================================================================================
+  // Helping Methods
+  //================================================================================================
+  private void showSnackbar(String text)
+  {
+    Snackbar.make(getActivity().findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG).show();
+  }
 
   //================================================================================================
   // Methods and classes for creating the table
@@ -80,9 +89,9 @@ public class FragmentTable extends Fragment
       textView.setLayoutParams(new LinearLayout.LayoutParams(
               ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
       textView.setText(String.format("%s", string));
-      int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
+      final int padding = (int) getResources().getDimension(R.dimen.fragment_table_cell);
       textView.setPadding(padding, padding, padding, padding);
-      textView.measure(0,0);
+      textView.measure(0, 0);
       textView.setLayoutParams(new LinearLayout.LayoutParams(
               textView.getMeasuredWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
       textView.setGravity(Gravity.CENTER);
@@ -269,41 +278,49 @@ public class FragmentTable extends Fragment
           viewHolder = new CustomTableLineLayout(recordsSettings, color2, lineHeight);
         view = viewHolder.getTableLineLayout();
         view.setTag(viewHolder);
-      }
-      else
+      } else
       {
         viewHolder = (CustomTableLineLayout) view.getTag();
       }
 
       if (recordsSettings.isPanel1Voltage())
-        viewHolder.getPanel1Voltage().setText(String.format("%.2fV",record.getPanel1Voltage()));
+        viewHolder.getPanel1Voltage().setText(String.format("%.2fV", record.getPanel1Voltage()));
 
       if (recordsSettings.isPanel1Current())
-        viewHolder.getPanel1Current().setText(String.format("%.2fA",record.getPanel1Current()));
+        viewHolder.getPanel1Current().setText(String.format("%.2fA", record.getPanel1Current()));
 
       if (recordsSettings.isPanel1Power())
-        viewHolder.getPanel1Power().setText(String.format("%.2fW",record.getPanel1Power()));
+        viewHolder.getPanel1Power().setText(String.format("%.2fW", record.getPanel1Power()));
 
       if (recordsSettings.isPanel1Energy())
-        viewHolder.getPanel1Energy().setText(String.format("%.2fWh",record.getPanel1Energy()));
+        if (Double.isNaN(record.getPanel1Energy()))
+          viewHolder.getPanel1Energy().setText(String.format("-"));
+        else
+          viewHolder.getPanel1Energy().setText(String.format("%.2fWh", record.getPanel1Energy()));
 
       if (recordsSettings.isPanel2Voltage())
-        viewHolder.getPanel2Voltage().setText(String.format("%.2fV",record.getPanel2Voltage()));
+        viewHolder.getPanel2Voltage().setText(String.format("%.2fV", record.getPanel2Voltage()));
 
       if (recordsSettings.isPanel2Current())
-        viewHolder.getPanel2Current().setText(String.format("%.2fA",record.getPanel2Current()));
+        viewHolder.getPanel2Current().setText(String.format("%.2fA", record.getPanel2Current()));
 
       if (recordsSettings.isPanel2Power())
-        viewHolder.getPanel2Power().setText(String.format("%.2fW",record.getPanel2Power()));
+        viewHolder.getPanel2Power().setText(String.format("%.2fW", record.getPanel2Power()));
 
       if (recordsSettings.isPanel2Energy())
-        viewHolder.getPanel2Energy().setText(String.format("%.2fWh",record.getPanel2Energy()));
+        if (Double.isNaN(record.getPanel2Energy()))
+          viewHolder.getPanel2Energy().setText(String.format("-"));
+        else
+          viewHolder.getPanel2Energy().setText(String.format("%.2fWh", record.getPanel2Energy()));
 
       if (recordsSettings.isBothPower())
-        viewHolder.getPowerBoth().setText(String.format("%.2fW",record.getBothPower()));
+        viewHolder.getPowerBoth().setText(String.format("%.2fW", record.getBothPower()));
 
       if (recordsSettings.isBothEnergy())
-        viewHolder.getEnergyBoth().setText(String.format("%.2fWh",record.getBothEnergy()));
+        if (Double.isNaN(record.getBothEnergy()))
+          viewHolder.getEnergyBoth().setText(String.format("-"));
+        else
+          viewHolder.getEnergyBoth().setText(String.format("%.2fWh", record.getBothEnergy()));
 
       return view;
     }
@@ -353,7 +370,7 @@ public class FragmentTable extends Fragment
         textViewHolder = new TextView(getContext());
         textViewHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 lineHeight));
-        int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
+        final int padding = (int) getResources().getDimension(R.dimen.fragment_table_cell);
         textViewHolder.setPadding(padding, padding, padding, padding);
         textViewHolder.setBackgroundColor(getResources().getColor(color));
         textViewHolder.setGravity(Gravity.CENTER);
@@ -361,21 +378,20 @@ public class FragmentTable extends Fragment
         textViewHolder.setGravity(Gravity.CENTER_HORIZONTAL);
         view = textViewHolder;
         view.setTag(textViewHolder);
-      }
-      else
+      } else
       {
         textViewHolder = (TextView) view.getTag();
       }
 
-//        textViewHolder.setText(dateFormat.format(new Date(record.getDateTime().getTimeInMillis())));
-      textViewHolder.setText(dateFormat.format(new Date(record.getTimeInMillis())));
+      textViewHolder.setText(dateFormat.format(new Date(record.getDateTimeInMillis())));
       return view;
     }
   }
 
   private void createTable(Records records)
   {
-    //Main Layout with is defined in the xml-file
+    this.records = records;
+    //Main Layout which is defined in the xml-file
     final LinearLayout mainLayout =
             (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
 
@@ -383,14 +399,12 @@ public class FragmentTable extends Fragment
     final TextView dateTextView = new TextView(getContext());
     dateTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
-    int padding = (int)getResources().getDimension(R.dimen.fragment_table_cell);
+    final int padding = (int) getResources().getDimension(R.dimen.fragment_table_cell);
     dateTextView.setPadding(padding, padding, padding, padding);
-    dateTextView.setBackgroundColor(getResources().getColor(R.color.colorTableWhite));
-//    dateTextView.setText(new SimpleDateFormat("dd.MM.yy HH:mm").format(
-//            new Date(records.get(1).getDateTime().getTimeInMillis())));
+    dateTextView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTableWhite));
     dateTextView.setText(new SimpleDateFormat("dd.MM.yy HH:mm").format(
-            new Date(records.get(1).getTimeInMillis())));
-    dateTextView.measure(0,0);
+            new Date(records.get(1).getDateTimeInMillis())));
+    dateTextView.measure(0, 0);
     final int lineHeight = dateTextView.getMeasuredHeight();
 
 //  Layout and children views for the left side of the Table (Date/Time)
@@ -426,7 +440,7 @@ public class FragmentTable extends Fragment
 
     //Headline for the table
     final LinearLayout header = new CustomTableLineLayout(
-            recordsSettings,R.color.colorTableHeader, lineHeight).getTableLineLayout();
+            recordsSettings, R.color.colorTableHeader, lineHeight).getTableLineLayout();
 
     //ListView for the Data
     final ListView dataListView = new ListView(getContext());
@@ -434,7 +448,7 @@ public class FragmentTable extends Fragment
             ViewGroup.LayoutParams.WRAP_CONTENT));
     dataListView.setAdapter(new DataListViewAdapter(records, recordsSettings,
             R.color.colorTableRow1, R.color.colorTableRow2, lineHeight));
-    dataListView.setBackgroundColor(getResources().getColor(R.color.colorTableWhite));
+    dataListView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTableWhite));
 
     dataLayout.addView(header);
     dataLayout.addView(dataListView);
@@ -455,18 +469,19 @@ public class FragmentTable extends Fragment
       }
 
       @Override
-      public void onScroll(AbsListView absListView, int i, int i1, int i2)
+      public void onScroll(AbsListView absListView, int firstVisibleItem,
+                           int visibleItemCount, int totalItemCount)
       {
         View v = absListView.getChildAt(0);
         if (v != null)
         {
           if (absListView == dateListView)
           {
-            dataListView.setSelectionFromTop(i, v.getTop());
+            dataListView.setSelectionFromTop(firstVisibleItem, v.getTop());
 
           } else if (absListView == dataListView)
           {
-            dateListView.setSelectionFromTop(i, v.getTop());
+            dateListView.setSelectionFromTop(firstVisibleItem, v.getTop());
           }
         }
       }
@@ -487,7 +502,7 @@ public class FragmentTable extends Fragment
   private void saveTableSettings()
   {
     //TODO
-    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
+    showSnackbar("Not implemented now!");
   }
 
 
@@ -496,8 +511,8 @@ public class FragmentTable extends Fragment
   //================================================================================================
   private void shareTable()
   {
-    //TODO:
-    Toast.makeText(getContext(), "Not implemented now!", Toast.LENGTH_SHORT).show();
+    //TODO
+    showSnackbar("Not implemented now!");
   }
 
 
@@ -508,21 +523,17 @@ public class FragmentTable extends Fragment
   public void onRecordsSettingsOKListener(RecordsSettings recordsSettings)
   {
     if (recordsSettings.equals(this.recordsSettings))
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_table_settings_hasnot_changed),
-              Toast.LENGTH_LONG).show();
+      showSnackbar(getString(R.string.fragment_table_settings_hasnot_changed));
     else
     {
       this.recordsSettings = recordsSettings;
 
-      Toast.makeText(getContext(),
-              getResources().getText(R.string.fragment_table_settings_has_changed),
-              Toast.LENGTH_LONG).show();
+      showSnackbar(getString(R.string.fragment_table_settings_has_changed));
 
       LinearLayout mainLayout =
               (LinearLayout) thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
       LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams
-              (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+              (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
       progressBarParams.gravity = Gravity.CENTER_VERTICAL;
       mainLayout.removeAllViews();
 
@@ -549,7 +560,7 @@ public class FragmentTable extends Fragment
   {
     final DialogFragment dialogSettings = new DialogRecordsSettings();
     final Bundle recordSettingsBundle = new Bundle();
-    if(recordsSettings != null)
+    if (recordsSettings != null)
     {
       recordSettingsBundle.putBoolean("panel1Voltage", recordsSettings.isPanel1Voltage());
       recordSettingsBundle.putBoolean("panel1Current", recordsSettings.isPanel1Current());
@@ -627,13 +638,12 @@ public class FragmentTable extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState)
   {
-    // Inflate the layout for this fragment
-    thisFragment = inflater.inflate(R.layout.fragment_table, container, false);
-    getActivity().setTitle(getString(R.string.fragment_table_title));
-    setHasOptionsMenu(true);
-    if (records != null)
+    if (records == null)
     {
-      createTable(records);
+      // Inflate the layout for this fragment
+      thisFragment = inflater.inflate(R.layout.fragment_table, container, false);
+      getActivity().setTitle(getString(R.string.fragment_table_title));
+      setHasOptionsMenu(true);
     }
 
     return thisFragment;

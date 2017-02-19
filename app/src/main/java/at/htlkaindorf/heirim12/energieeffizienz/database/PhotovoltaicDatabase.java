@@ -132,12 +132,12 @@ public class PhotovoltaicDatabase extends Database
                               sixDaysBefore.getTimeInMillis(), today.getTimeInMillis()));
       )
       {
-        double energy7Days[] = new double[7];
+        float energy7Days[] = new float[7];
         String[] dates = new String[7];
-        double averagePower1 = 0;
-        double averagePower2 = 0;
-        double energy1 = 0;
-        double energy2 = 0;
+        float averagePower1 = 0;
+        float averagePower2 = 0;
+        float energy1 = 0;
+        float energy2 = 0;
         int count = 0;
 
         boolean hasNext = resultSet.next();
@@ -147,8 +147,10 @@ public class PhotovoltaicDatabase extends Database
 
         while (hasNext)
         {
-          final double power1 = (resultSet.getDouble("voltage1") * resultSet.getDouble("current1"));
-          final double power2 = (resultSet.getDouble("voltage2") * resultSet.getDouble("current2"));
+          final float  power1 = (float) (resultSet.getDouble("voltage1") *
+                  (float) resultSet.getDouble("current1"));
+          final float  power2 = (float) (resultSet.getDouble("voltage2") *
+                  (float) resultSet.getDouble("current2"));
 
 
           if (resultSet.next())
@@ -235,12 +237,12 @@ public class PhotovoltaicDatabase extends Database
         if (resultSet.next())
         {
           currentValues = new CurrentValues(
-                  resultSet.getDouble("voltage1"), resultSet.getDouble("current1"),
-                  resultSet.getDouble("voltage1") * resultSet.getDouble("current1"),
+                  (float) resultSet.getDouble("voltage1"), (float) resultSet.getDouble("current1"),
+                  (float) resultSet.getDouble("voltage1") * (float) resultSet.getDouble("current1"),
                   resultSet.getInt("azimuth1"), resultSet.getInt("elevation1"),
-                  resultSet.getDouble("voltage2"), resultSet.getDouble("current2"),
-                  resultSet.getDouble("voltage2") * resultSet.getDouble("current2"),
-                  resultSet.getDouble("voltage_accu"));
+                  (float) resultSet.getDouble("voltage2"), (float) resultSet.getDouble("current2"),
+                  (float) resultSet.getDouble("voltage2") * (float) resultSet.getDouble("current2"),
+                  (float) resultSet.getDouble("voltage_accu"));
         }
         return currentValues;
       }
@@ -299,44 +301,46 @@ public class PhotovoltaicDatabase extends Database
       boolean hasNext = resultSet.next();
       Calendar currentResultSetDateTime = new GregorianCalendar();
       currentResultSetDateTime.setTimeInMillis(resultSet.getLong("epoch_ms"));
-      double panel1Energy = 0, panel2Energy = 0, bothEnergy = 0;
+      float panel1Energy = 0, panel2Energy = 0, bothEnergy = 0;
 
       while (hasNext)
       {
-        double panel1Voltage = Double.NaN,
-                panel1Current = Double.NaN,
-                panel1Power = Double.NaN,
-                panel2Voltage = Double.NaN,
-                panel2Current = Double.NaN,
-                panel2Power = Double.NaN,
-                bothPower = Double.NaN;
+        float panel1Voltage = Float.NaN,
+                panel1Current = Float.NaN,
+                panel1Power = Float.NaN,
+                panel2Voltage = Float.NaN,
+                panel2Current = Float.NaN,
+                panel2Power = Float.NaN,
+                bothPower = Float.NaN;
 
         //saves the requested data
         if (recordsSettings.isPanel1Voltage()
                 || recordsSettings.isPanel1Energy() || recordsSettings.isBothEnergy())
-          panel1Voltage = resultSet.getDouble("voltage1");
+          panel1Voltage = (float) resultSet.getDouble("voltage1");
 
         if (recordsSettings.isPanel1Current()
                 || recordsSettings.isPanel1Energy() || recordsSettings.isBothEnergy())
-          panel1Current = resultSet.getDouble("current1");
+          panel1Current = (float) resultSet.getDouble("current1");
 
         if (recordsSettings.isPanel1Power())
-          panel1Power = resultSet.getDouble("voltage1") * resultSet.getDouble("current1");
+          panel1Power = (float) resultSet.getDouble("voltage1") * (float) resultSet.getDouble("current1");
 
         if (recordsSettings.isPanel2Voltage()
                 || recordsSettings.isPanel2Energy() || recordsSettings.isBothEnergy())
-          panel2Voltage = resultSet.getDouble("voltage2");
+          panel2Voltage = (float) resultSet.getDouble("voltage2");
 
         if (recordsSettings.isPanel2Current()
                 || recordsSettings.isPanel2Energy() || recordsSettings.isBothEnergy())
-          panel2Current = resultSet.getDouble("current2");
+          panel2Current = (float) resultSet.getDouble("current2");
 
         if (recordsSettings.isPanel2Power())
-          panel2Power = resultSet.getDouble("voltage2") * resultSet.getDouble("current2");
+          panel2Power = (float) resultSet.getDouble("voltage2") * (float) resultSet.getDouble("current2");
 
         if (recordsSettings.isBothPower())
-          bothPower = resultSet.getDouble("voltage1") * resultSet.getDouble("current1")
-                  + resultSet.getDouble("voltage2") * resultSet.getDouble("current2");
+          bothPower = (float) resultSet.getDouble("voltage1") *
+                  (float) resultSet.getDouble("current1")
+                  + (float) resultSet.getDouble("voltage2") *
+                  (float) resultSet.getDouble("current2");
 
         if (resultSet.next())
         {
@@ -367,17 +371,17 @@ public class PhotovoltaicDatabase extends Database
                     recordsSettings.isPanel2Current() ||
                     recordsSettings.isPanel2Power() ||
                     recordsSettings.isBothPower())
-            records.add(new Record(currentResultSetDateTime,
-                    bothPower, Double.NaN,
-                    panel1Voltage, panel1Current, panel1Power, Double.NaN,
-                    panel2Voltage, panel2Current, panel2Power, Double.NaN));
+            records.add(new Record(currentResultSetDateTime.getTimeInMillis(),
+                    bothPower, Float.NaN,
+                    panel1Voltage, panel1Current, panel1Power, Float.NaN,
+                    panel2Voltage, panel2Current, panel2Power, Float.NaN));
 
             currentResultSetDateTime = nextResultSetDateTime;
           } else
           {
             // the last energy value of the day will not be considered
             // => doesn´t matter because it will be in the night
-              records.add(new Record(currentResultSetDateTime,
+              records.add(new Record(currentResultSetDateTime.getTimeInMillis(),
                       bothPower, bothEnergy / 3600000,
                       panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
                       panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
@@ -388,7 +392,7 @@ public class PhotovoltaicDatabase extends Database
           }
         } else
         {
-          records.add(new Record(currentResultSetDateTime,
+          records.add(new Record(currentResultSetDateTime.getTimeInMillis(),
                   bothPower, bothEnergy / 3600000,
                   panel1Voltage, panel1Current, panel1Power, panel1Energy / 3600000,
                   panel2Voltage, panel2Current, panel2Power, panel2Energy / 3600000));
@@ -450,7 +454,7 @@ public class PhotovoltaicDatabase extends Database
 //
 //          if (!Double.isNaN(record.getBothEnergy()))
 //          {
-//            System.out.println(record.getDateTime().getTimeInMillis());
+//            System.out.println(record.getDateTime().getDateTimeInMillis());
 //            System.out.println(record.getPanel1Voltage());
 //            System.out.println(record.getPanel1Current());
 //            System.out.println(record.getPanel1Power());

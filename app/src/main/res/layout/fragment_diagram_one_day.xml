@@ -17,7 +17,7 @@
             android:layout_gravity="right"
             android:paddingRight="@dimen/fragment_diagram_pressicon_padding_right"
             android:paddingTop="@dimen/fragment_diagram_pressicon_padding_top"
-            app:srcCompat="@drawable/ic_diagram_table_press_icon"/>
+            app:srcCompat="@drawable/ic_press_icon_black_24dp"/>
 
         <TextView
             android:layout_width="wrap_content"

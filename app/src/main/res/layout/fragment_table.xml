@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="@dimen/fragment_table_pressicon_padding_right"
                 android:paddingTop="@dimen/fragment_table_pressicon_padding_top"
-                app:srcCompat="@drawable/ic_diagram_table_press_icon"
+                app:srcCompat="@drawable/ic_press_icon_black_24dp"
                 android:layout_gravity="right"/>
 
             <TextView

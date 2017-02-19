@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.sql.SQLException;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,11 +34,10 @@ public class FragmentCurrentMeasurement extends Fragment
   //================================================================================================
   private final static int[] refreshMs = { 200, 1000, 3000, 5000, 10000 };
 
-  private View rootView;
-  private Timer timer;
+  private View thisFragment;
   private int refreshCycle = 1;
   private static Boolean inBackground = new Boolean(false);
-  private ScheduledExecutorService exe = null;
+  private ScheduledExecutorService scheduledExecutorService = null;
   private Future future = null;
 
   //================================================================================================
@@ -47,7 +45,7 @@ public class FragmentCurrentMeasurement extends Fragment
   //================================================================================================
   private void setText(int id, String text)
   {
-    final TextView textView = (TextView) rootView.findViewById(id);
+    final TextView textView = (TextView) thisFragment.findViewById(id);
     textView.setText(text);
   }
 
@@ -92,7 +90,6 @@ public class FragmentCurrentMeasurement extends Fragment
     }
   }
 
-
   //================================================================================================
   // Constructor
   //================================================================================================
@@ -110,16 +107,12 @@ public class FragmentCurrentMeasurement extends Fragment
                            Bundle savedInstanceState)
   {
     // Inflate the layout for this fragment
+    thisFragment = inflater.inflate(R.layout.fragment_current_measurement, container, false);
     getActivity().setTitle(getString(R.string.fragment_current_measurement_title));
 
-    rootView = inflater.inflate(R.layout.fragment_current_measurement, container, false);
-//        int refreshCycle = 1;
-
-
-
-
     final Spinner refreshCycleSpinner =
-            (Spinner) rootView.findViewById(R.id.cur_meas_spinnerRefreshCycle);
+            (Spinner) thisFragment.findViewById(R.id.cur_meas_spinnerRefreshCycle);
+   // ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
             R.array.refresh_array, android.R.layout.simple_spinner_item);
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,7 +126,7 @@ public class FragmentCurrentMeasurement extends Fragment
         refreshCycle = (position<refreshMs.length) ? refreshMs[position] : 400;
         if (future!=null)
           future.cancel(false);
-        future = exe.scheduleWithFixedDelay(
+        future = scheduledExecutorService.scheduleWithFixedDelay(
                 new Runnable()
                 {
                   @Override
@@ -153,15 +146,15 @@ public class FragmentCurrentMeasurement extends Fragment
     });
 
     //return inflater.inflate(R.layout.fragment_current_measurement, container, false);
-    return rootView;
+    return thisFragment;
   }
 
   @Override
   public void onStart()
   {
     super.onStart();
-    exe = Executors.newSingleThreadScheduledExecutor();
-    future = exe.scheduleWithFixedDelay(
+    scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    future = scheduledExecutorService.scheduleWithFixedDelay(
             new Runnable()
             {
               @Override
@@ -176,8 +169,8 @@ public class FragmentCurrentMeasurement extends Fragment
   @Override
   public void onStop()
   {
-    if (exe!=null)
-      exe.shutdown();
+    if (scheduledExecutorService !=null)
+      scheduledExecutorService.shutdown();
     super.onStop();
   }
 
