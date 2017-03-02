@@ -428,6 +428,9 @@ public class DialogRecordsSettings
   {
     viewDialog = getActivity().getLayoutInflater().inflate(R.layout.dialog_records_settings, null);
 
+    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    builder.setView(viewDialog);
+
     final Calendar currentDate = Calendar.getInstance();
     final int
             minDay = 1,
@@ -440,9 +443,6 @@ public class DialogRecordsSettings
     startDay = endDay = maxDay;
     startMonth = endMonth = maxMonth;
     startYear = endYear = maxYear;
-
-    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-    builder.setView(viewDialog);
 
     TextView startDate = (TextView) viewDialog.findViewById(R.id.dialog_diagram_textViewStartDate);
     startDate.setText(String.format("%02d.%02d.%04d", startDay, startMonth, startYear));

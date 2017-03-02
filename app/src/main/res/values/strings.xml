@@ -206,6 +206,13 @@
     <string name="dialog_diagram_energy">Energy</string>
     <!-- ======================================================================================= -->
 
+    <!-- Dialog Diagram Specific Day Settings -->
+    <!-- ======================================================================================= -->
+    <string name="dialog_diagram_energy_panel1">Panel 1</string>
+    <string name="dialog_diagram_energy_panel2">Panel 2</string>
+    <string name="dialog_diagram_energy_both">Both Panels</string>
+    <!-- ======================================================================================= -->
+
     <!-- Dialog Records Settings One Day -->
     <!-- ======================================================================================= -->
     <string name="dialog_records_one_day_title">Settings</string>

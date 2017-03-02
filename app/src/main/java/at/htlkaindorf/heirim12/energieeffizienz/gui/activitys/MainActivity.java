@@ -47,14 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   //Opens a AlertDialog and shows an about-page
   private void showAppInfo()
   {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle(R.string.main_activity_alert_about);
-
     final LinearLayout aboutLayout =
             (LinearLayout) this.getLayoutInflater().inflate(R.layout.dialog_about, null);
-
-    builder.setPositiveButton(R.string.main_activity_alert_close, null);
-    builder.setView(aboutLayout);
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(R.string.main_activity_alert_about)
+            .setView(aboutLayout)
+            .setPositiveButton(R.string.main_activity_alert_close, null);
     AlertDialog dialog = builder.create();
     dialog.show();
   }
@@ -63,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   private void loadFragment(Fragment fragment)
   {
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    final FragmentTransaction fragmentTransaction  = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.main_activity_fragmanetholder, fragment);
-    fragmentTransaction.commit();
+    final FragmentTransaction transaction  = fragmentManager.beginTransaction();
+    transaction.replace(R.id.main_activity_fragmanetholder, fragment);
+    transaction.commit();
   }
 
   @Override

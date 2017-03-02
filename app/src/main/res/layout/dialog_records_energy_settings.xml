@@ -84,27 +84,30 @@
 
                 <CheckBox
                     android:id="@+id/dialog_settings_energy_energyBoth"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/dialog_diagram_energy"
+                    android:text="@string/dialog_diagram_energy_panel1"
+                    android:layout_gravity="center"
                     android:textSize="@dimen/dialog_settings_text_size"/>
 
                 <CheckBox
                     android:id="@+id/dialog_settings_energy_energy1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/dialog_diagram_energy"
+                    android:layout_gravity="center"
+                    android:text="@string/dialog_diagram_energy_panel2"
                     android:textSize="@dimen/dialog_settings_text_size"/>
 
                 <CheckBox
                     android:id="@+id/dialog_settings_energy_energy2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/dialog_settings_text_gap_big"
-                    android:text="@string/dialog_diagram_energy"
+                    android:layout_gravity="center"
+                    android:text="@string/dialog_diagram_energy_both"
                     android:textSize="@dimen/dialog_settings_text_size"/>
             </LinearLayout>
         </LinearLayout>

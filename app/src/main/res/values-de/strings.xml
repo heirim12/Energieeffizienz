@@ -210,6 +210,13 @@
     <string name="dialog_diagram_energy">Energie</string>
     <!-- ======================================================================================= -->
 
+    <!-- Dialog Diagram Specific Day Settings -->
+    <!-- ======================================================================================= -->
+    <string name="dialog_diagram_energy_panel1">Panel 1</string>
+    <string name="dialog_diagram_energy_panel2">Panel 2</string>
+    <string name="dialog_diagram_energy_both">Both Panels</string>
+    <!-- ======================================================================================= -->
+
     <!-- Fragment Records Table One Day: fragment_table.xml -->
     <!-- ======================================================================================= -->
     <string name="fragment_table_one_day_title">Tabelle</string>
