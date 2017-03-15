@@ -11,10 +11,11 @@ import java.util.List;
 public class Records
 {
   private final List<Record> records = new ArrayList<>();
-  private final Exception exception = null;
+  private final Exception exception;
 
   public Records()
   {
+    this.exception = null;
 //    records.add(new Record(new GregorianCalendar(2016,10,1,12,20), 1000, 100,
 //            12.05, 3.5, 700, 70, 13, 2, 300, 30));
 //
@@ -59,6 +60,11 @@ public class Records
 //
 //    records.add(new Record(new GregorianCalendar(2016,10,17,12,20), 5000, 140,
 //            13, 4, 1300, 100, 13, 2, 3700, 40));
+  }
+
+  public Records(Exception exception)
+  {
+    this.exception = exception;
   }
 
   public int getSize()

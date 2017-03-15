@@ -18,6 +18,11 @@ import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 
 public class SettingsActivity extends AppCompatActivity
 {
+  private void showSnackbar(String text)
+  {
+    Snackbar.make(findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG).show();
+  }
 
   private String getInput(int id, int name)
           throws Exception
@@ -82,7 +87,8 @@ public class SettingsActivity extends AppCompatActivity
     setTitle(getString(R.string.activity_settings_title));
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     final SharedPreferences sharedPreferences =
-            getSharedPreferences(getString(R.string.shared_preference_file1), Context.MODE_PRIVATE);
+            getSharedPreferences(getString(R.string.shared_preference_file1),
+                    Context.MODE_PRIVATE);
     loadOldSettings(sharedPreferences);
 
 //    InputFilter[] ipFilter = new InputFilter[1];
@@ -139,14 +145,11 @@ public class SettingsActivity extends AppCompatActivity
                           "smartphone"),
                   sharedPreferences.getString(getString(R.string.shared_preference_saved_password),
                           "htl"));
-          Toast.makeText(getBaseContext(),
-                  getString(R.string.activity_settings_successfully_changed),
-                  Toast.LENGTH_LONG).show();
+          showSnackbar(getString(R.string.activity_settings_successfully_changed));
           finish();
         } catch (Exception ex)
         {
-          Snackbar.make(findViewById(android.R.id.content),
-                  ex.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+          showSnackbar(ex.getLocalizedMessage());
         }
       }
     });

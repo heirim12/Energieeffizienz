@@ -4,6 +4,7 @@ package at.htlkaindorf.heirim12.energieeffizienz.gui.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,15 @@ public class FragmentCurrentMeasurement extends Fragment
   private static Boolean inBackground = new Boolean(false);
   private ScheduledExecutorService scheduledExecutorService = null;
   private Future future = null;
+
+  //================================================================================================
+  // Helping Methods
+  //================================================================================================
+  private void showSnackbar(String text)
+  {
+    Snackbar.make(getActivity().findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG).show();
+  }
 
   //================================================================================================
   // Methods for setting the gui
@@ -195,15 +205,10 @@ public class FragmentCurrentMeasurement extends Fragment
         final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
         result = photovoltaicDatabase.getCurrentValues();
       }
-      catch (SQLException ex)
-      {
-        ex.printStackTrace();
-    //    Toast.makeText(getContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-      }
       catch (Exception ex)
       {
         System.out.println(ex.getLocalizedMessage());
-       // Toast.makeText(getContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        result = new CurrentValues(ex);
       }
       finally
       {
@@ -222,7 +227,10 @@ public class FragmentCurrentMeasurement extends Fragment
       if (currentValues == null)
         return;
       super.onPostExecute(currentValues);
-      fillTextViews(currentValues);
+      if (currentValues.getException() == null)
+        fillTextViews(currentValues);
+      else
+        showSnackbar("Error: " + currentValues.getException().getLocalizedMessage());
     }
   }
 }

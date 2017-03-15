@@ -29,6 +29,7 @@ import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.data.HomeValues;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.diagramFormatter.SpecificValueMarkerView;
+import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.diagramFormatter.YAxisUnitValueFormatter;
 
 
 /**
@@ -129,6 +130,8 @@ public class FragmentHome extends Fragment
     yAxis.setTextColor(Color.BLACK);
     yAxis.setDrawAxisLine(true);
     yAxis.setDrawGridLines(true); // grid lines
+    yAxis.setEnabled(true);
+    yAxis.setValueFormatter(new YAxisUnitValueFormatter("Wh"));
     barChart.getAxisRight().setEnabled(false); // no right axis
 
     final XAxis xAxis = barChart.getXAxis();
@@ -142,7 +145,7 @@ public class FragmentHome extends Fragment
     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
     barChart.setFitBars(true); // make the x-axis fit exactly all bars
-    barChart.animateXY(2000,2000); // animate vertical 3000 milliseconds
+    barChart.animateXY(2000,2000); // animate vertical 2000 milliseconds
     barChart.invalidate(); // refresh
   }
 
@@ -173,6 +176,7 @@ public class FragmentHome extends Fragment
   @Override
   public void onStart()
   {
+    System.out.println(Thread.currentThread().getId()+"-----------------------------------");
     super.onStart();
     executor = Executors.newSingleThreadExecutor();
     executor.execute(
@@ -181,6 +185,7 @@ public class FragmentHome extends Fragment
               @Override
               public void run()
               {
+                System.out.println(Thread.currentThread().getId()+"-----------------------------------");
                 new GetInfoTask().execute();
               }
             });
@@ -206,16 +211,14 @@ public class FragmentHome extends Fragment
       HomeValues result = null;
       try
       {
-
+        System.out.println(Thread.currentThread().getId()+"-----------------------------------");
         final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
         result = photovoltaicDatabase.getHomeValues();
       }
       catch (Exception ex)
       {
         ex.printStackTrace();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(ex.getLocalizedMessage());
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        result = new HomeValues(ex);
       }
 
       return result;
@@ -224,13 +227,19 @@ public class FragmentHome extends Fragment
     @Override
     protected void onPostExecute(HomeValues homeValues)
     {
+
       if (executor.isShutdown())
         return;
       if (homeValues == null)
         return;
       super.onPostExecute(homeValues);
-      fillTextViews(homeValues);
-      makeBarChart(homeValues,barChart);
+      if (homeValues.getException() == null)
+      {
+        fillTextViews(homeValues);
+        makeBarChart(homeValues,barChart);
+      }
+      else
+        showSnackbar("Error: "+homeValues.getException().getLocalizedMessage());
     }
   }
 }

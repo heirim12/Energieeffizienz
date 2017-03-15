@@ -677,12 +677,8 @@ public class FragmentDiagramOneDay extends Fragment
 
       } catch (Exception ex)
       {
-//        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-//                Toast.LENGTH_LONG).show();
-        System.out.println("___________________________________________________________________");
         ex.printStackTrace();
-        System.out.println(ex.getLocalizedMessage());
-        System.out.println("___________________________________________________________________");
+        result = new Records(ex);
       }
       return result;
     }
@@ -695,7 +691,17 @@ public class FragmentDiagramOneDay extends Fragment
       if (records == null)
         return;
       super.onPostExecute(records);
-      createDiagram(records);
+      if (records.getException() == null)
+        createDiagram(records);
+      else
+      {
+        showSnackbar("Error: "+records.getException().getLocalizedMessage());
+        final LinearLayout layout = (LinearLayout)
+                thisFragment.findViewById(R.id.fragment_diagram_mainLinearLayout);
+        layout.removeAllViews();
+        layout.addView(getLayoutInflater(null).
+                inflate(R.layout.fragment_diagram_one_day, null, false));
+      }
     }
   }
 }

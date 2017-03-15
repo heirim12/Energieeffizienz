@@ -652,7 +652,6 @@ public class FragmentTable extends Fragment
   @Override
   public void onStop()
   {
-    //TODO:
     if (executor != null)
       executor.shutdown();
     super.onStop();
@@ -671,12 +670,10 @@ public class FragmentTable extends Fragment
       {
         final PhotovoltaicDatabase photovoltaicDatabase = PhotovoltaicDatabase.getInstance();
         result = photovoltaicDatabase.getHistory(recordsSettings);
-//        ReceiveRecords receiveRecords = new ReceiveRecords(recordsSettings);
-//        result = receiveRecords.getRecords();
       } catch (Exception ex)
       {
-        Toast.makeText(getActivity(), String.format("Error: %s", ex.getLocalizedMessage()),
-                Toast.LENGTH_LONG).show();
+        ex.printStackTrace();
+        result = new Records(ex);
       }
       return result;
     }
@@ -689,7 +686,17 @@ public class FragmentTable extends Fragment
       if (records == null)
         return;
       super.onPostExecute(records);
-      createTable(records);
+      if (records.getException() == null)
+        createTable(records);
+      else
+      {
+        showSnackbar("Error: "+records.getException().getLocalizedMessage());
+        final LinearLayout layout = (LinearLayout)
+                thisFragment.findViewById(R.id.fragment_table_mainLinearLayout);
+        layout.removeAllViews();
+        layout.addView(getLayoutInflater(null).
+                inflate(R.layout.fragment_table, null, false));
+      }
     }
   }
 }

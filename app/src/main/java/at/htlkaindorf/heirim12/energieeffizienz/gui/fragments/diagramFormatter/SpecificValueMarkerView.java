@@ -20,7 +20,7 @@ import at.htlkaindorf.heirim12.energieeffizienz.R;
  * Created by richard on 18.02.2017.
  */
 
-public class SpecificValueMarkerView extends MarkerView implements IMarker
+public class SpecificValueMarkerView extends MarkerView // implements IMarker
 {
   private final long referenceTime;
   private final long middleTimeStep;

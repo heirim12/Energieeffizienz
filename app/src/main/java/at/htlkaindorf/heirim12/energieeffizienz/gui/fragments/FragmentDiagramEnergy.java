@@ -411,7 +411,7 @@ public class FragmentDiagramEnergy extends Fragment
   {
     if (records == null)
     {
-      thisFragment = inflater.inflate(R.layout.fragment_fragment_diagram_energy, container, false);
+      thisFragment = inflater.inflate(R.layout.fragment_diagram_energy, container, false);
       getActivity().setTitle(getString(R.string.fragment_diagram_title));
       setHasOptionsMenu(true);
     }
@@ -444,10 +444,8 @@ public class FragmentDiagramEnergy extends Fragment
         result = photovoltaicDatabase.getHistory(recordsSettings);
       } catch (Exception ex)
       {
-        System.out.println("___________________________________________________________________");
         ex.printStackTrace();
-        System.out.println(ex.getLocalizedMessage());
-        System.out.println("___________________________________________________________________");
+        result = new Records(ex);
       }
       return result;
     }
@@ -460,7 +458,17 @@ public class FragmentDiagramEnergy extends Fragment
       if (records == null)
         return;
       super.onPostExecute(records);
-      createDiagram(records);
+      if (records.getException() == null)
+        createDiagram(records);
+      else
+      {
+        showSnackbar("Error: "+records.getException().getLocalizedMessage());
+        final LinearLayout layout = (LinearLayout)
+                thisFragment.findViewById(R.id.fragment_diagram_energy_mainLinearLayout);
+        layout.removeAllViews();
+        layout.addView(getLayoutInflater(null).
+                inflate(R.layout.fragment_diagram_energy, null, false));
+      }
     }
   }
 }

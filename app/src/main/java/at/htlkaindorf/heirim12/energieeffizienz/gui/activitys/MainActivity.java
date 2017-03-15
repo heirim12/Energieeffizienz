@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import java.util.GregorianCalendar;
+
 import at.htlkaindorf.heirim12.energieeffizienz.R;
 import at.htlkaindorf.heirim12.energieeffizienz.database.PhotovoltaicDatabase;
 import at.htlkaindorf.heirim12.energieeffizienz.gui.fragments.FragmentCurrentMeasurement;

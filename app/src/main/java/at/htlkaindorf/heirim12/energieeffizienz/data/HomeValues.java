@@ -19,6 +19,8 @@ public class HomeValues
   private final float energy7Days[];
   private final String[] dates;
 
+  private final Exception exception;
+
   public HomeValues(float panel1Power, float panel1Energy,
                     float panel2Power, float panel2Energy,
                     float energy7Days[], String[] dates)
@@ -29,6 +31,18 @@ public class HomeValues
     this.panel2Energy = panel2Energy;
     this.energy7Days = energy7Days;
     this.dates = dates;
+    this.exception = null;
+  }
+
+  public HomeValues(Exception exception)
+  {
+    this.panel1Power = Float.NaN;
+    this.panel1Energy = Float.NaN;
+    this.panel2Power = Float.NaN;
+    this.panel2Energy = Float.NaN;
+    this.energy7Days = null;
+    this.dates = null;
+    this.exception = exception;
   }
 
   public float getPanel1Power()
@@ -59,5 +73,10 @@ public class HomeValues
   public String[] getDates()
   {
     return dates;
+  }
+
+  public Exception getException()
+  {
+    return exception;
   }
 }
